@@ -1,4 +1,4 @@
-NORAD Number,Source Used for Orbital Data,Source,Source.1,Source.2,Source.3,Source.4,Source.5,Source.6,Comments,Detailed Purpose
+norad_id,Source Used for Orbital Data,Source,Source.1,Source.2,Source.3,Source.4,Source.5,Source.6,Comments,Detailed Purpose
 7530,www.satellitedebris.net 12/12,https://www.amsat.org/status/,,http://www.emilyshouse.com/experthams/ao7/main.php,,,,,American amateur radio satellite.,
 19548,JM/12_08,http://www.worldsat.net/610.html,,http://www.zarya.info/Diaries/Launches/Launches.php?year=2014,http://www.spaceflightnow.com/atlas/ac144/021201tdrss.html,http://nmsp.gsfc.nasa.gov/tdrss/tconst.html,,,Backup; still partially operational.,
 20253,JM/2_09,http://www.kosmo.cz/modules.php?op=modload&name=kosmo&file=index&fil=/s/1989/077A.HTM,,http://www.wired.com/politics/security/news/2009/04/fleetcom?currentPage=all,http://www.designation-systems.net/dusrm/app3/sat-summary.html,http://www.fas.org/spp/military/program/com/fltsat.htm,,,Old system replaced by UFO satellites; this satellite still operational as of 2009.,
