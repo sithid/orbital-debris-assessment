@@ -1,6 +1,10 @@
-Analysis of current satellites and clutter, and possibly other objects, orbiting earth.  
+# Orbital Debris Assessment
 
-https://www.ucs.org/resources/satellite-database  
+Analysis of current satellites, debris, etc currently orbiting Earth.  
 
-https://celestrak.org
-https://celestrak.org/pub/satcat.csv
+## Datasets
+* UCS Satellite Database
+  * https://www.ucs.org/resources/satellite-database
+* Celestrak SatCat
+  * https://celestrak.org
+  * https://celestrak.org/pub/satcat.csv
