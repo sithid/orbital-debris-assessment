@@ -24,7 +24,7 @@ To run this analysis locally, you will need **Python 3.x** and the following lib
    ```bash
    pip install -r requirements.txt
    ```
-4. Run `satcat_cleanup.ipynb` first to generate the master clutter dataset.
+4. Run `ucs_cleanup.ipynb` first, followed by `satcat_cleanup.ipynb` to generate the master clutter dataset.
 5. Run `satcat_eda.ipynb` to view the visualizations.
 
 ### Usage Examples
