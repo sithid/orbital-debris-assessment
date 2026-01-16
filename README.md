@@ -20,8 +20,12 @@ To run this analysis locally, you will need **Python 3.x** and the following lib
 2. Ensure your data folder structure is as follows:
    - `data/original/satcat.csv`
    - `data/clean/ucs_cleaned.csv`
-3. Run `satcat_cleanup.ipynb` first to generate the master clutter dataset.
-4. Run `satcat_eda.ipynb` to view the visualizations.
+3. Install the necessary dependencies using pip:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Run `satcat_cleanup.ipynb` first to generate the master clutter dataset.
+5. Run `satcat_eda.ipynb` to view the visualizations.
 
 ### Usage Examples
 
