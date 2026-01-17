@@ -37,13 +37,13 @@ The project includes several key visualization patterns:
 
 ### Technical Highlights
 
-- **Boolean Masking:** Used to isolate specific altitude zones (e.g., 250km - 500km) for detailed congestion analysis.
+- **Boolean Masking:** Used to isolate specific data such as altitude zones (e.g., 250km - 500km), data_status, etc.
 - **Pivot Tables:** Used to transform raw satellite lists into time-series data for growth modeling.
 - **Data Merging:** Integrated the UCS and SATCAT datasets using **NORAD IDs** to distinguish between active payloads and inactive debris.
 
 ### Credits & Contributors
 
-- **Lead Analyst:** [Your Name]
+- **Lead Analyst:** James Glosser
 - **Course:** Data Analysis Pathway with **Code:You**.
 - **Data Sources:** Union of Concerned Scientists (UCS) and CelesTrak (NORAD/SATCAT).
 
