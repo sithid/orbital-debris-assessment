@@ -7,51 +7,38 @@
 
 ### Project Description
 
-This project investigates the growing crisis of space debris and satellite congestion in Low Earth Orbit (LEO). By merging active satellite data from the **Union of Concerned Scientists (UCS)** with the **CelesTrak SATCAT**, this analysis identifies historical "smoking gun" events and quantifies the **Visibility Gap**—the population of large, inactive objects that sensors struggle to track consistently.
+This project investigates the growing crisis of space debris and satellite congestion in Low Earth Orbit (LEO). By merging active satellite data from the **Union of Concerned Scientists (UCS)** with the **CelesTrak SATCAT**, this analysis quantifies the **Visibility Gap** and evaluates the environment against the **Kessler Syndrome**—the tipping point where orbital collisions become self-sustaining.
 
-The goal is to demonstrate that while "New Space" (commercial) is driving current growth, a legacy of "Old Space" debris and untrackable "Zombie Satellites" poses an immediate threat to modern infrastructure.
+### Key Insights
 
-### Key Discovery: The Visibility Gap
-
-A major finding of this EDA is that **Inactive Satellites alone account for nearly 50% of all objects with unhealthy tracking status codes** (e.g., NEA - No Elements Available). This proves that orbital risk is driven not just by small debris fragments, but by large, dead payloads that have become untrackable over time.
-
----
-
-### Installation & Setup
-
-To run this analysis locally, you will need **Python 3.x** and the following libraries:
-
-- `pandas` – Data manipulation and Boolean masking.
-- `matplotlib` & `seaborn` – Data visualization.
-- `scipy` – Growth modeling.
-
-**Execution Order:**
-
-1. Run `ucs_cleanup.ipynb` and `satcat_cleanup.ipynb` to generate the master dataset.
-2. Run `ucs_eda.ipynb` to generate analysis and visualizations of the ucs dataset.
-3. Run `satcat_eda.ipynb` to generate the analysis and visualizations for the satcat dataset.
+- **The 50% Visibility Gap:** Nearly half of all objects with "unhealthy" tracking status (e.g., NEA - No Elements Available) are intact Inactive Satellites. These "Zombie Satellites" represent massive, unmonitored kinetic risks.
+- **Evidence of Kessler Syndrome:** Analysis of LEO population trends shows a transition from linear growth to an exponential curve, punctuated by catastrophic fragmentation events in 2007 and 2009.
 
 ---
 
 ### Technical Highlights
 
-- **Boolean Masking & Data Integrity:** Used to isolate "unhealthy" tracking flags (NEA, NCE, NIE) and determine their impact on data reliability.
-- **Pivot Tables:** Transformed raw satellite lists into time-series data to compare linear vs. exponential growth models.
-- **Data Merging:** Successfully integrated two disparate datasets using **NORAD IDs** to distinguish between active payloads and inactive clutter.
-- **Categorical Proportions:** Utilized `value_counts` and pie charts to visualize the distribution of orbital anomalies across different object types.
+- **Growth Modeling:** Applied mathematical best-fit curves to distinguish between linear launch rates and exponential debris accumulation.
+- **Boolean Masking:** Isolated "unhealthy" tracking flags to identify which object categories pose the greatest risk to orbital situational awareness.
+- **Data Merging:** Integrated disparate datasets via **NORAD IDs** to separate active infrastructure from historical clutter.
+- **Categorical Proportions:** Utilized pie charts and grouped counts to visualize the dominance of dead payloads in the tracking catalog.
 
-### Usage Examples (Key Visualizations)
+### Installation & Setup
 
-- **The "Smoking Gun" Timeline:** Bar charts highlighting massive debris spikes in 2000, 2007, and 2009.
-- **Tracking Status Distribution:** A proportional analysis proving the dominance of Inactive Satellites in tracking failures.
-- **Orbit Composition:** A stacked bar chart showing the ratio of active satellites to "junk" at various altitudes.
+1. Clone the repository.
+2. Ensure data files are in `data/original/` and `data/clean/`.
+3. **Execution Order:**
+   - Run `ucs_cleanup.ipynb`
+   - Run `satcat_cleanup.ipynb`
+   - Run `ucs_eda.ipynb` (EDA/Analysis)
+   - Run `satcat_eda.ipynb` (EDA/Analysis)
 
 ---
 
 ### Data Sources
 
-- **Union of Concerned Scientists (UCS):** Active satellite database.
-- **CelesTrak (NORAD/SATCAT):** Historical satellite catalog and tracking status.
+- **Union of Concerned Scientists (UCS):** Active satellite records.
+- **CelesTrak (NORAD/SATCAT):** Historical catalog and tracking statuses.
 
 ### License
 
