@@ -25,6 +25,30 @@ This project investigates the growing crisis of space debris and satellite conge
 - **Data Merging:** Integrated disparate datasets via **NORAD IDs** to separate active infrastructure from historical clutter.
 - **Categorical Proportions:** Utilized pie charts and grouped counts to visualize the dominance of dead payloads in the tracking catalog.
 
+---
+
+### Data Sources
+
+- **Union of Concerned Scientists (UCS):** In-depth records of active satellites (Owner, Purpose, Mass, Orbit).
+- **CelesTrak (NORAD/SATCAT):** Historical catalog of all man-made objects ever launched and their current tracking statuses.
+
+---
+
+### Stretch Goals & Future Roadmap: Collision Risk Assessment
+
+While this project quantifies man-made orbital congestion, the ultimate goal is to evaluate the relative risk to modern space infrastructure.
+
+**Upcoming Analysis: Man-Made vs. Natural Hazard Flux**
+Current research indicates that for the first time in history, the risk of satellite failure due to man-made debris has surpassed the risk from natural meteoroids. I plan to integrate a "Flux Comparison" analysis using NASA’s Meteoroid and Orbital Debris (MMOD) estimates.
+
+**Proposed To-Do List:**
+
+- [ ] **Comparative Velocity Modeling:** Visualize the kinetic energy difference between natural meteoroids (~20 km/s) and man-made orbital debris (~7.8 km/s).
+- [ ] **Density Threshold Mapping:** Create a "Kessler Limit" overlay to show exactly where man-made density exceeds the background natural environment.
+- [ ] **Risk Attribution:** Quantify the probability of a "Mission Ending Strike" from a 1cm man-made fragment versus a natural micrometeoroid of the same size.
+
+---
+
 ### Installation & Setup
 
 1. Clone the repository.
@@ -36,11 +60,6 @@ This project investigates the growing crisis of space debris and satellite conge
    - Run `satcat_eda.ipynb` (Main Analysis: Debris, Growth, and Tracking Health)
 
 ---
-
-### Data Sources
-
-- **Union of Concerned Scientists (UCS):** In-depth records of active satellites (Owner, Purpose, Mass, Orbit).
-- **CelesTrak (NORAD/SATCAT):** Historical catalog of all man-made objects ever launched and their current tracking statuses.
 
 ### License
 
