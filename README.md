@@ -14,6 +14,8 @@ This project investigates the growing crisis of space debris and satellite conge
 - **The 50% Visibility Gap:** Nearly half of all objects with "unhealthy" tracking status (e.g., NEA - No Elements Available) are intact Inactive Satellites. These "Zombie Satellites" represent massive, unmonitored kinetic risks.
 - **Active Satellite Trends (UCS Data):** Analysis of the UCS dataset reveals the explosion of commercial "Mega-Constellations." By visualizing satellite purposes and operators, this project identifies which sectors are contributing most to LEO density.
 - **Evidence of Kessler Syndrome:** Analysis of LEO population trends shows a transition from linear growth to an exponential curve, punctuated by catastrophic fragmentation events in 2007 and 2009.
+- **The Mass Transparency Gap:** While tracking 32,000+ objects, high-fidelity mass data is only available for ~23% of the catalog. By merging UCS and SATCAT data, this project identifies a "Conservative Lower Bound" for orbital kinetic energy and proposes synthetic modeling to estimate the hidden risk of unweighted rocket bodies.
+
 
 ---
 
@@ -24,6 +26,8 @@ This project investigates the growing crisis of space debris and satellite conge
 - **Boolean Masking:** Isolated "unhealthy" tracking flags to identify which object categories pose the greatest risk to orbital situational awareness.
 - **Data Merging:** Integrated disparate datasets via **NORAD IDs** to separate active infrastructure from historical clutter.
 - **Categorical Proportions:** Utilized pie charts and grouped counts to visualize the dominance of dead payloads in the tracking catalog.
+- **Relational Data Mapping:** Cross-dataset lookup table using NORAD IDs to bridge the Union of Concerned Scientists (UCS) mass metrics with the CelesTrak orbital catalog.
+- **Dual-Axis Trend Analysis:** Developed synchronized visualizations to compare the growth of orbital population (count) against cumulative mass (kg) to identify and visualize shifts in orbital density.
 
 ---
 
@@ -31,6 +35,20 @@ This project investigates the growing crisis of space debris and satellite conge
 
 - **Union of Concerned Scientists (UCS):** In-depth records of active satellites (Owner, Purpose, Mass, Orbit).
 - **CelesTrak (NORAD/SATCAT):** Historical catalog of all man-made objects ever launched and their current tracking statuses.
+
+---
+
+### **Project Visualizations**
+
+#### **The Kessler Growth Curve**
+
+This chart demonstrates the transition from linear orbital growth to the current exponential "Hockey Stick" curve.
+![Kessler Growth Curve](images/kessler_growth_curve.png)
+
+#### **The Double Threat: Population vs. Mass**
+
+By merging datasets, we can see how the total "Kinetic Fuel" in orbit tracks alongside the object count.
+![Mass vs Population](images/kessler_mass_vs_pop.png)
 
 ---
 
