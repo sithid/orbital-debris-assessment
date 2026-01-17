@@ -48,7 +48,16 @@ This chart demonstrates the transition from linear orbital growth to the current
 #### **The Double Threat: Population vs. Mass**
 
 By merging datasets, we can see how the total "Kinetic Fuel" in orbit tracks alongside the object count.
-![Mass vs Population](images/kessler_mass_vs_pop.png)
+![Mass vs Population](images/cumulative_mass_curve.png)
+
+#### **The Double Threat: Population vs. Mass Accumulation**
+
+This dual-axis visualization reveals the critical relationship between the number of orbital objects and the total kinetic "fuel" (mass) in orbit. While the population count (blue) shows the crowding of space, the cumulative mass (red) identifies the total energy available for a potential Kessler cascade.
+
+![The Double Threat: Population vs. Mass](images/double_threat.png)
+
+_Note: The mass curve represents a conservative lower-bound estimate due to the [Mass Transparency Gap](#key-insights) identified during analysis._
+
 
 ---
 
