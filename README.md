@@ -14,12 +14,13 @@ This project investigates the growing crisis of space debris and satellite conge
 - **The 50% Visibility Gap:** Nearly half of all objects with "unhealthy" tracking status (e.g., NEA - No Elements Available) are intact Inactive Satellites. These "Zombie Satellites" represent massive, unmonitored kinetic risks.
 - **Active Satellite Trends (UCS Data):** Analysis of the UCS dataset reveals the explosion of commercial "Mega-Constellations." By visualizing satellite purposes and operators, this project identifies which sectors are contributing most to LEO density.
 - **Evidence of Kessler Syndrome:** Analysis of LEO population trends shows a transition from linear growth to an exponential curve, punctuated by catastrophic fragmentation events in 2007 and 2009.
-- **The 82.8% Mass Transparency Gap:** While tracking 32,000+ objects, high-fidelity mass data is only available for ~17% of the catalog. By merging UCS and SATCAT data, this project identifies that over 80% of the orbital population is effectively "weightless" in public records, masking the true physical scale of the threat and establishing a "Conservative Lower Bound" for orbital kinetic energy.
+- **The 82.8% Mass Transparency Gap:** While tracking 32,000+ objects, high-fidelity mass data is only available for ~17% of the catalog. By merging UCS and SATCAT data, this project identifies that over 80% of the orbital population is effectively "weightless" in public records, masking the true physical scale of the threat.
 
 ---
 
 ### Technical Highlights
 
+- **Tier 1 Synthetic Mass Modeling:** Implemented categorical mass fills (e.g., 2,000kg for Rocket Bodies) to scientifically bridge the 82.8% data gap, converting a "Transparency Gap" into a actionable proxy model.
 - **Growth Modeling:** Applied mathematical best-fit curves to distinguish between linear launch rates and exponential debris accumulation.
 - **Multi-Dataset Visualization:** Created comparative plots using UCS data to show the ratio of commercial vs. government payloads and their intended orbital classes.
 - **Boolean Masking:** Isolated "unhealthy" tracking flags to identify which object categories pose the greatest risk to orbital situational awareness.
@@ -37,32 +38,30 @@ This project investigates the growing crisis of space debris and satellite conge
 
 ---
 
----
-
 ### **Project Visualizations**
 
-#### **The Kessler Growth Curve**
+#### **1. The Kessler Growth Curve**
 
-This chart demonstrates the transition from linear orbital growth to the current exponential "Hockey Stick" curve, highlighting the acceleration of debris fragments.
+This chart demonstrates the transition from linear orbital growth to the current exponential "Hockey Stick" curve.
 ![Kessler Growth Curve](images/kessler_growth_curve.png)
 
-#### **The Double Threat: Population vs. Mass**
+#### **2. The Baseline: Known Mass in Orbit**
 
-By merging datasets, we can see how the total "Kinetic Fuel" in orbit tracks alongside the object count.
-![Mass vs Population](images/cumulative_mass_curve.png)
+This visualization tracks the "Kinetic Fuel" (Mass) currently in orbit based strictly on public records. It establishes the baseline for our analysis before modeling the missing data.
+![Cumulative Mass Curve](images/cumulative_mass_curve.png)
 
-#### **The Kessler Arc: Cumulative Mass in Orbit**
+#### **3. The Kessler Reality Check: Modeled vs. Public Data**
 
-This visualization represents the total metric tonnage of material currently in space. Due to the **82.8% Transparency Gap**, this curve establishes a conservative lower bound by treating unknown masses as 0kg.
-![The Kessler Arc](images/kessler_cumulative_mass.png)
+Here we compare the public baseline (Blue) against our **Tier 1 Synthetic Model** (Red). The discrepancy visually proves the **82.8% Mass Transparency Gap**, revealing thousands of tons of "Hidden" orbital mass.
+![The Kessler Reality Check](images/kessler_reality_check.png)
 
-#### **The Double Threat: Population vs. Mass Accumulation**
+#### **4. The Double Threat: Population vs. Mass Accumulation**
 
 This dual-axis visualization reveals the critical relationship between the number of orbital objects and the total kinetic "fuel" (mass) in orbit. While the population count (blue) shows the crowding of space, the cumulative mass (red) identifies the total energy available for a potential Kessler cascade.
 
 ![The Double Threat: Population vs. Mass](images/double_threat.png)
 
-_Note: The mass curves represent a conservative lower-bound estimate due to the [Mass Transparency Gap](#key-insights) identified during analysis._
+_Note: This chart utilizes the **Tier 1 Synthetic Mass Model** to show the most realistic correlation between congestion and kinetic potential._
 
 ---
 
@@ -75,7 +74,6 @@ Current research indicates that for the first time in history, the risk of satel
 
 **Proposed To-Do List:**
 
-- [ ] **Tier 1: Synthetic Mass Modeling:** Implement categorical mass fills (e.g., 3,000kg for Rocket Bodies) to provide a more realistic proxy for the 82.8% data gap.
 - [ ] **Tier 2: RCS-Based Kinetic Modeling:** Utilize Radar Cross Section (RCS) data to calculate specific mass estimates for debris fragments based on their radar signature.
 - [ ] **Comparative Velocity Modeling:** Visualize the kinetic energy difference between natural meteoroids (~20 km/s) and man-made orbital debris (~7.8 km/s).
 - [ ] **Density Threshold Mapping:** Create a "Kessler Limit" overlay to show exactly where man-made density exceeds the background natural environment.
