@@ -37,16 +37,23 @@ This project investigates the growing crisis of space debris and satellite conge
 
 ---
 
+---
+
 ### **Project Visualizations**
 
 #### **The Kessler Growth Curve**
 
-This chart demonstrates the transition from linear orbital growth to the current exponential "Hockey Stick" curve.
+This chart demonstrates the transition from linear orbital growth to the current exponential "Hockey Stick" curve, highlighting the acceleration of debris fragments.
 ![Kessler Growth Curve](images/kessler_growth_curve.png)
+
+#### **The Double Threat: Population vs. Mass**
+
+By merging datasets, we can see how the total "Kinetic Fuel" in orbit tracks alongside the object count.
+![Mass vs Population](images/cumulative_mass_curve.png)
 
 #### **The Kessler Arc: Cumulative Mass in Orbit**
 
-This visualization represents the total metric tonnage of material currently in orbit over time. Due to the **82.8% Transparency Gap**, this curve establishes a conservative lower bound by treating unknown masses as 0kg.
+This visualization represents the total metric tonnage of material currently in space. Due to the **82.8% Transparency Gap**, this curve establishes a conservative lower bound by treating unknown masses as 0kg.
 ![The Kessler Arc](images/kessler_cumulative_mass.png)
 
 #### **The Double Threat: Population vs. Mass Accumulation**
@@ -55,7 +62,7 @@ This dual-axis visualization reveals the critical relationship between the numbe
 
 ![The Double Threat: Population vs. Mass](images/double_threat.png)
 
-_Note: The mass curve represents a conservative lower-bound estimate due to the [Mass Transparency Gap](#key-insights) identified during analysis._
+_Note: The mass curves represent a conservative lower-bound estimate due to the [Mass Transparency Gap](#key-insights) identified during analysis._
 
 ---
 
