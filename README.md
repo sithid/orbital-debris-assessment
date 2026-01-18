@@ -14,7 +14,9 @@ This project investigates the growing crisis of space debris and satellite conge
 - **The 50% Visibility Gap:** Nearly half of all objects with "unhealthy" tracking status (e.g., NEA - No Elements Available) are intact Inactive Satellites. These "Zombie Satellites" represent massive, unmonitored kinetic risks.
 - **Active Satellite Trends (UCS Data):** Analysis of the UCS dataset reveals the explosion of commercial "Mega-Constellations." By visualizing satellite purposes and operators, this project identifies which sectors are contributing most to LEO density.
 - **Evidence of Kessler Syndrome:** Analysis of LEO population trends shows a transition from linear growth to an exponential curve, punctuated by catastrophic fragmentation events in 2007 and 2009.
-- **The 82.8% Mass Transparency Gap:** While tracking 32,000+ objects, high-fidelity mass data is only available for ~17% of the catalog. By merging UCS and SATCAT data, this project identifies that over 80% of the orbital population is effectively "weightless" in public records, masking the true physical scale of the threat.
+- **The 82.8% Mass Transparency Gap:** While tracking 32,000+ objects, high-fidelity mass data is only available for ~17% of the catalog. By merging UCS and SATCAT data, this project identifies that over 80% of the mass in orbit is "invisible" to standard analysis.
+- **The "Kessler Canyon" (Orbital Segregation):** KDE analysis reveals a distinct segregation of risk in LEO. While active satellites cluster in the "Commuter Lane" (~550km), massive abandoned rocket bodies form a permanent "Deadly Ring" at ~900km. This creates a high-mass "canyon walls" effect, where the heaviest debris looms directly above modern infrastructure.
+
 
 ---
 
@@ -63,6 +65,12 @@ This dual-axis visualization reveals the critical relationship between the numbe
 
 _Note: This chart utilizes the **Tier 1 Synthetic Mass Model** to show the most realistic correlation between congestion and kinetic potential._
 
+### Visualizing the Threat
+
+![Orbital Traffic Map](images/kessler_traffic_map.png)
+
+_Figure: The "Orbital Traffic Map" reveals distinct highways of risk. The Green Peak represents the active economy (Starlink/OneWeb), while the Red Peak represents the "Ghost Town" of abandoned Soviet and US rocket stages._
+
 ---
 
 ### Stretch Goals & Future Roadmap: Collision Risk Assessment
@@ -90,7 +98,9 @@ Current research indicates that for the first time in history, the risk of satel
 2. Ensure data files are in `data/original/` and `data/clean/`.
 3. **Execution Order:**
    - Run `ucs_cleanup.ipynb` (Standardizing UCS records)
-   - Run `satcat_cleanup.ipynb` (Standardizing SATCAT/CelesTrak records)
+   - **`satcat_cleanup.ipynb` (The Cleaning Pipeline):**
+     - **Tier 1 (Mass Imputation):** Uses ESA proxies to fill the 82.8% mass gap for Rocket Bodies and inactive payloads.
+     - **Tier 2 (Physics Standardization):** Sanitizes RCS (Radar Cross Section) and orbital geometry to prepare for kinetic energy modeling.
    - Run `ucs_eda.ipynb` (Visualizing active satellite distribution and ownership)
    - Run `satcat_eda.ipynb` (Main Analysis: Debris, Growth, and Tracking Health)
 
