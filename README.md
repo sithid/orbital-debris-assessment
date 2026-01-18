@@ -14,8 +14,7 @@ This project investigates the growing crisis of space debris and satellite conge
 - **The 50% Visibility Gap:** Nearly half of all objects with "unhealthy" tracking status (e.g., NEA - No Elements Available) are intact Inactive Satellites. These "Zombie Satellites" represent massive, unmonitored kinetic risks.
 - **Active Satellite Trends (UCS Data):** Analysis of the UCS dataset reveals the explosion of commercial "Mega-Constellations." By visualizing satellite purposes and operators, this project identifies which sectors are contributing most to LEO density.
 - **Evidence of Kessler Syndrome:** Analysis of LEO population trends shows a transition from linear growth to an exponential curve, punctuated by catastrophic fragmentation events in 2007 and 2009.
-- **The Mass Transparency Gap:** While tracking 32,000+ objects, high-fidelity mass data is only available for ~23% of the catalog. By merging UCS and SATCAT data, this project identifies a "Conservative Lower Bound" for orbital kinetic energy and proposes synthetic modeling to estimate the hidden risk of unweighted rocket bodies.
-
+- **The 82.8% Mass Transparency Gap:** While tracking 32,000+ objects, high-fidelity mass data is only available for ~17% of the catalog. By merging UCS and SATCAT data, this project identifies that over 80% of the orbital population is effectively "weightless" in public records, masking the true physical scale of the threat and establishing a "Conservative Lower Bound" for orbital kinetic energy.
 
 ---
 
@@ -45,10 +44,10 @@ This project investigates the growing crisis of space debris and satellite conge
 This chart demonstrates the transition from linear orbital growth to the current exponential "Hockey Stick" curve.
 ![Kessler Growth Curve](images/kessler_growth_curve.png)
 
-#### **The Double Threat: Population vs. Mass**
+#### **The Kessler Arc: Cumulative Mass in Orbit**
 
-By merging datasets, we can see how the total "Kinetic Fuel" in orbit tracks alongside the object count.
-![Mass vs Population](images/cumulative_mass_curve.png)
+This visualization represents the total metric tonnage of material currently in orbit over time. Due to the **82.8% Transparency Gap**, this curve establishes a conservative lower bound by treating unknown masses as 0kg.
+![The Kessler Arc](images/kessler_cumulative_mass.png)
 
 #### **The Double Threat: Population vs. Mass Accumulation**
 
@@ -57,7 +56,6 @@ This dual-axis visualization reveals the critical relationship between the numbe
 ![The Double Threat: Population vs. Mass](images/double_threat.png)
 
 _Note: The mass curve represents a conservative lower-bound estimate due to the [Mass Transparency Gap](#key-insights) identified during analysis._
-
 
 ---
 
@@ -70,6 +68,8 @@ Current research indicates that for the first time in history, the risk of satel
 
 **Proposed To-Do List:**
 
+- [ ] **Tier 1: Synthetic Mass Modeling:** Implement categorical mass fills (e.g., 3,000kg for Rocket Bodies) to provide a more realistic proxy for the 82.8% data gap.
+- [ ] **Tier 2: RCS-Based Kinetic Modeling:** Utilize Radar Cross Section (RCS) data to calculate specific mass estimates for debris fragments based on their radar signature.
 - [ ] **Comparative Velocity Modeling:** Visualize the kinetic energy difference between natural meteoroids (~20 km/s) and man-made orbital debris (~7.8 km/s).
 - [ ] **Density Threshold Mapping:** Create a "Kessler Limit" overlay to show exactly where man-made density exceeds the background natural environment.
 - [ ] **Risk Attribution:** Quantify the probability of a "Mission Ending Strike" from a 1cm man-made fragment versus a natural micrometeoroid of the same size.
@@ -77,9 +77,7 @@ Current research indicates that for the first time in history, the risk of satel
 - [ ] **Physical Risk Modeling:** Utilize RCS (Radar Cross Section) data to calculate the specific collision probability of "Zombie Satellites" versus standard debris fragments.
 - [ ] **Geospatial Ground-Track Mapping:** Integrate `GeoPandas` to project orbital paths onto terrestrial maps, identifying high-density flyover zones for inactive debris.
 
-
 ---
-
 
 ### Installation & Setup
 
