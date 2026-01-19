@@ -21,20 +21,24 @@ This project investigates the growing crisis of space debris and satellite conge
 ### **Visualizing the Crisis**
 
 #### **1. The Mass Gap (Tier 1 Analysis)**
-
 ![Kessler Reality Check](images/kessler_reality_check.png)
-_The "Reality Check" reveals the 82.8% Mass Gap. The red area represents the massive amount of "Hidden" kinetic fuel identified through ESA proxy modeling._
 
-#### **2. The Double Threat: Population vs. Kinetic Fuel**
+*The "Reality Check" reveals the 82.8% Mass Gap. The red area represents the massive amount of "Hidden" kinetic fuel identified through Tier 1 ESA proxy modeling.*
 
+#### **2. The Great Kessler Acceleration (The Modern Sprint)**
+![Modern Sprint](images/modern_sprint.png)
+
+*Mathematical validation of the 2014 Pivot. This visual isolates the "Modern Sprint," showing where orbital growth decoupled from historical linear trends to enter a self-accelerating exponential phase.*
+
+#### **3. The Double Threat: Population vs. Kinetic Fuel**
 ![Double Threat](images/double_threat.png)
-_A dual-axis synthesis of the crisis. While the Population (Blue) is exploding exponentially post-2014, the total Kinetic Mass (Red) continues its steady, dangerous climb, creating a pincer maneuver of risk._
 
-#### **3. The Kessler Canyon (The Traffic Map)**
+*A dual-axis synthesis of the crisis. While the Population (Cyan) is exploding post-2014, the total Kinetic Mass (Magenta) continues its relentless climb, creating a pincer maneuver of orbital risk.*
 
+#### **4. The Kessler Canyon (The Traffic Map)**
 ![Kessler Traffic Map](images/kessler_traffic_map.png)
-_Mapping the physical highways of risk. This Kernel Density Estimation (KDE) shows the dangerous proximity between the high-density "Commuter Lane" and the high-mass "Deadly Ring" above it._
 
+*Mapping the physical highways of risk. This Kernel Density Estimation (KDE) shows the dangerous proximity between the high-density "Commuter Lane" and the high-mass "Deadly Ring" of legacy debris.*
 ---
 
 ### **Scientific Methodology**
