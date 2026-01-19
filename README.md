@@ -52,6 +52,30 @@ With the "Input Rate" for active satellites established, the next phase focuses 
 
 ---
 
+### **Scientific Methodology & Mathematical Framework**
+
+To ensure the analysis meets professional standards for Space Situational Awareness (SSA), this project moves beyond descriptive statistics to utilize predictive modeling and mass imputation.
+
+#### **1. Temporal Modeling: The Brent's Method Solver**
+
+Rather than simply observing a launch increase, this project utilizes **Non-Linear Least Squares Optimization** (`scipy.optimize.curve_fit`) to characterize the orbital regime.
+
+- **The Derivative Analysis:** To identify the "Acceleration Point," we calculated the first derivative (slope) of both the legacy linear model and the modern exponential model.
+- **Root Finding:** We employed **Brent’s Method** (`scipy.optimize.brentq`) to solve for the exact year where the exponential growth rate ($f'(x)$) officially surpassed the legacy cadence. This provided the mathematically-proven 2014 inflexion point used throughout the analysis.
+
+#### **2. Kinetic Risk: Closing the Mass Transparency Gap**
+
+A primary hurdle in orbital debris modeling is the "Invisible Population"—objects missing verified mass data.
+
+- **Tier 1 Mass Imputation:** This project rejects the "drop-null" approach used in basic analyses. Instead, we developed a cleaning pipeline that utilizes **ESA (European Space Agency) Mass Proxies** to impute values for Rocket Bodies (R/B) and Inactive Payloads based on standardized launch vehicle specifications.
+- **Result:** This reclaimed over 80% of the catalog's mass data, allowing for a high-fidelity assessment of total kinetic energy in LEO.
+
+#### **3. Spatial Analysis: Kernel Density Estimation (KDE)**
+
+To visualize the "Kessler Canyon," we utilized Gaussian KDE to map object density against altitude. This identifies the physical segregation between the **Commuter Lane** (active constellations) and the **Deadly Ring** (legacy high-mass debris), quantifying the "Double Threat" pincer maneuver currently constricting orbital operations.
+
+---
+
 ### Installation & Setup
 
 1. Clone the repository.
@@ -68,3 +92,4 @@ With the "Input Rate" for active satellites established, the next phase focuses 
 
 ### License
 This project is licensed under the MIT License.
+
