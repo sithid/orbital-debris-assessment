@@ -67,3 +67,9 @@ Using `scipy.optimize`, we fitted historical growth data against both Linear and
    - `ucs_cleanup.ipynb` -> `ucs_eda.ipynb` (Initial Pivot Identification)
    - `satcat_cleanup.ipynb` (Tier 1 Proxy Pipeline)
    - `satcat_eda.ipynb` (Final Intelligence Briefing)
+
+---
+
+### **License**
+
+This project is licensed under the MIT License.
