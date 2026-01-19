@@ -20,25 +20,31 @@ This project investigates the growing crisis of space debris and satellite conge
 
 ### **Visualizing the Crisis**
 
-#### **1. The Mass Gap (Tier 1 Analysis)**
-![Kessler Reality Check](images/kessler_reality_check.png)
+#### **1. The Great Kessler Acceleration (Initial Discovery)**
 
-*The "Reality Check" reveals the 82.8% Mass Gap. The red area represents the massive amount of "Hidden" kinetic fuel identified through Tier 1 ESA proxy modeling.*
+![Great Acceleration](images/great_acceleration.png)
+_The first point of discovery using the UCS Satellite Database. This model identifies the precise decoupling point where active satellite deployment transitioned from a linear progression to an exponential arc._
 
-#### **2. The Great Kessler Acceleration (The Modern Sprint)**
+#### **2. The Modern Sprint (Full Catalog Validation)**
+
 ![Modern Sprint](images/modern_sprint.png)
+_Validation of the acceleration using the full 32,000+ object SATCAT registry. This visual confirms that the 2014 Pivot is not just an active-satellite trend, but an environment-wide shift affecting all orbital categories._
 
-*Mathematical validation of the 2014 Pivot. This visual isolates the "Modern Sprint," showing where orbital growth decoupled from historical linear trends to enter a self-accelerating exponential phase.*
+#### **3. The Mass Gap (Tier 1 Analysis)**
 
-#### **3. The Double Threat: Population vs. Kinetic Fuel**
+![Kessler Reality Check](images/kessler_reality_check.png)
+_The "Reality Check" reveals the 82.8% Mass Gap. The red area represents the massive amount of "Hidden" kinetic fuel identified through Tier 1 ESA proxy modeling._
+
+#### **4. The Double Threat: Population vs. Kinetic Fuel**
+
 ![Double Threat](images/double_threat.png)
+_A dual-axis synthesis of the crisis. While the **Population (Cyan)** is exploding post-2014, the total **Kinetic Mass (Magenta)** continues its relentless climb, creating a pincer maneuver of orbital risk._
 
-*A dual-axis synthesis of the crisis. While the Population (Cyan) is exploding post-2014, the total Kinetic Mass (Magenta) continues its relentless climb, creating a pincer maneuver of orbital risk.*
+#### **5. The Kessler Canyon (The Traffic Map)**
 
-#### **4. The Kessler Canyon (The Traffic Map)**
 ![Kessler Traffic Map](images/kessler_traffic_map.png)
+_Mapping the physical highways of risk. This Kernel Density Estimation (KDE) reveals the high-density **Commuter Lane (Cyan)** sitting precariously beneath the high-mass **Deadly Ring (Red)** of legacy rocket bodies._
 
-*Mapping the physical highways of risk. This Kernel Density Estimation (KDE) shows the dangerous proximity between the high-density "Commuter Lane" and the high-mass "Deadly Ring" of legacy debris.*
 ---
 
 ### **Scientific Methodology**
@@ -58,6 +64,6 @@ Using `scipy.optimize`, we fitted historical growth data against both Linear and
 1. Clone the repository.
 2. Ensure data files are in `data/original/` and `data/clean/`.
 3. **Execution Order:**
-   - `ucs_cleanup.ipynb` -> `ucs_eda.ipynb`
-   - `satcat_cleanup.ipynb` (Tier 1 & Tier 2 Pipelines)
-   - `satcat_eda.ipynb` (Main Briefing)
+   - `ucs_cleanup.ipynb` -> `ucs_eda.ipynb` (Initial Pivot Identification)
+   - `satcat_cleanup.ipynb` (Tier 1 Proxy Pipeline)
+   - `satcat_eda.ipynb` (Final Intelligence Briefing)
