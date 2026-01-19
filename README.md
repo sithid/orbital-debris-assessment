@@ -23,27 +23,32 @@ This project investigates the growing crisis of space debris and satellite conge
 #### **1. The Great Kessler Acceleration (Initial Discovery)**
 
 ![Great Acceleration](images/great_acceleration.png)
+
 _The first point of discovery using the UCS Satellite Database. This model identifies the precise decoupling point where active satellite deployment transitioned from a linear progression to an exponential arc._
 
 #### **2. The Modern Sprint (Full Catalog Validation)**
 
 ![Modern Sprint](images/modern_sprint.png)
+
 _Validation of the acceleration using the full 32,000+ object SATCAT registry. This visual confirms that the 2014 Pivot is not just an active-satellite trend, but an environment-wide shift affecting all orbital categories._
 
 #### **3. The Mass Gap (Tier 1 Analysis)**
 
 ![Kessler Reality Check](images/kessler_reality_check.png)
-_The "Reality Check" reveals the 82.8% Mass Gap. The red area represents the massive amount of "Hidden" kinetic fuel identified through Tier 1 ESA proxy modeling._
+
+_The "Reality Check" reveals the 82.8% Mass Gap. The **Red** area represents the massive amount of "Hidden" kinetic fuel identified through Tier 1 ESA proxy modeling._
 
 #### **4. The Double Threat: Population vs. Kinetic Fuel**
 
 ![Double Threat](images/double_threat.png)
-_A dual-axis synthesis of the crisis. While the **Population (Cyan)** is exploding post-2014, the total **Kinetic Mass (Magenta)** continues its relentless climb, creating a pincer maneuver of orbital risk._
+
+_A dual-axis synthesis of the crisis. While the **Population (Blue)** is exploding post-2014, the total **Kinetic Mass (Magenta)** continues its relentless climb, creating a pincer maneuver of orbital risk._
 
 #### **5. The Kessler Canyon (The Traffic Map)**
 
 ![Kessler Traffic Map](images/kessler_traffic_map.png)
-_Mapping the physical highways of risk. This Kernel Density Estimation (KDE) reveals the high-density **Commuter Lane (Cyan)** sitting precariously beneath the high-mass **Deadly Ring (Red)** of legacy rocket bodies._
+
+_Mapping the physical highways of risk. This Kernel Density Estimation (KDE) reveals the high-density **Commuter Lane (Lime)** sitting precariously beneath the high-mass **Deadly Ring (Red)** of legacy rocket bodies._
 
 ---
 
