@@ -1,95 +1,59 @@
-# Orbital Clutter: Analyzing the Pollution of LEO
+# Orbital Clutter: Mapping the Kessler Acceleration
 
 **Lead Analyst:** James Glosser  
 **Course:** Data Analysis Pathway with **Code:You**
 
 ---
 
-### Project Description
+### **Project Description**
 
-This project investigates the growing crisis of space debris and satellite congestion in Low Earth Orbit (LEO). By merging active satellite data from the **Union of Concerned Scientists (UCS)** with the **CelesTrak SATCAT**, this analysis quantifies the **Visibility Gap** and evaluates the environment against the **Kessler Syndrome**—the tipping point where orbital collisions become self-sustaining.
+This project investigates the growing crisis of space debris and satellite congestion in Low Earth Orbit (LEO). By merging active satellite data with the **CelesTrak SATCAT Registry**, this analysis quantifies the **Visibility Gap** and evaluates the environment against the **Kessler Syndrome**—the tipping point where orbital collisions become a self-sustaining cascade.
 
-### Key Insights
+### **Key Insights**
 
-- **The "Kessler Canyon" (Orbital Segregation):** KDE analysis reveals a distinct segregation of risk in LEO. While active satellites cluster in the "Commuter Lane" (~550km), massive abandoned rocket bodies form a permanent "Deadly Ring" at ~900km. This creates a high-mass "canyon walls" effect, where the heaviest debris looms directly above modern infrastructure.
-- **The 82.8% Mass Transparency Gap:** While tracking 32,000+ objects, high-fidelity mass data is only available for ~17% of the catalog. By merging UCS and SATCAT data, this project identifies that over 80% of the mass in orbit is "invisible" to standard analysis.
-- **The 2014 Great Kessler Acceleration:** Modeling of the UCS dataset identifies **2014** as the critical mathematical inflexion point. At this moment, the exponential "New Space" growth rate officially outpaced the legacy linear trend, signaling a fundamental regime shift in orbital density.
-- **The Exponential Risk Surplus:** The divergence between historical trends and modern growth reveals a "Risk Surplus" of thousands of active payloads. This volume of assets is pulling away from historical management models at an accelerating rate, increasing the active-on-active collision risk.
-- **The 50% Visibility Gap:** Nearly half of all objects with "unhealthy" tracking status (e.g., NEA - No Elements Available) are intact Inactive Satellites. These "Zombie Satellites" represent massive, unmonitored kinetic risks.
+- **The 47.6% Zombie Blind Spot:** Analysis of the 'Visibility Gap' reveals that nearly half of all tracking failures are caused by **Inactive 'Zombie' Satellites**. This debunks the myth that small fragmentation is the primary driver of catalog uncertainty; the real risk is large, uncontrolled payloads drifting through commercial lanes.
+- **The 2014 Great Kessler Acceleration:** Mathematical modeling identifies **2014** as the critical "Decoupling Point." Since this year, orbital growth has abandoned the linear 20th-century model and locked into an **Exponential Kessler Arc**, tripling in velocity due to commercial proliferation.
+- **The 82.8% Mass Transparency Gap:** While tracking 32,000+ objects, high-fidelity mass data is only available for ~17% of the catalog. This project utilized **Tier 1 ESA Proxy Imputations** to reclaim 80% of this data, revealing the true kinetic energy of the "invisible" fleet.
+- **The Kessler Canyon (Orbital Segregation):** KDE analysis reveals a distinct segregation of risk. While active satellites cluster in the "Commuter Lane" (~550km), massive abandoned rocket bodies form a permanent "Deadly Ring" at ~900km.
 
-### Visualizing the Crisis
+---
 
-#### 1. The Mass Gap (Tier 1 Analysis)
+### **Visualizing the Crisis**
+
+#### **1. The Mass Gap (Tier 1 Analysis)**
+
 ![Kessler Reality Check](images/kessler_reality_check.png)
+_The "Reality Check" reveals the 82.8% Mass Gap. The red area represents the massive amount of "Hidden" kinetic fuel identified through ESA proxy modeling._
 
-_Figure: The "Reality Check" reveals the 82.8% Mass Gap. The grey area represents the massive amount of kinetic energy (rocket bodies/dead satellites) that raw public data fails to account for._
+#### **2. The Double Threat: Population vs. Kinetic Fuel**
 
-#### 2. The Great Kessler Acceleration (Tier 1 Analysis)
-![Great Acceleration](images/great_acceleration.png)
-
-_Figure: The "Acceleration Point" identifies the 2014 pivot. It highlights the "Exponential Risk Surplus"—the shaded delta between business-as-usual historical growth and the current commercial reality._
-
-#### 3. The Double Threat: Legacy Mass vs. Exponential Proliferation
 ![Double Threat](images/double_threat.png)
+_A dual-axis synthesis of the crisis. While the Population (Blue) is exploding exponentially post-2014, the total Kinetic Mass (Red) continues its steady, dangerous climb, creating a pincer maneuver of risk._
 
-_Figure: The "Double Threat" Synthesis overlays Legacy Risk (untracked high-mass debris) with Modern Risk (exponential active growth). It illustrates LEO caught in a "pincer maneuver" between abandoned heavy-lift hardware and a rapidly densifying commercial economy._
+#### **3. The Kessler Canyon (The Traffic Map)**
 
-#### 4. The Kessler Canyon (Tier 2 Analysis)
-![Orbital Traffic Map](images/kessler_traffic_map.png)
-
-_Figure: The "Orbital Traffic Map" reveals distinct highways of risk: the Green Peak (Starlink Economy) sits directly below the Red Peak (The Rocket Body Graveyard)._
-
----
-
-### Future Goals: The Advanced Analysis (`adv_analysis.ipynb`)
-
-With the "Input Rate" for active satellites established, the next phase focuses on **Kinetic Threat Modeling** by merging active assets with the "Invisible Population" found in the SATCAT:
-
-- [ ] **Density Threshold Mapping:** Create a "Kessler Limit" overlay to show exactly where man-made density exceeds the background natural environment.
-- [ ] **Risk Attribution:** Quantify the probability of a "Mission Ending Strike" from a 1cm man-made fragment versus a natural micrometeoroid.
-- [ ] **Predictive Tracking Decay:** Use Correlation Matrices to determine if object age is a leading indicator for "unhealthy" tracking status.
-- [ ] **Physical Risk Modeling:** Utilize RCS (Radar Cross Section) data to calculate the specific collision probability of "Zombie Satellites".
+![Kessler Traffic Map](images/kessler_traffic_map.png)
+_Mapping the physical highways of risk. This Kernel Density Estimation (KDE) shows the dangerous proximity between the high-density "Commuter Lane" and the high-mass "Deadly Ring" above it._
 
 ---
 
-### **Scientific Methodology & Mathematical Framework**
+### **Scientific Methodology**
 
-To ensure the analysis meets professional standards for Space Situational Awareness (SSA), this project moves beyond descriptive statistics to utilize predictive modeling and mass imputation.
+#### **1. Kinetic Risk: Closing the Mass Transparency Gap**
 
-#### **1. Temporal Modeling: The Brent's Method Solver**
+We rejected the "Drop all Nulls" approach. Instead, we developed a cleaning pipeline that utilizes **ESA (European Space Agency) Mass Proxies** to impute values for Rocket Bodies and Inactive Payloads based on standardized launch vehicle specifications.
 
-Rather than simply observing a launch increase, this project utilizes **Non-Linear Least Squares Optimization** (`scipy.optimize.curve_fit`) to characterize the orbital regime.
+#### **2. Temporal Modeling: The Kessler Engine**
 
-- **The Derivative Analysis:** To identify the "Acceleration Point," we calculated the first derivative (slope) of both the legacy linear model and the modern exponential model.
-- **Root Finding:** We employed **Brent’s Method** (`scipy.optimize.brentq`) to solve for the exact year where the exponential growth rate ($f'(x)$) officially surpassed the legacy cadence. This provided the mathematically-proven 2014 inflexion point used throughout the analysis.
-
-#### **2. Kinetic Risk: Closing the Mass Transparency Gap**
-
-A primary hurdle in orbital debris modeling is the "Invisible Population"—objects missing verified mass data.
-
-- **Tier 1 Mass Imputation:** This project rejects the "drop-null" approach used in basic analyses. Instead, we developed a cleaning pipeline that utilizes **ESA (European Space Agency) Mass Proxies** to impute values for Rocket Bodies (R/B) and Inactive Payloads based on standardized launch vehicle specifications.
-- **Result:** This reclaimed over 80% of the catalog's mass data, allowing for a high-fidelity assessment of total kinetic energy in LEO.
-
-#### **3. Spatial Analysis: Kernel Density Estimation (KDE)**
-
-To visualize the "Kessler Canyon," we utilized Gaussian KDE to map object density against altitude. This identifies the physical segregation between the **Commuter Lane** (active constellations) and the **Deadly Ring** (legacy high-mass debris), quantifying the "Double Threat" pincer maneuver currently constricting orbital operations.
+Using `scipy.optimize`, we fitted historical growth data against both Linear and Exponential models. This mathematically validated the **2014 Pivot**, proving the environment has entered a self-accelerating phase.
 
 ---
 
-### Installation & Setup
+### **Installation & Setup**
 
 1. Clone the repository.
 2. Ensure data files are in `data/original/` and `data/clean/`.
 3. **Execution Order:**
-   - Run `ucs_cleanup.ipynb` (Standardizing UCS records)
-   - Run `ucs_eda.ipynb` (Modeling the 2014 Acceleration Point and active "Risk Surplus")
-   - **`satcat_cleanup.ipynb` (The Cleaning Pipeline):**
-     - **Tier 1 (Mass Imputation):** Uses ESA proxies to fill the 82.8% mass gap.
-     - **Tier 2 (Physics Standardization):** Sanitizes RCS and orbital geometry for kinetic modeling.
-   - Run `satcat_eda.ipynb` (Main Analysis: Debris, Growth, and Tracking Health)
-
----
-
-### License
-This project is licensed under the MIT License.
-
+   - `ucs_cleanup.ipynb` -> `ucs_eda.ipynb`
+   - `satcat_cleanup.ipynb` (Tier 1 & Tier 2 Pipelines)
+   - `satcat_eda.ipynb` (Main Briefing)
