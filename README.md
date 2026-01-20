@@ -97,7 +97,7 @@ To ensure the analysis runs with the correct library versions, please use a virt
 
 ### **AI Attribution & Usage Disclosure**
 
-In alignment with professional data science standards, I utilized the **Gemini 3** model family (**Flash & Pro**) as a technical thought partner and pair-programmer for this project. Developing within **VS Code**, I targeted my usage of AI toward specific engineering and analytical goals:
+In alignment with professional data science standards, I utilized the **Gemini 3** model family (**Flash & Pro**) as a technical thought partner and pair-programmer. Developing within **VS Code** and utilizing its integrated terminal and extensions, I targeted my usage of AI toward specific engineering and analytical goals:
 
 - **Mathematical Prototyping:** I collaborated with **Gemini 3 Pro** to prototype the scipy.optimize curve-fitting logic and the RMSE statistical validation for the 2014 Pivot.
 - **Data Engineering Audit:** I used **Gemini 3 Flash** to peer-review my **Tier 1 Mass Imputation** logic and verify the accuracy of the ESA proxy dictionary application.
