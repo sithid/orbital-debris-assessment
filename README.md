@@ -76,7 +76,9 @@ To ensure the analysis runs with the correct library versions, please use a virt
 2.  **Create and Activate the Virtual Environment:**
 
     - Create: `python -m venv venv`
-    - Activate (Windows): `./venv/Scripts/activate`
+    - Activate (Windows Git Bash): `source venv/Scripts/activate`
+    - Activate (Windows CMD): `.\venv\Scripts\activate`
+    - Activate (Windows PowerShell): `.\venv\Scripts\Activate.ps1`
     - Activate (Mac/Linux): `source venv/bin/activate`
 
 3.  **Install Project Dependencies:**
