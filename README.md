@@ -13,7 +13,7 @@ This project investigates the growing crisis of space debris and satellite conge
 
 - **The 47.6% Zombie Blind Spot:** Analysis of the 'Visibility Gap' reveals that nearly half of all tracking failures are caused by **Inactive 'Zombie' Satellites**. This debunks the myth that small fragmentation is the primary driver of catalog uncertainty; the real risk is large, uncontrolled payloads drifting through commercial lanes.
 - **The 2014 Great Kessler Acceleration:** Mathematical modeling identifies **2014** as the critical "Decoupling Point." Since this year, orbital growth has abandoned the linear 20th-century model and locked into an **Exponential Kessler Arc**, tripling in velocity due to commercial proliferation.
-- **The 82.8% Mass Transparency Gap:** While tracking 32,000+ objects, high-fidelity mass data is only available for ~17% of the catalog. This project utilized **Tier 1 ESA Proxy Imputations** to reclaim 80% of this data, revealing the true kinetic energy of the "invisible" fleet.
+- **The 82.8% Mass Transparency Gap:** While tracking 32,000+ objects, high-fidelity mass data is only available for ~17% of the catalog. This project utilized **Tier 1 Imputations** to reclaim 80% of this data, revealing the true kinetic energy of the "invisible" fleet.
 - **The Kessler Canyon (Orbital Segregation):** KDE analysis reveals a distinct segregation of risk. While active satellites cluster in the "Commuter Lane" (~550km), massive abandoned rocket bodies form a permanent "Deadly Ring" at ~900km.
 
 ---
@@ -54,11 +54,24 @@ _Mapping the physical highways of risk. This Kernel Density Estimation (KDE) rev
 
 ### **Scientific Methodology**
 
-#### **1. Kinetic Risk: Closing the Mass Transparency Gap**
+#### **1. UCS Pipeline: The Physics Reconstruction Engine**
 
-We rejected the "Drop all Nulls" approach. Instead, we developed a cleaning pipeline that utilizes **ESA (European Space Agency) Mass Proxies** to impute values for Rocket Bodies and Inactive Payloads based on standardized launch vehicle specifications.
+To normalize the active satellite registry (`ucs_cleanup.ipynb`), we rejected the standard "Drop Nulls" approach which discards 40%+ of physics data. Instead, we built a tiered imputation engine:
 
-#### **2. Temporal Modeling: The Kessler Engine**
+- **The "White Whale" Exception:** Manually pinned the **ISS** mass (450,000 kg) to prevent it from skewing statistical baselines.
+- **Grouped Median Imputation:** Imputed missing `Launch Mass` and `Power` using the median of satellites with similar **Orbit Class** and **Mission Purpose** (e.g., inferring a missing Starlink mass from other LEO Communications satellites).
+- **Derived Dry Mass (Kinetic Potential):** Calculated the **Structural Mass Fraction** (Dry-to-Wet Ratio) for each orbit class to derive `Dry Mass` from `Launch Mass`. This ensures collision models account for solid hardware rather than expended fuel.
+- **Sector & Mission Flagging:** Decomposed complex user strings into binary sector flags (`is_commercial`, `is_military`) and standardized 30+ raw mission types into 7 machine-readable categories.
+
+#### **2. SATCAT Pipeline: Closing the Visibility Gap (Tier 1 Imputation)**
+
+To address the 82.8% transparency gap in the debris catalog (`satcat_cleanup.ipynb`), we implement a **Synthetic Mass Fill** using conservative categorical averages derived from ESA debris reports. This allows us to model the "Kinetic Fuel" of objects that lack public metadata:
+
+- **Rocket Bodies:** Assigned **2,000 kg** (Conservative average for upper stages like Centaur or Falcon 9).
+- **Inactive Satellites:** Assigned **1,000 kg** (Historical average for legacy payloads).
+- **Debris:** Assigned **0.1 kg** (Statistical baseline for trackable fragments >10cm).
+
+#### **3. Temporal Modeling: The Kessler Engine**
 
 Using `scipy.optimize`, we fitted historical growth data against both Linear and Exponential models. This mathematically validated the **2014 Pivot**, proving the environment has entered a self-accelerating phase.
 
@@ -88,10 +101,10 @@ To ensure the analysis runs with the correct library versions, please use a virt
 4.  **Data Verification:** Ensure raw data files are in data/original/ and cleaned outputs are directed to data/clean/.
 5.  **Execution Order:**
 
-    - ucs_cleanup.ipynb -> ucs_eda.ipynb (Initial Pivot Identification)
-    - satcat_cleanup.ipynb (Tier 1 Proxy Pipeline)
-    - satcat_eda.ipynb (Final Intelligence Briefing)
-
+    - **`ucs_cleanup.ipynb`**: Normalization & Physics Reconstruction (Active Satellites).
+    - `ucs_eda.ipynb`: Initial Pivot Identification.
+    - **`satcat_cleanup.ipynb`**: SATCAT Merge & Debris Proxying (Tier 1 Imputation).
+    - `satcat_eda.ipynb`: Final Intelligence Briefing.
 
 ---
 
@@ -100,7 +113,7 @@ To ensure the analysis runs with the correct library versions, please use a virt
 In alignment with professional data science standards, I utilized the **Gemini 3** model family (**Flash & Pro**) as a technical thought partner and pair-programmer. Developing within **VS Code** and utilizing its integrated terminal and extensions, I targeted my usage of AI toward specific engineering and analytical goals:
 
 - **Mathematical Prototyping:** I collaborated with **Gemini 3 Pro** to prototype the scipy.optimize curve-fitting logic and the RMSE statistical validation for the 2014 Pivot.
-- **Data Engineering Audit:** I used **Gemini 3 Flash** to peer-review my **Tier 1 Mass Imputation** logic and verify the accuracy of the ESA proxy dictionary application.
+- **Data Engineering Audit:** I used **Gemini 3 Flash** to peer-review my **Physics Reconstruction Engine** and verify the accuracy of the grouped median imputation logic.
 - **Technical Documentation:** I utilized AI to assist with text formatting for the intelligence briefings and to troubleshoot shell-specific environment activation commands (Git Bash vs. PowerShell).
 
 **Note:** All analytical decisions, data filtering thresholds (The Kessler Canyon), and strategic findings (The Double Threat) are my original conclusions based on the processed data.
