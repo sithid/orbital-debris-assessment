@@ -64,17 +64,46 @@ Using `scipy.optimize`, we fitted historical growth data against both Linear and
 
 ---
 
+### **Technical Note: Why Versioning Matters**
+
+In orbital mechanics modeling, version consistency is critical. The curve_fit functions I used to identify the **2014 Pivot** rely on specific NumPy backends to calculate residuals accurately. Furthermore, the **Kessler Canyon** KDE plots utilize specific Seaborn bandwidth logic that can vary between versions. Using the provided venv ensures these exact findings can be recreated with mathematical precision.
+
 ### **Installation & Setup**
 
-1. Clone the repository.
-2. Ensure data files are in `data/original/` and `data/clean/`.
-3. **Execution Order:**
-   - `ucs_cleanup.ipynb` -> `ucs_eda.ipynb` (Initial Pivot Identification)
-   - `satcat_cleanup.ipynb` (Tier 1 Proxy Pipeline)
-   - `satcat_eda.ipynb` (Final Intelligence Briefing)
+To ensure the analysis runs with the correct library versions, please use a virtual environment. This prevents dependency conflicts and ensures the mathematical models and visualizations render as intended.
+
+1.  **Clone the repository and navigate to the project root.**
+2.  **Create and Activate the Virtual Environment:**
+
+    - Create: `python -m venv venv`
+    - Activate (Windows): `./venv/Scripts/activate`
+    - Activate (Mac/Linux): `source venv/bin/activate`
+
+3.  **Install Project Dependencies:**
+
+    - pip install -r requirements.txt
+
+4.  **Data Verification:** Ensure raw data files are in data/original/ and cleaned outputs are directed to data/clean/.
+5.  **Execution Order:**
+
+    - ucs_cleanup.ipynb -> ucs_eda.ipynb (Initial Pivot Identification)
+    - satcat_cleanup.ipynb (Tier 1 Proxy Pipeline)
+    - satcat_eda.ipynb (Final Intelligence Briefing)
+
 
 ---
 
+## **AI Attribution & Usage Disclosure**
+
+In alignment with professional data science standards, I utilized the **Gemini 3** model family (**Flash & Pro**) as a technical thought partner and pair-programmer for this project. My usage of AI was targeted toward specific engineering and analytical goals:
+
+- **Mathematical Prototyping:** I collaborated with **Gemini 3 Pro** to prototype the scipy.optimize curve-fitting logic and the RMSE statistical validation for the 2014 Pivot.
+- **Data Engineering Audit:** I used **Gemini 3 Flash** to peer-review my **Tier 1 Mass Imputation** logic, ensuring the ESA proxy dictionary was applied accurately without compromising original data integrity.
+- **Report Design:** I utilized the Gemini 3 family to refine the technical tone of the Markdown summaries and ensure visual consistency (Color-coding and Narrative Flow) across the project.
+
+**Note:** All analytical decisions, data filtering thresholds (The Kessler Canyon), and strategic findings (The Double Threat) are my original conclusions based on the processed data.
+
+---
 ### **License**
 
 This project is licensed under the MIT License.
