@@ -95,17 +95,18 @@ To ensure the analysis runs with the correct library versions, please use a virt
 
 ---
 
-## **AI Attribution & Usage Disclosure**
+### **AI Attribution & Usage Disclosure**
 
-In alignment with professional data science standards, I utilized the **Gemini 3** model family (**Flash & Pro**) as a technical thought partner and pair-programmer for this project. My usage of AI was targeted toward specific engineering and analytical goals:
+In alignment with professional data science standards, I utilized the **Gemini 3** model family (**Flash & Pro**) as a technical thought partner and pair-programmer for this project. Developing within **VS Code**, I targeted my usage of AI toward specific engineering and analytical goals:
 
 - **Mathematical Prototyping:** I collaborated with **Gemini 3 Pro** to prototype the scipy.optimize curve-fitting logic and the RMSE statistical validation for the 2014 Pivot.
-- **Data Engineering Audit:** I used **Gemini 3 Flash** to peer-review my **Tier 1 Mass Imputation** logic, ensuring the ESA proxy dictionary was applied accurately without compromising original data integrity.
-- **Report Design:** I utilized the Gemini 3 family to refine the technical tone of the Markdown summaries and ensure visual consistency (Color-coding and Narrative Flow) across the project.
+- **Data Engineering Audit:** I used **Gemini 3 Flash** to peer-review my **Tier 1 Mass Imputation** logic and verify the accuracy of the ESA proxy dictionary application.
+- **Technical Documentation:** I utilized AI to assist with text formatting for the intelligence briefings and to troubleshoot shell-specific environment activation commands (Git Bash vs. PowerShell).
 
 **Note:** All analytical decisions, data filtering thresholds (The Kessler Canyon), and strategic findings (The Double Threat) are my original conclusions based on the processed data.
 
 ---
+
 ### **License**
 
 This project is licensed under the MIT License.
