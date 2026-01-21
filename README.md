@@ -58,19 +58,22 @@ _The definitive "Strategic Synthesis" identifying the 2014 Pivot Point. The Mage
 To normalize the active satellite registry, we built a tiered imputation engine to finalize **7,542** unique assets:
 
 - **The "White Whale" Exception:** Manually pinned the **ISS** mass (450,000 kg) to prevent statistical skew.
-- **Grouped Median Imputation:** Filled missing `Launch Mass` and `Power` based on **Orbit Class** and **Mission Purpose**.
-- **Derived Dry Mass:** Calculated the **Structural Mass Fraction** to derive `Dry Mass` from `Launch Mass`.
-- **Integrity & Deep Scrub:** Global string sanitization and temporal synchronization (aligned to Simulation Year 2023) to ensure 1:1 join-readiness.
+- **Grouped Median Imputation:** Filled missing `Launch Mass` and `Power` based on **Orbit Class**.
+- **Derived Dry Mass:** Calculated structural mass fractions to ensure 1:1 join-readiness.
 
-#### **2. SATCAT Pipeline: Closing the Visibility Gap**
+#### **2. SATCAT Pipeline: Standalone Registry Normalization**
 
-Implemented a **Synthetic Mass Fill** using conservative averages from ESA debris reports:
+Processing the full historical registry of ~60,000 objects to establish a baseline for the global environment:
 
-- **Rocket Bodies:** Assigned **2,000 kg**.
-- **Inactive Satellites:** Assigned **1,000 kg**.
-- **Debris:** Assigned **0.1 kg**.
+- **In-Orbit Boolean Logic:** Implemented a decay-date filter to isolate current kinetic threats.
+- **Synthetic Mass Fill:** Applied conservative ESA-standard proxies for Rocket Bodies (2,000 kg) and Debris (0.1 kg).
+
+#### **3. Orbital Risk Synthesis: Closing the Visibility Gap**
+
+The final integration layer where UCS and SATCAT datasets are merged to generate the `kinetic_master.csv`. This phase performs the "Zombie" identification and final data augmentation.
 
 ---
+
 
 ### **AI Attribution & Usage Disclosure**
 
@@ -88,21 +91,21 @@ In alignment with professional data science standards, I utilized the **Gemini**
 
 To ensure the analysis runs with the correct library versions, please use a virtual environment. This prevents dependency conflicts and ensures the mathematical models and visualizations render as intended.
 
-1.  **Clone the repository and navigate to the project root.**
-2.  **Create and Activate the Virtual Environment:**
-    - Create: `python -m venv venv`
-    - Activate - Windows (Git Bash): `source venv/Scripts/activate`
-    - Activate - Windows (Command Prompt): `.\venv\Scripts\activate`
-    - Activate - Windows (PowerShell): `.\venv\Scripts\Activate.ps1`
-    - Activate (Mac/Linux): `source venv/bin/activate`
-3.  **Install Project Dependencies:**
-    - pip install -r requirements.txt
-4.  **Data Verification:** Ensure raw data files are in data/original/ and cleaned outputs are directed to data/clean/.
-5.  **Execution Order:**
-    - **`ucs_cleanup.ipynb`**: Normalization & Physics Reconstruction (Active Satellites).
-    - **`ucs_eda.ipynb`**: Active Fleet Characterization & Exponential Modeling.
-    - **`satcat_cleanup.ipynb`**: SATCAT Merge & Debris Proxying (Tier 1 Imputation).
-    - **`satcat_eda.ipynb`**: Final Intelligence Briefing.
+1. **Clone the repository and navigate to the project root.**
+2. **Create and Activate the Virtual Environment:**
+   - Create: `python -m venv venv`
+   - Activate - Windows (Git Bash): `source venv/Scripts/activate`
+   - Activate - Windows (Command Prompt): `.\venv\Scripts\activate`
+   - Activate - Windows (PowerShell): `.\venv\Scripts\Activate.ps1`
+   - Activate (Mac/Linux): `source venv/bin/activate`
+3. **Install Project Dependencies:** `pip install -r requirements.txt`
+4. **Data Verification:** Ensure raw data files are in `data/original/` and cleaned outputs are directed to `data/clean/`.
+5. **Execution Order:**
+   - **`ucs_cleanup.ipynb`**: Cleans and reconstructs the active satellite database.
+   - **`satcat_cleanup.ipynb`**: Normalizes the global satellite catalog and filters for current objects.
+   - **`orbital_risk_synthesis.ipynb`**: Merges both cleaned datasets to create the `kinetic_master.csv`.
+   - **`active_fleet_intelligence.ipynb`**: Explores the active fleet and calculates the Kessler Clock.
+   - **`strategic_analysis.ipynb`**: Final high-level analysis of the global kinetic environment.
 
 ---
 
