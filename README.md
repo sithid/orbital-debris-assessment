@@ -12,44 +12,72 @@ This project investigates the growing crisis of space debris and satellite conge
 ### **Key Insights**
 
 - **The 47.6% Zombie Blind Spot:** Analysis of the 'Visibility Gap' reveals that nearly half of all tracking failures are caused by **Inactive 'Zombie' Satellites**. This debunks the myth that small fragmentation is the primary driver of catalog uncertainty; the real risk is large, uncontrolled payloads drifting through commercial lanes.
-- **The 2014 Great Kessler Acceleration:** Mathematical modeling identifies **2014** as the critical "Decoupling Point." Since this year, orbital growth has abandoned the linear 20th-century model and locked into an **Exponential Kessler Arc**.
+- **The 2014 Great Kessler Acceleration:** Mathematical modeling identifies **2014** as the critical "Decoupling Point." Since this year, orbital growth has abandoned the linear 20th-century model and locked into an **Exponential Kessler Arc**, tripling in velocity due to commercial proliferation.
 - **The Kessler Clock (2.8-Year Doubling Time):** Tactical audits of the active fleet reveal a growth rate that doubles the orbital population every ~2.8 years. This velocity creates an "Active Kinetic Load" that outpaces legacy debris mitigation guidelines.
 - **The 100% Density Achievement:** This project utilized **Physics-Informed Reconstruction** to achieve 100% data density across 20+ physical and orbital features for the active fleet, revealing the true kinetic energy of the "invisible" population.
-- **The Kessler Canyon (LEO Concentration):** Spatial analysis confirms that risk is not evenly distributed; mass is acutely concentrating in the 500-600km LEO shell, creating a high-density corridor for potential cascade events.
+- **The Kessler Canyon (Orbital Segregation):** KDE analysis reveals a distinct segregation of risk. While active satellites cluster in the "Commuter Lane" (~550km), massive abandoned rocket bodies form a permanent "Deadly Ring" at ~900km.
 
 ---
 
-### **Visualizing the Shift**
+### **Visualizing the Crisis**
 
-![The Strategic Synthesis](../../images/great_acceleration.png)
-_Fig 1: The Strategic Synthesis showing the divergence between legacy linear expectations (Dashed Green) and the current exponential reality (Magenta)._
+#### **1. The Intelligence Gallery (Phase 1: Active Environment)**
+
+**The Geospatial Hegemony Shift**
+![Hegemony Map](images/geospatial_shift.png)
+_Mapping the physical control of orbital space. This audit tracks the transition from state-actor dominance to a multi-polar commercial landscape, identifying the geographical origins of the kinetic load._
+
+**The Oligopoly of Orbit**
+![Operator Oligopoly](images/operator_oligopoly.png)
+_Identification of the specific entities driving the commercial surge. This visual highlights how a handful of "Commercial Titans" now control the majority of active LEO assets._
+
+**Kinetic Mass Profiling (The Swarm vs. The Giants)**
+![Mass Profile](images/mass_distribution_log.png)
+_Logarithmic scaling of the active fleet. In a collision event, mass equates to "shrapnel potential"; this identifies "High-Value" targets versus the CubeSat swarm._
+
+**Vertical Congestion (LEO vs. The Rest)**
+![Orbit Congestion](images/orbit_congestion_leo.png)
+_Mapping the "Shell of Density." This chart proves that exponential growth is almost exclusively contained within the 500-600km LEO corridor._
+
+**The Kessler Clock (Mathematical Forecasting)**
+![Kessler Clock](images/kessler_acceleration_vector.png)
+_Cinematic HUD-style projection of orbital density. This mathematical proof quantifies the current doubling time and the "2024 Event Horizon" for orbital management._
+
+#### **2. The Strategic Synthesis (Executive View)**
+
+![Great Acceleration](images/great_acceleration.png)
+_The definitive "Strategic Synthesis" identifying the 2014 Pivot Point. The Magenta region represents the "Risk Surplus"—the unplanned mass creating a debris burden legacy guidelines were never designed to handle._
 
 ---
 
-### **Analytical Strategy**
+### **Scientific Methodology**
 
-The analysis is structured as an **Intelligence Briefing** across two distinct phases:
+#### **1. UCS Pipeline: The Physics Reconstruction Engine**
 
-1. **Phase 1: The Active Environment (`ucs_eda.ipynb`)**
+To normalize the active satellite registry, we built a tiered imputation engine to finalize **7,542** unique assets:
 
-   - Characterizing "High-Value" targets versus the commercial swarm.
-   - Mapping the **Oligopoly of Orbit** (Top 10 Operators).
-   - Establishing the mathematical proof of exponential acceleration.
+- **The "White Whale" Exception:** Manually pinned the **ISS** mass (450,000 kg) to prevent statistical skew.
+- **Grouped Median Imputation:** Filled missing `Launch Mass` and `Power` based on **Orbit Class** and **Mission Purpose**.
+- **Derived Dry Mass:** Calculated the **Structural Mass Fraction** to derive `Dry Mass` from `Launch Mass`.
+- **Integrity & Deep Scrub:** Global string sanitization and temporal synchronization (aligned to Simulation Year 2023) to ensure 1:1 join-readiness.
 
-2. **Phase 2: The Invisible Population (`satcat_eda.ipynb`)**
-   - Auditing the 60,000-object Master Satellite Catalog.
-   - Using Tier 1 Imputation to proxy the mass of spent rocket bodies and fragments.
-   - Synthesizing active and inactive data to locate the "Collision Event Horizon."
+#### **2. SATCAT Pipeline: Closing the Visibility Gap**
+
+Implemented a **Synthetic Mass Fill** using conservative averages from ESA debris reports:
+
+- **Rocket Bodies:** Assigned **2,000 kg**.
+- **Inactive Satellites:** Assigned **1,000 kg**.
+- **Debris:** Assigned **0.1 kg**.
 
 ---
 
-### **AI Collaboration Disclosure**
+### **AI Attribution & Usage Disclosure**
 
-This project utilized Generative AI to assist with specific engineering and analytical goals:
+In alignment with professional data science standards, I utilized the **Gemini** model family as a technical thought partner. I targeted my usage of AI toward specific engineering and analytical goals:
 
-- **Mathematical Prototyping:** I collaborated with **Gemini** to prototype the `scipy.optimize` curve-fitting logic and the HUD-style visualization coordinate transforms for the Kessler Clock.
-- **Data Engineering Audit:** I used AI to peer-review my **Physics Reconstruction Engine** and verify the accuracy of the grouped median imputation logic for missing mass data.
-- **Technical Documentation:** I utilized AI to assist with text formatting for the intelligence briefings and to troubleshoot environment activation commands.
+- **Mathematical Prototyping:** I collaborated with AI to prototype the `scipy.optimize` curve-fitting logic and the HUD-style visualization coordinate transforms for the Kessler Clock.
+- **Data Engineering Audit:** I used AI to peer-review my **Physics Reconstruction Engine** and verify the accuracy of the grouped median imputation logic.
+- **Technical Documentation:** I utilized AI to assist with text formatting for the intelligence briefings and to troubleshoot shell-specific environment activation commands.
 
 **Note:** All analytical decisions, data filtering thresholds (The Kessler Canyon), and strategic findings (The Great Acceleration) are my original conclusions based on the processed data.
 
@@ -57,19 +85,25 @@ This project utilized Generative AI to assist with specific engineering and anal
 
 ### **Installation & Setup**
 
-1. **Clone the repository.**
-2. **Create and Activate the Virtual Environment:**
-   - `python -m venv venv`
-   - Activate: `source venv/Scripts/activate` (Mac/Linux) or `.\venv\Scripts\activate` (Windows)
-3. **Install Dependencies:**
-   - `pip install -r requirements.txt`
-4. **Execution Order:**
-   - **`ucs_cleanup.ipynb`**: Normalization & Physics Reconstruction (Active Satellites).
-   - **`ucs_eda.ipynb`**: Active Fleet Characterization & Exponential Modeling.
-   - **`satcat_cleanup.ipynb`**: SATCAT Merge & Debris Proxying (Tier 1 Imputation).
-   - **`satcat_eda.ipynb`**: Final Intelligence Briefing.
+To ensure the analysis runs with the correct library versions, please use a virtual environment. This prevents dependency conflicts and ensures the mathematical models and visualizations render as intended.
 
-   ---
+1.  **Clone the repository and navigate to the project root.**
+2.  **Create and Activate the Virtual Environment:**
+    - Create: `python -m venv venv`
+    - Activate - Windows (Git Bash): `source venv/Scripts/activate`
+    - Activate - Windows (Command Prompt): `.\venv\Scripts\activate`
+    - Activate - Windows (PowerShell): `.\venv\Scripts\Activate.ps1`
+    - Activate (Mac/Linux): `source venv/bin/activate`
+3.  **Install Project Dependencies:**
+    - pip install -r requirements.txt
+4.  **Data Verification:** Ensure raw data files are in data/original/ and cleaned outputs are directed to data/clean/.
+5.  **Execution Order:**
+    - **`ucs_cleanup.ipynb`**: Normalization & Physics Reconstruction (Active Satellites).
+    - **`ucs_eda.ipynb`**: Active Fleet Characterization & Exponential Modeling.
+    - **`satcat_cleanup.ipynb`**: SATCAT Merge & Debris Proxying (Tier 1 Imputation).
+    - **`satcat_eda.ipynb`**: Final Intelligence Briefing.
+
+---
 
 ### **License**
 
@@ -88,5 +122,4 @@ This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 In
 - **NonCommercial** — You may **NOT** use the material for commercial purposes. This includes selling the code, charging for access to the analysis, or using the models within a commercial product or service.
 
 ---
-
 
