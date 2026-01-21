@@ -25,27 +25,28 @@ This project investigates the growing crisis of space debris and satellite conge
 
 **The Geospatial Hegemony Shift**
 ![Hegemony Map](images/geospatial_shift.png)
+
 _Mapping the physical control of orbital space. This audit tracks the transition from state-actor dominance to a multi-polar commercial landscape, identifying the geographical origins of the kinetic load._
 
 **The Oligopoly of Orbit**
 ![Operator Oligopoly](images/operator_oligopoly.png)
+
 _Identification of the specific entities driving the commercial surge. This visual highlights how a handful of "Commercial Titans" now control the majority of active LEO assets._
 
 **Kinetic Mass Profiling (The Swarm vs. The Giants)**
 ![Mass Profile](images/mass_distribution_log.png)
+
 _Logarithmic scaling of the active fleet. In a collision event, mass equates to "shrapnel potential"; this identifies "High-Value" targets versus the CubeSat swarm._
 
 **Vertical Congestion (LEO vs. The Rest)**
 ![Orbit Congestion](images/orbit_congestion_leo.png)
-_Mapping the "Shell of Density." This chart proves that exponential growth is almost exclusively contained within the 500-600km LEO corridor._
 
-**The Kessler Clock (Mathematical Forecasting)**
-![Kessler Clock](images/kessler_acceleration_vector.png)
-_Cinematic HUD-style projection of orbital density. This mathematical proof quantifies the current doubling time and the "2024 Event Horizon" for orbital management._
+_Mapping the "Shell of Density." This chart proves that exponential growth is almost exclusively contained within the 500-600km LEO corridor._
 
 #### **2. The Strategic Synthesis (Executive View)**
 
 ![Great Acceleration](images/great_acceleration.png)
+
 _The definitive "Strategic Synthesis" identifying the 2014 Pivot Point. The Magenta region represents the "Risk Surplus"—the unplanned mass creating a debris burden legacy guidelines were never designed to handle._
 
 ---
