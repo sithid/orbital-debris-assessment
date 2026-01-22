@@ -111,7 +111,7 @@ The project has transitioned from raw data ingestion to a **Physics-Complete** e
 
 | Feature          | Meaning                                                                                     |
 | :--------------- | :------------------------------------------------------------------------------------------ |
-| `is_zombie`      | (Phase 2) Boolean flag identifying payloads that are inactive or have exceeded design life. |
+| `is_zombie`      | Boolean flag identifying payloads that are inactive or have exceeded design life. |
 | `is_military`    | Boolean flag identifying state-actor defense assets.                                        |
 | `is_commercial`  | Binary flag identifying assets owned/operated by private entities for profit.               |
 | `is_government`  | Binary flag identifying assets owned by state agencies (e.g., NASA, ESA).                   |
@@ -122,13 +122,16 @@ The project has transitioned from raw data ingestion to a **Physics-Complete** e
 
 ### **AI Attribution & Usage Disclosure**
 
-In alignment with professional data science standards, I utilized the **Gemini** model family as a technical thought partner. I targeted my usage of AI toward specific engineering and analytical goals:
+### **AI Attribution & Usage Disclosure**
+
+In alignment with professional data science standards, I utilized the **Gemini** model family as a technical thought partner and high-precision analytical tool to assist with specific engineering and analytical goals:
 
 - **Mathematical Prototyping:** I collaborated with AI to prototype the `scipy.optimize` curve-fitting logic and the HUD-style visualization coordinate transforms for the Kessler Clock.
 - **Data Engineering Audit:** I used AI to peer-review my **Physics Reconstruction Engine** and verify the accuracy of the grouped median imputation logic.
 - **Technical Documentation:** I utilized AI to assist with text formatting for the intelligence briefings and to troubleshoot shell-specific environment activation commands.
 
 **Note:** All analytical decisions, data filtering thresholds (The Kessler Canyon), and strategic findings (The Great Acceleration) are my original conclusions based on the processed data.
+
 
 ---
 
@@ -145,12 +148,12 @@ To ensure the analysis runs with the correct library versions, please use a virt
    - Activate (Mac/Linux): `source venv/bin/activate`
 3. **Install Project Dependencies:** `pip install -r requirements.txt`
 4. **Data Verification:** Ensure raw data files are in `data/original/` and cleaned outputs are directed to `data/clean/`.
-5. **Execution Order:**
-   - **`ucs_cleanup.ipynb`**: Cleans and reconstructs the active satellite database.
-   - **`satcat_cleanup.ipynb`**: Normalizes the global satellite catalog and filters for current objects.
-   - **`orbital_risk_synthesis.ipynb`**: Merges both cleaned datasets to create the `kinetic_master.csv`.
-   - **`active_fleet_intelligence.ipynb`**: Explores the active fleet and calculates the Kessler Clock.
-   - **`strategic_analysis.ipynb`**: Final high-level analysis of the global kinetic environment.
+5. **Execution Order & Pipeline Methodology:**
+   * **`ucs_cleanup.ipynb`**: **Active Intelligence Reconstruction.** Cleans the active satellite database and engineers orbit-specific "Dry-to-Wet" mass ratios and sectoral intelligence flags.
+   * **`satcat_cleanup.ipynb`**: **Global Physics Normalization.** Reconstructs the 60,000+ object registry using a Keplerian Engine to derive missing orbital periods and a "Hierarchy of Truth" to repair SATCAT mass blindness.
+   * **`orbital_risk_synthesis.ipynb`**: **Kinetic Intelligence Coupling.** Merges the reconstructed registries and applies a hybrid vulnerability model to identify "Zombies" and calculate total Kinetic Energy ($E_k$).
+   * **`active_fleet_intelligence.ipynb`**: **Tactical Fleet Audit.** Explores the active environment, identifies commercial hegemony, and calculates the "Kessler Clock" doubling rate.
+   * **`strategic_analysis.ipynb`**: **Strategic Global Synthesis.** Final high-level analysis of the global kinetic environment, identifying the 2014 Pivot Point and Geopolitical Kinetic Responsibility.
 
 ---
 
