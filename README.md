@@ -11,11 +11,11 @@ This project investigates the growing crisis of space debris and satellite conge
 
 ### **Key Insights**
 
-- **The 47.6% Zombie Blind Spot:** Analysis of the 'Visibility Gap' reveals that nearly half of all tracking failures are caused by **Inactive 'Zombie' Satellites**. This debunks the myth that small fragmentation is the primary driver of catalog uncertainty; the real risk is large, uncontrolled payloads drifting through commercial lanes.
-- **The 2014 Great Kessler Acceleration:** Mathematical modeling identifies **2014** as the critical "Decoupling Point." Since this year, orbital growth has abandoned the linear 20th-century model and locked into an **Exponential Kessler Arc**, tripling in velocity due to commercial proliferation.
-- **The Kessler Clock (2.8-Year Doubling Time):** Tactical audits of the active fleet reveal a growth rate that doubles the orbital population every ~2.8 years. This velocity creates an "Active Kinetic Load" that outpaces legacy debris mitigation guidelines.
-- **The 100% Density Achievement:** This project utilized **Physics-Informed Reconstruction** to achieve 100% data density across 20+ physical and orbital features for the active fleet, revealing the true kinetic energy of the "invisible" population.
-- **The Kessler Canyon (Orbital Segregation):** KDE analysis reveals a distinct segregation of risk. While active satellites cluster in the "Commuter Lane" (~550km), massive abandoned rocket bodies form a permanent "Deadly Ring" at ~900km.
+- **The 47.6% Zombie Blind Spot:** Analysis of the 'Visibility Gap' reveals that nearly half of all tracking failures are caused by **Inactive 'Zombie' Satellites**. This debunks the myth that small fragmentation is the primary driver of catalog uncertainty; the real risk is large, uncontrolled payloads drifting through commercial lanes.   
+- **The 2014 Great Kessler Acceleration:** Mathematical modeling identifies **2014** as the critical "Decoupling Point." Since this year, orbital growth has abandoned the linear 20th-century model and locked into an **Exponential Kessler Arc**, tripling in velocity due to commercial proliferation.   
+- **The Kessler Clock (2.8-Year Doubling Time):** Tactical audits of the active fleet reveal a growth rate that doubles the orbital population every ~2.8 years. This velocity creates an "Active Kinetic Load" that outpaces legacy debris mitigation guidelines.   
+- **The 100% Density Achievement:** This project utilized **Physics-Informed Reconstruction** to achieve 100% data density across 20+ physical and orbital features for the active fleet, revealing the true kinetic energy of the "invisible" population.   
+- **The Kessler Canyon (Orbital Segregation):** KDE analysis reveals a distinct segregation of risk. While active satellites cluster in the "Commuter Lane" (~550km), massive abandoned rocket bodies form a permanent "Deadly Ring" at ~900km.   
 
 ---
 
@@ -64,26 +64,36 @@ _Figure 6: Segregation of risk. While active satellites cluster in the "Commuter
 The project has transitioned from raw data ingestion to a **Physics-Complete** environment. We utilize a "Hierarchy of Truth" methodology to ensure the highest possible fidelity for kinetic modeling.
 
 ### **1. Data Cleaning & Density Engineering**
-* **UCS Cleanup (`ucs_cleanup.ipynb`):** * Sanitized 7,500+ active satellites.
-    * Implemented orbit-specific *Dry-to-Wet* mass ratios.
-    * Engineered multi-sector Boolean flags (Military, Commercial, Civil, Gov).
-* **SATCAT Cleanup (`satcat_cleanup.ipynb`):**
-    * Reconstructed a 60,000+ object global registry.
-    * **Keplerian Engine:** Derived missing orbital periods via Kepler’s Third Law.
-    * **High-Fidelity Enrichment:** 1:1 integration with UCS data to repair SATCAT "Mass Blindness."
-    * **Tiered Imputation:** Applied ESA-standard mass proxies for debris and rocket bodies.
-    * **Temporal Hardening:** Implemented `Int64` nullable integers for object age relative to Simulation Year 2026.
-* **The "Hierarchy of Truth" Integration:** 
-    * Implemented a multi-tier data repair logic where verified UCS observations (Tier 1) are used to "patch" missing SATCAT geometry (Period, Inclination, Altitudes) before resorting to mathematical derivation (Tier 2).
-* **Kinetic Risk Modeling:**
-    * Developed a hybrid vulnerability model using specific UCS design-life metrics where available, falling back to a 15-year industry standard proxy for "Ghost" payloads.
 
-### **2. Current Project Status**
-* [x] **Phase 1: Foundation** (UCS & SATCAT Standardization) - **100% Complete**
-* [ ] **Phase 2: Synthesis** (Risk Integration & Zombie Identification) - **CURRENT FOCUS**
-  * _Merging Intelligence:_ 1:1 coupling of `ucs_cleaned` and `satcat_cleaned`.
-  * _Kinetic Energy Modeling:_ Applying $E_k = \frac{1}{2}mv^2$ to 60,000+ objects using orbital velocity vectors.
-* [ ] **Phase 3: Strategic Analysis** (Geopolitical Risk & EoL Modeling) - **PENDING**
+- **UCS Cleanup (`ucs_cleanup.ipynb`):** 
+  - Sanitized 7,500+ active satellites.
+  - Implemented orbit-specific _Dry-to-Wet_ mass ratios.
+  - Engineered multi-sector Boolean flags (Military, Commercial, Civil, Gov).
+- **SATCAT Cleanup (`satcat_cleanup.ipynb`):**
+  - Reconstructed a 60,000+ object global registry.
+  - **Keplerian Engine:** Derived missing orbital periods via Kepler’s Third Law.
+  - **High-Fidelity Enrichment:** 1:1 integration with UCS data to repair SATCAT "Mass Blindness."
+  - **Tiered Imputation:** Applied ESA-standard mass proxies for debris and rocket bodies.
+  - **Temporal Hardening:** Implemented `Int64` nullable integers for object age relative to Simulation Year 2026.
+- **The "Hierarchy of Truth" Integration:**
+  * Implemented a multi-tier data repair logic where verified UCS observations (Tier 1) are used to "patch" missing SATCAT geometry (Period, Inclination, Altitudes) before resorting to mathematical derivation (Tier 2).
+
+### **2. Kinetic Synthesis & Physics Engineering**
+
+- **Synthesis (`orbital_risk_synthesis.ipynb`):**
+  - **The Master Merge:** Executed a prioritized Left-Join to fuse the 67,000+ object SATCAT backbone with deep UCS operational intelligence.
+  - **Kinetic Engineering:** Calculated Mean Orbital Velocity ($v$) and Kinetic Energy ($E_k$) for every object using the Vis-Viva equation ($v=\sqrt{\mu/a}$).
+  - **Power Modeling:** Engineered `proxy_power_watts` using Regime-Specific densities (LEO vs. GEO) to estimate the "Design Capacity" of legacy satellites.
+  - **Zombie Identification:** Algorithmically flagged ~5,200 "Living Dead" payloads (Active status but Age > Design Life + 10%).
+  - **Vital Signs:** Verified the final `kinetic_master.csv` contains **32,600+** in-orbit objects representing **~21.6 Kilotons** of mass and **~475 Terajoules** of kinetic energy.
+
+### **3. Current Project Status**
+
+- [x] **Phase 1: Foundation** (UCS & SATCAT Standardization) - **100% Complete**
+- [x] **Phase 2: Synthesis** (Risk Integration & Zombie Identification) - **100% Complete**
+  - _Merging Intelligence:_ 1:1 coupling of `ucs_cleaned` and `satcat_cleaned`.
+  - _Kinetic Energy Modeling:_ Applying $E_k = \frac{1}{2}mv^2$ to 60,000+ objects.
+- [ ] **Phase 3: Strategic Analysis** (Geopolitical Risk & EoL Modeling) - **CURRENT FOCUS**
 
 ---
 
@@ -98,29 +108,30 @@ The project has transitioned from raw data ingestion to a **Physics-Complete** e
 
 #### **1. Physical & Orbital Registry (SATCAT Derived)**
 
-| Feature         | Meaning                                                                               |
-| :-------------- | :------------------------------------------------------------------------------------ |
-| `proxy_mass_kg` | The "Wet Mass" (Launch) used for initial kinetic energy calculations.                 |
-| `dry_mass_kg`   | The estimated "Structural Mass" used for end-of-life impact modeling (Stage 5.2).     |
-| `rcs_class`     | Geometric size category (Small, Medium, Large) derived from radar cross-section data. |
-| `in_orbit`      | Binary flag (1/0) isolating current kinetic threats from decayed historical records.  |
-| `owner_code`    | Standardized ISO-style country/entity code for geopolitical risk aggregation.         |
-| `orbit_class`   | Standardized regime (LEO, MEO, GEO, Elliptical) for spatial congestion analysis.      |
+| Feature          | Meaning                                                                               |
+| :--------------- | :------------------------------------------------------------------------------------ |
+| `proxy_mass_kg`  | The "Wet Mass" (Launch) used for initial kinetic energy calculations.                 |
+| `dry_mass_kg`    | The estimated "Structural Mass" used for end-of-life impact modeling (Stage 5.2).     |
+| `rcs_class`      | Geometric size category (Small, Medium, Large) derived from radar cross-section data. |
+| `in_orbit`       | Binary flag (1/0) isolating current kinetic threats from decayed historical records.  |
+| `owner_code`     | Standardized ISO-style country/entity code for geopolitical risk aggregation.         |
+| `orbit_class`    | Standardized regime (LEO, MEO, GEO, Elliptical) for spatial congestion analysis.      |
+| `kinetic_joules` | **[NEW]** The raw destructive energy ($E_k$) derived from Mass and Velocity.          |
+| `velocity_kms`   | **[NEW]** Mean orbital velocity derived via astrodynamic laws ($v=\sqrt{\mu/a}$).     |
 
 #### **2. Fleet Intelligence & Sector Flags (UCS Derived)**
 
-| Feature          | Meaning                                                                                     |
-| :--------------- | :------------------------------------------------------------------------------------------ |
-| `is_zombie`      | Boolean flag identifying payloads that are inactive or have exceeded design life. |
-| `is_military`    | Boolean flag identifying state-actor defense assets.                                        |
-| `is_commercial`  | Binary flag identifying assets owned/operated by private entities for profit.               |
-| `is_government`  | Binary flag identifying assets owned by state agencies (e.g., NASA, ESA).                   |
-| `is_civil`       | Binary flag identifying academic, scientific, or amateur-led missions.                      |
-| `lifetime_years` | Design-life expectancy used to calculate the "End-of-Life" risk threshold.                  |
+| Feature             | Meaning                                                                           |
+| :------------------ | :-------------------------------------------------------------------------------- |
+| `is_zombie`         | Boolean flag identifying payloads that are inactive or have exceeded design life. |
+| `is_military`       | Boolean flag identifying state-actor defense assets.                              |
+| `is_commercial`     | Binary flag identifying assets owned/operated by private entities for profit.     |
+| `is_government`     | Binary flag identifying assets owned by state agencies (e.g., NASA, ESA).         |
+| `is_civil`          | Binary flag identifying academic, scientific, or amateur-led missions.            |
+| `lifetime_years`    | Design-life expectancy used to calculate the "End-of-Life" risk threshold.        |
+| `proxy_power_watts` | **[NEW]** Imputed power capacity (Watts) based on mass and orbit regime.          |
 
 ---
-
-### **AI Attribution & Usage Disclosure**
 
 ### **AI Attribution & Usage Disclosure**
 
@@ -131,7 +142,6 @@ In alignment with professional data science standards, I utilized the **Gemini**
 - **Technical Documentation:** I utilized AI to assist with text formatting for the intelligence briefings and to troubleshoot shell-specific environment activation commands.
 
 **Note:** All analytical decisions, data filtering thresholds (The Kessler Canyon), and strategic findings (The Great Acceleration) are my original conclusions based on the processed data.
-
 
 ---
 
@@ -149,27 +159,25 @@ To ensure the analysis runs with the correct library versions, please use a virt
 3. **Install Project Dependencies:** `pip install -r requirements.txt`
 4. **Data Verification:** Ensure raw data files are in `data/original/` and cleaned outputs are directed to `data/clean/`.
 5. **Execution Order & Pipeline Methodology:**
-   * **`ucs_cleanup.ipynb`**: **Active Intelligence Reconstruction.** Cleans the active satellite database and engineers orbit-specific "Dry-to-Wet" mass ratios and sectoral intelligence flags.
-   * **`satcat_cleanup.ipynb`**: **Global Physics Normalization.** Reconstructs the 60,000+ object registry using a Keplerian Engine to derive missing orbital periods and a "Hierarchy of Truth" to repair SATCAT mass blindness.
-   * **`orbital_risk_synthesis.ipynb`**: **Kinetic Intelligence Coupling.** Merges the reconstructed registries and applies a hybrid vulnerability model to identify "Zombies" and calculate total Kinetic Energy ($E_k$).
-   * **`active_fleet_intelligence.ipynb`**: **Tactical Fleet Audit.** Explores the active environment, identifies commercial hegemony, and calculates the "Kessler Clock" doubling rate.
-   * **`strategic_analysis.ipynb`**: **Strategic Global Synthesis.** Final high-level analysis of the global kinetic environment, identifying the 2014 Pivot Point and Geopolitical Kinetic Responsibility.
+   - **`ucs_cleanup.ipynb`**: **Active Intelligence Reconstruction.** Cleans the active satellite database and engineers orbit-specific "Dry-to-Wet" mass ratios and sectoral intelligence flags.   
+   - **`satcat_cleanup.ipynb`**: **Global Physics Normalization.** Reconstructs the 60,000+ object registry using a Keplerian Engine to derive missing orbital periods and a "Hierarchy of Truth" to repair SATCAT mass blindness.   
+   - **`orbital_risk_synthesis.ipynb`**: **Kinetic Intelligence Coupling.** Merges the reconstructed registries and applies a hybrid vulnerability model to identify "Zombies" and calculate total Kinetic Energy ($E_k$).   
+   - **`active_fleet_intelligence.ipynb`**: **Tactical Fleet Audit.** Explores the active environment, identifies commercial hegemony, and calculates the "Kessler Clock" doubling rate.   
+   - **`strategic_analysis.ipynb`**: **Strategic Global Synthesis.** Final high-level analysis of the global kinetic environment, identifying the 2014 Pivot Point and Geopolitical Kinetic Responsibility.   
 
 ---
 
 ### **License**
 
 **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**
-
 This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/).
 
 **You are free to:**
+
 - **Share** — copy and redistribute the material in any medium or format.
 - **Adapt** — remix, transform, and build upon the material.
 
 **Under the following terms:**
+
 - **Attribution** — You must give appropriate credit, provide a link to the license, and indicate if changes were made.
 - **NonCommercial** — You may **NOT** use the material for commercial purposes. This includes selling the code, charging for access to the analysis, or using the models within a commercial product or service.
-
----
-
