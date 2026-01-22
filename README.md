@@ -26,54 +26,99 @@ This project investigates the growing crisis of space debris and satellite conge
 **The Geospatial Hegemony Shift**
 ![Hegemony Map](images/geospatial_shift.png)
 
-_Mapping the physical control of orbital space. This audit tracks the transition from state-actor dominance to a multi-polar commercial landscape, identifying the geographical origins of the kinetic load._
+_Figure 1: Mapping the physical control of orbital space. This audit tracks the transition from state-actor dominance to a multi-polar commercial landscape, identifying the geographical origins of the kinetic load._
 
 **The Oligopoly of Orbit**
 ![Operator Oligopoly](images/operator_oligopoly.png)
 
-_Identification of the specific entities driving the commercial surge. This visual highlights how a handful of "Commercial Titans" now control the majority of active LEO assets._
+_Figure 2: Identification of the specific entities driving the commercial surge. This visual highlights how a handful of "Commercial Titans" now control the majority of active LEO assets._
 
 **Kinetic Mass Profiling (The Swarm vs. The Giants)**
 ![Mass Profile](images/mass_distribution_log.png)
 
-_Logarithmic scaling of the active fleet. In a collision event, mass equates to "shrapnel potential"; this identifies "High-Value" targets versus the CubeSat swarm._
+_Figure 3: Logarithmic scaling of the active fleet. In a collision event, mass equates to "shrapnel potential"; this identifies "High-Value" targets versus the CubeSat swarm._
 
 **Vertical Congestion (LEO vs. The Rest)**
 ![Orbit Congestion](images/orbit_congestion_leo.png)
 
-_Mapping the "Shell of Density." This chart proves that exponential growth is almost exclusively contained within the 500-600km LEO corridor._
+_Figure 4: Mapping the "Shell of Density." This chart proves that exponential growth is almost exclusively contained within the 500-600km LEO corridor._
 
-#### **2. The Strategic Synthesis (Executive View)**
+---
 
+#### **2. The Strategic Synthesis (Phase 2 & 3: Global Risk)**
+
+**The Great Kessler Acceleration (2014 Pivot)**
 ![Great Acceleration](images/great_acceleration.png)
 
-_The definitive "Strategic Synthesis" identifying the 2014 Pivot Point. The Magenta region represents the "Risk Surplus"—the unplanned mass creating a debris burden legacy guidelines were never designed to handle._
+_Figure 5: The "Decoupling Point." This definitive synthesis identifies 2014 as the pivot year where orbital growth locked into an exponential arc, outpacing legacy debris mitigation guidelines._
+
+**The Kessler Canyon (Orbital Segregation)**
+![Kessler Canyon](images/kessler_traffic_map.png)
+
+_Figure 6: Segregation of risk. While active satellites cluster in the "Commuter Lane" (~550km), massive abandoned rocket bodies form a permanent "Deadly Ring" at ~900km._
 
 ---
 
-### **Scientific Methodology**
+## **Current Pipeline Architecture: The Gold Standard**
 
-#### **1. UCS Pipeline: The Physics Reconstruction Engine**
+The project has transitioned from raw data ingestion to a **Physics-Complete** environment. We utilize a "Hierarchy of Truth" methodology to ensure the highest possible fidelity for kinetic modeling.
 
-To normalize the active satellite registry, we built a tiered imputation engine to finalize **7,542** unique assets:
+### **1. Data Cleaning & Density Engineering**
+* **UCS Cleanup (`ucs_cleanup.ipynb`):** * Sanitized 7,500+ active satellites.
+    * Implemented orbit-specific *Dry-to-Wet* mass ratios.
+    * Engineered multi-sector Boolean flags (Military, Commercial, Civil, Gov).
+* **SATCAT Cleanup (`satcat_cleanup.ipynb`):**
+    * Reconstructed a 60,000+ object global registry.
+    * **Keplerian Engine:** Derived missing orbital periods via Kepler’s Third Law.
+    * **High-Fidelity Enrichment:** 1:1 integration with UCS data to repair SATCAT "Mass Blindness."
+    * **Tiered Imputation:** Applied ESA-standard mass proxies for debris and rocket bodies.
+    * **Temporal Hardening:** Implemented `Int64` nullable integers for object age relative to Simulation Year 2026.
+* **The "Hierarchy of Truth" Integration:** 
+    * Implemented a multi-tier data repair logic where verified UCS observations (Tier 1) are used to "patch" missing SATCAT geometry (Period, Inclination, Altitudes) before resorting to mathematical derivation (Tier 2).
+* **Kinetic Risk Modeling:**
+    * Developed a hybrid vulnerability model using specific UCS design-life metrics where available, falling back to a 15-year industry standard proxy for "Ghost" payloads.
 
-- **The "White Whale" Exception:** Manually pinned the **ISS** mass (450,000 kg) to prevent statistical skew.
-- **Grouped Median Imputation:** Filled missing `Launch Mass` and `Power` based on **Orbit Class**.
-- **Derived Dry Mass:** Calculated structural mass fractions to ensure 1:1 join-readiness.
-
-#### **2. SATCAT Pipeline: Standalone Registry Normalization**
-
-Processing the full historical registry of ~60,000 objects to establish a baseline for the global environment:
-
-- **In-Orbit Boolean Logic:** Implemented a decay-date filter to isolate current kinetic threats.
-- **Synthetic Mass Fill:** Applied conservative ESA-standard proxies for Rocket Bodies (2,000 kg) and Debris (0.1 kg).
-
-#### **3. Orbital Risk Synthesis: Closing the Visibility Gap**
-
-The final integration layer where UCS and SATCAT datasets are merged to generate the `kinetic_master.csv`. This phase performs the "Zombie" identification and final data augmentation.
+### **2. Current Project Status**
+* [x] **Phase 1: Foundation** (UCS & SATCAT Standardization) - **100% Complete**
+* [ ] **Phase 2: Synthesis** (Risk Integration & Zombie Identification) - **CURRENT FOCUS**
+  * _Merging Intelligence:_ 1:1 coupling of `ucs_cleaned` and `satcat_cleaned`.
+  * _Kinetic Energy Modeling:_ Applying $E_k = \frac{1}{2}mv^2$ to 60,000+ objects using orbital velocity vectors.
+* [ ] **Phase 3: Strategic Analysis** (Geopolitical Risk & EoL Modeling) - **PENDING**
 
 ---
 
+## **Technical Standards**
+
+- **Primary Key:** `norad_id` (Standardized String)
+- **Mass Metric:** `proxy_mass_kg` (Launch/Wet Mass) and `dry_mass_kg` (Structural Mass)
+- **Simulation Baseline:** Year 2026
+- **Physics Units:** km (Altitude), minutes (Period), degrees (Inclination), m² (RCS)
+
+### **Key Feature Glossary**
+
+#### **1. Physical & Orbital Registry (SATCAT Derived)**
+
+| Feature         | Meaning                                                                               |
+| :-------------- | :------------------------------------------------------------------------------------ |
+| `proxy_mass_kg` | The "Wet Mass" (Launch) used for initial kinetic energy calculations.                 |
+| `dry_mass_kg`   | The estimated "Structural Mass" used for end-of-life impact modeling (Stage 5.2).     |
+| `rcs_class`     | Geometric size category (Small, Medium, Large) derived from radar cross-section data. |
+| `in_orbit`      | Binary flag (1/0) isolating current kinetic threats from decayed historical records.  |
+| `owner_code`    | Standardized ISO-style country/entity code for geopolitical risk aggregation.         |
+| `orbit_class`   | Standardized regime (LEO, MEO, GEO, Elliptical) for spatial congestion analysis.      |
+
+#### **2. Fleet Intelligence & Sector Flags (UCS Derived)**
+
+| Feature          | Meaning                                                                                     |
+| :--------------- | :------------------------------------------------------------------------------------------ |
+| `is_zombie`      | (Phase 2) Boolean flag identifying payloads that are inactive or have exceeded design life. |
+| `is_military`    | Boolean flag identifying state-actor defense assets.                                        |
+| `is_commercial`  | Binary flag identifying assets owned/operated by private entities for profit.               |
+| `is_government`  | Binary flag identifying assets owned by state agencies (e.g., NASA, ESA).                   |
+| `is_civil`       | Binary flag identifying academic, scientific, or amateur-led missions.                      |
+| `lifetime_years` | Design-life expectancy used to calculate the "End-of-Life" risk threshold.                  |
+
+---
 
 ### **AI Attribution & Usage Disclosure**
 
@@ -116,12 +161,10 @@ To ensure the analysis runs with the correct library versions, please use a virt
 This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/).
 
 **You are free to:**
-
 - **Share** — copy and redistribute the material in any medium or format.
 - **Adapt** — remix, transform, and build upon the material.
 
 **Under the following terms:**
-
 - **Attribution** — You must give appropriate credit, provide a link to the license, and indicate if changes were made.
 - **NonCommercial** — You may **NOT** use the material for commercial purposes. This includes selling the code, charging for access to the analysis, or using the models within a commercial product or service.
 
