@@ -32,7 +32,7 @@ _Figure 1: A comparative geospatial audit showing the transition from the balanc
 _Figure 2: Dominance Alert: A handful of commercial titans now control the majority of LEO. The top operator alone accounts for 54.1% of the entire active sky, representing a massive consolidation of orbital management._
 
 **Kinetic Liability: Mass vs. Traffic**
-![Liability vs Traffic](images/./liability_vs_traffic.png)  
+![Liability vs Traffic](./images/liability_vs_traffic.png)  
 _Figure 3: Correlating geopolitical 'Kinetic Liability' (Total Mass) against 'Operational Traffic' (Object Count). This highlights how the US leads in both categories, followed by the CIS and PRC._
 
 ---
@@ -40,7 +40,7 @@ _Figure 3: Correlating geopolitical 'Kinetic Liability' (Total Mass) against 'Op
 #### **2. Kinetic Potential & Vertical Congestion**
 
 **Mass Distribution: The Swarm vs. The Giants**
-![Mass Profile](images/./mass_distribution_log.png)  
+![Mass Profile](./images/mass_distribution_log.png)  
 _Figure 4: A logarithmic profile of kinetic potential. While the 'CubeSat Swarm' dominates in numbers, the 'White Whale' (ISS) and large rocket bodies represent the true shrapnel potential in a collision event._
 
 **The LEO Wall: Vertical Congestion**
@@ -64,8 +64,8 @@ _Figure 7: The 'Divergence Gap.' Modern launch volume has abandoned the legacy l
 _Figure 8: Pinpointing the moment the orbital growth rate broke the legacy limit (~2014). This exponential acceleration marks the transition to a high-velocity orbital environment._
 
 **The Great Acceleration: Cumulative Mass in Orbit**
-![Great Acceleration]./images/great_acceleration.png)  
-_Figure 9: The 'Pivot' of 2014. Cumulative mass in orbit has shifted from steady growth to a vertical climb, nearing 22,000 cumulative mass tons._
+![Great Acceleration](./images/great_acceleration.png)  
+_Figure 9: The 'Pivot' of 2014. Cumulative mass in orbit has shifted from steady growth to a vertical climb, nearing 22,000 cumulative mass tons.
 
 ---
 
