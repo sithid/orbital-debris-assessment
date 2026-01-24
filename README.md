@@ -65,7 +65,7 @@ _Figure 8: Pinpointing the moment the orbital growth rate broke the legacy limit
 
 **The Great Acceleration: Cumulative Mass in Orbit**
 ![Great Acceleration](./images/great_acceleration.png)  
-_Figure 9: The 'Pivot' of 2014. Cumulative mass in orbit has shifted from steady growth to a vertical climb, nearing 22,000 cumulative mass tons.
+_Figure 9: The 'Pivot' of 2014. Cumulative mass in orbit has shifted from steady growth to a vertical climb, nearing 22,000 cumulative mass tons._
 
 ---
 
@@ -83,13 +83,13 @@ The project has transitioned from raw data ingestion to a **Physics-Complete** e
 
 ### **1. Data Cleaning & Density Engineering**
 
-- **UCS Cleanup (`ucs_cleanup.ipynb`):**
+- **UCS Cleanup (`01_ucs_cleanup.ipynb`):**
   - Sanitized 7,500+ active satellites.
   - Implemented orbit-specific _Dry-to-Wet_ mass ratios.
   - Engineered multi-sector Boolean flags (Military, Commercial, Civil, Gov).
-- **SATCAT Cleanup (`satcat_cleanup.ipynb`):**
+- **SATCAT Cleanup (`02_satcat_cleanup.ipynb`):**
   - Reconstructed a 60,000+ object global registry.
-  - **Keplerian Engine:** Derived missing orbital periods via Kepler’s Third Law.
+  - **Keplerian Engine:** Derived missing orbital periods via Kepler's Third Law.
   - **High-Fidelity Enrichment:** 1:1 integration with UCS data to repair SATCAT "Mass Blindness."
   - **Tiered Imputation:** Applied ESA-standard mass proxies for debris and rocket bodies.
   - **Temporal Hardening:** Implemented `Int64` nullable integers for object age relative to Simulation Year 2026.
@@ -98,12 +98,50 @@ The project has transitioned from raw data ingestion to a **Physics-Complete** e
 
 ### **2. Kinetic Synthesis & Physics Engineering**
 
-- **Synthesis (`orbital_risk_synthesis.ipynb`):**
+- **Synthesis (`03_orbital_risk_synthesis.ipynb`):**
   - **The Master Merge:** Executed a prioritized Left-Join to fuse the 67,000+ object SATCAT backbone with deep UCS operational intelligence.
-  - **Kinetic Engineering:** Calculated Mean Orbital Velocity ($v$) and Kinetic Energy ($E_k$) using the Vis-Viva equation ($v=\sqrt{{\mu/a}}$).
+  - **Kinetic Engineering:** Calculated Mean Orbital Velocity ($v$) and Kinetic Energy ($E_k$) using the Vis-Viva equation ($v=\sqrt{{\mu/a}}$) and standard kinetic formula ($E_k = \frac{1}{2}mv^2$).
   - **Power Modeling:** Engineered `proxy_power_watts` using Regime-Specific densities to estimate "Design Capacity."
   - **Zombie Identification:** Algorithmically flagged ~5,200 "Living Dead" payloads (Active status but Age > Design Life + 10%).
-  - **Vital Signs:** Verified the final `kinetic_master.csv` contains **32,600+** in-orbit objects representing **~21.6 Kilotons** of mass and **~475 Terajoules** of kinetic energy.
+  - **Vital Signs:** Verified the final `kinetic_master.csv` contains **32,687** in-orbit objects representing **~21.6 Kilotons** of mass and **~475 Terajoules** of kinetic energy.
+
+#### **Zombie Satellite Identification Algorithm**
+
+A payload is flagged as a "Zombie" if either condition is met:
+
+1. `ops_status` is NOT "OPERATIONAL", OR
+2. `sat_age_years` > (`lifetime_years` × 1.10)
+
+This algorithm identifies ~5,200 high-mass threats masquerading as "active" in legacy databases, representing the critical blind spot in collision risk assessments.
+
+---
+
+### **Final Master Registry Statistics**
+
+| Metric                | Value              | Description                                       |
+| :-------------------- | :----------------- | :------------------------------------------------ |
+| **Total Objects**     | 67,264             | Complete SATCAT tracking entries                  |
+| **In-Orbit**          | 32,687 (48.6%)     | Active objects requiring collision monitoring     |
+| **Total Mass**        | 21,600 metric tons | Cumulative kinetic mass in LEO/MEO/GEO            |
+| **Kinetic Energy**    | 475 Terajoules     | Total destructive potential at orbital velocities |
+| **Data Completeness** | 100%               | Full density across 40 engineered features        |
+
+---
+
+### **Data Quality Achievements**
+
+| Domain           | Feature          | Density           | Status |
+| :--------------- | :--------------- | :---------------- | :----- |
+| **KINETIC**      | `proxy_mass_kg`  | 100.0%            | ✅ OK  |
+| **KINETIC**      | `velocity_kms`   | 100.0%            | ✅ OK  |
+| **KINETIC**      | `kinetic_joules` | 100.0%            | ✅ OK  |
+| **ORBIT**        | `orbit_class`    | 100.0%            | ✅ OK  |
+| **ORBIT**        | `period_minutes` | 100.0%            | ✅ OK  |
+| **ORBIT**        | `apogee_km`      | 100.0%            | ✅ OK  |
+| **ORBIT**        | `perigee_km`     | 100.0%            | ✅ OK  |
+| **SUPPLY CHAIN** | `owner`          | 100.0%            | ✅ OK  |
+| **SUPPLY CHAIN** | `owner_code`     | 100.0%            | ✅ OK  |
+| **LIFECYCLE**    | `is_zombie`      | 100.0% (Payloads) | ✅ OK  |
 
 ---
 
@@ -113,21 +151,22 @@ The project has transitioned from raw data ingestion to a **Physics-Complete** e
 - **Mass Metric:** `proxy_mass_kg` (Launch/Wet Mass) and `dry_mass_kg` (Structural Mass)
 - **Simulation Baseline:** Year 2026
 - **Physics Units:** km (Altitude), minutes (Period), degrees (Inclination), m² (RCS)
+- **Gravitational Parameter:** μ = 398,600.4418 km³/s² (Earth standard)
 
 ### **Key Feature Glossary**
 
 #### **1. Physical & Orbital Registry (SATCAT Derived)**
 
-| Feature          | Meaning                                                                               |
-| :--------------- | :------------------------------------------------------------------------------------ |
-| `proxy_mass_kg`  | The "Wet Mass" (Launch) used for initial kinetic energy calculations.                 |
-| `dry_mass_kg`    | The estimated "Structural Mass" used for end-of-life impact modeling.                 |
-| `rcs_class`      | Geometric size category (Small, Medium, Large) derived from radar cross-section data. |
-| `in_orbit`       | Binary flag (1/0) isolating current kinetic threats from decayed historical records.  |
-| `owner_code`     | Standardized ISO-style country/entity code for geopolitical risk aggregation.         |
-| `orbit_class`    | Standardized regime (LEO, MEO, GEO, Elliptical) for spatial congestion analysis.      |
-| `kinetic_joules` | **[NEW]** The raw destructive energy ($E_k$) derived from Mass and Velocity.          |
-| `velocity_kms`   | **[NEW]** Mean orbital velocity derived via astrodynamic laws ($v=\sqrt{{\mu/a}}$).   |
+| Feature          | Meaning                                                                                        |
+| :--------------- | :--------------------------------------------------------------------------------------------- |
+| `proxy_mass_kg`  | The "Wet Mass" (Launch) used for initial kinetic energy calculations.                          |
+| `dry_mass_kg`    | The estimated "Structural Mass" used for end-of-life impact modeling.                          |
+| `rcs_class`      | Geometric size category (Small, Medium, Large) derived from radar cross-section data.          |
+| `in_orbit`       | Binary flag (1/0) isolating current kinetic threats from decayed historical records.           |
+| `owner_code`     | Standardized ISO-style country/entity code for geopolitical risk aggregation.                  |
+| `orbit_class`    | Standardized regime (LEO, MEO, GEO, Elliptical) for spatial congestion analysis.               |
+| `kinetic_joules` | **[NEW]** The raw destructive energy ($E_k = \frac{1}{2}mv^2$) derived from Mass and Velocity. |
+| `velocity_kms`   | **[NEW]** Mean orbital velocity derived via Vis-viva equation ($v=\sqrt{{\mu/a}}$).            |
 
 #### **2. Fleet Intelligence & Sector Flags (UCS Derived)**
 
@@ -169,11 +208,12 @@ To ensure the analysis runs with the correct library versions, please use a virt
 3. **Install Project Dependencies:** `pip install -r requirements.txt`
 4. **Data Verification:** Ensure raw data files are in `data/original/` and cleaned outputs are directed to `data/clean/`.
 5. **Execution Order & Pipeline Methodology:**
-   - **`ucs_cleanup.ipynb`**: Active Intelligence Reconstruction.
-   - **`satcat_cleanup.ipynb`**: Global Physics Normalization.
-   - **`orbital_risk_synthesis.ipynb`**: Kinetic Intelligence Coupling.
-   - **`active_fleet_intelligence.ipynb`**: Tactical Fleet Audit.
-   - **`strategic_analysis.ipynb`**: Strategic Global Synthesis.
+   - **`00_exploratory_research.ipynb`**: Initial data exploration and hypothesis formation
+   - **`01_ucs_cleanup.ipynb`**: Active Intelligence Reconstruction
+   - **`02_satcat_cleanup.ipynb`**: Global Physics Normalization
+   - **`03_orbital_risk_synthesis.ipynb`**: Kinetic Intelligence Coupling
+   - **`04_active_fleet_intelligence.ipynb`**: Tactical Fleet Audit & Visualization
+   - **`05_strategic_analysis.ipynb`**: Strategic Global Synthesis & Kessler Modeling
 
 ---
 
