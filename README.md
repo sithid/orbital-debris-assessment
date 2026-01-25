@@ -389,7 +389,7 @@ _Figure 2: Mass vs. Count distribution revealing the deceptive inversion between
 ### **Figure 3: The Great Acceleration (2014 Pivot)**
 
 ![Great Acceleration](./images/great_acceleration.png)  
-_Figure 3: Dual-cadence curve fitting proving the 2014 acceleration hypothesis. The linear model (red, 1957-2013) shows steady Cold War era growth (~100 satellites/year). The exponential model (cyan, 2014-2026) captures commercial mega-constellation deployment. Brent's Method root-finding identifies mid-2014 as the mathematical crossover point where exponential velocity surpassed linear trends. This is not subjective interpretation—it's calculus-verified proof of a regime change._
+_Figure 3: Exponential launch reality (magenta) versus the legacy linear path (grey dashed), with 2000–2024 actual launches shown as cyan bars. The shaded magenta wedge is the “risk surplus” that exists only because growth went exponential. Brent’s Method pinpoints the acceleration inflection at ~2014.6 (vertical line and callout), and the HUD shows the fitted growth rate (~24%/yr) and doubling time (~2.9 years), confirming a sustained regime change._
 
 ---
 
