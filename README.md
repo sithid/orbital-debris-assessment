@@ -16,7 +16,7 @@ This project delivers a comprehensive orbital debris risk assessment by engineer
 
 - **The 2014 Pivot:** Mathematical proof (via Brent's Method root-finding) that exponential satellite growth officially surpassed linear Cold War trends in mid-2014
 - **64km Compression Crisis:** KDE analysis reveals modern mega-constellations occupy a narrow 200-600km band, creating a "commuter lane" 64km below a dense field of uncontrolled rocket bodies (800-1200km)
-- **Zombie Protocol Imperative:** Identified 5,200+ defunct payloads (satellites only; excludes debris/rocket bodies) exceeding 110% design life, representing high-mass collision catalysts in high-traffic orbits
+- **Zombie Protocol Imperative:** Identified 5,278 defunct payloads (satellites only; excludes debris/rocket bodies) exceeding 110% design life, representing high-mass collision catalysts in high-traffic orbits
 - **Double Threat Topology:** The orbital environment exhibits vertical segregation where active satellites operate in a "kinetic canyon" bounded by legacy debris above and exponential launch rates below
 
 ### **Technical Impact**
@@ -30,7 +30,7 @@ This project delivers a comprehensive orbital debris risk assessment by engineer
 
 **Analytical Innovation:**
 
-- Designed "Zombie Index" risk metric combining mass, altitude, and age-to-lifetime ratios
+- Identified zombie satellite distribution by owner, revealing US (2,211 satellites, 42%) and Russia/CIS (1,429 satellites, 27%) as primary contributors to defunct payload population
 - Applied dual-cadence curve fitting (linear 1957-2013 vs. exponential 2014-2026) to prove acceleration hypothesis
 - Performed 2D KDE spatial analysis to quantify the 64km altitude compression between active/inactive populations
 
@@ -68,12 +68,12 @@ High-resolution Kernel Density Estimation reveals a dangerous vertical segregati
 
 ### **The "Zombie Satellite" Population**
 
-This analysis identifies **5,200+ defunct payloads** (satellites only; debris and rocket bodies are excluded from this classification) that:
+This analysis identifies **5,278 defunct payloads** (satellites only; debris and rocket bodies are excluded from this classification) that:
 
 - Exceed 110% of their design lifetime (e.g., 15-year satellite now 16.5+ years old)
-- Retain operational mass (500-5,000kg) but lack maneuverability
-- Occupy high-traffic LEO orbits (53° inclination Starlink zone)
-- Represent ideal Active Debris Removal (ADR) targets: large, trackable, high-ROI
+- Average age of 25.2 years (significantly beyond typical 10-15 year design lives)
+- Represent 30.1% of the total payload population (17,562 active + inactive satellites)
+- Geopolitical distribution reveals Cold War legacy: US (42%) and Russia/CIS (27%) account for 69% of zombie population
 
 **Methodology Note:** The zombie algorithm applies exclusively to objects classified as `PAYLOAD` in SATCAT, filtering out non-operational satellites via status codes or age-to-lifetime ratios. The total in-orbit population includes an additional 12,672 debris fragments and 2,401 rocket bodies that are not counted in zombie statistics.
 
@@ -268,7 +268,7 @@ KE = 0.5 × dry_mass_kg × velocity_m_s²
 - **In-Orbit Objects:** 32,687 (48.6% of catalog)
 - **Total Mass:** ~16.3 Kilotons ⚠️ _(exceeds ESA 2025 benchmark by 7.8%)_
 - **Kinetic Energy:** ~312 Terajoules
-- **Zombie Satellites:** 5,200+ defunct payloads
+- **Zombie Satellites:** 5,278 defunct payloads
 - **Average Orbital Velocity:** 7.48 km/s (altitude-adjusted via Vis-Viva)
 
 Verified the final `kinetic_master.csv` contains **32,687** in-orbit objects representing **~16.3 Kilotons** of mass (worst-case estimate) and **~312 Terajoules** of kinetic energy.
@@ -342,20 +342,17 @@ Commercial mega-constellations (post-2014) represent a fundamentally different g
   - **Caveat:** This ratio includes ~10,000 unknown payloads imputed at 260-500kg; actual disparity for measured objects may vary
   - **Implication:** While rocket bodies remain high-risk shrapnel sources, modern mega-constellation satellites (e.g., Starlink: 260kg) represent a **swarm threat** where quantity multiplies kinetic load
 
-**Zombie Index Risk Metric:**
+**Zombie Geopolitical Distribution:**
 
-```python
-Zombie_Index = (dry_mass_kg / 1000) × (1 + altitude_km / 2000) × age_penalty
-  where age_penalty = sat_age_years / lifetime_years
-```
+The 5,278 zombie satellites break down by owner:
 
-This composite metric ranks defunct satellites by:
+- **United States:** 2,211 satellites (41.9%)
+- **Russia/CIS:** 1,429 satellites (27.1%)
+- **China (PRC):** 372 satellites (7.0%)
+- **United Kingdom:** 148 satellites (2.8%)
+- **Japan:** 147 satellites (2.8%)
 
-- **Mass** (collision energy potential)
-- **Altitude** (decay timeline; higher = longer orbital lifetime)
-- **Age Penalty** (time beyond design life)
-
-**Top 10 Zombie Threats:** High-mass, high-altitude defunct payloads ideal for Active Debris Removal (ADR) missions.
+This distribution reveals the Cold War legacy effect: US and Soviet space programs created 69% of today's defunct payload population, representing long-term collision risks as these aged platforms (average 25.2 years old) enter unpredictable decay spirals.
 
 ---
 
@@ -366,7 +363,7 @@ This composite metric ranks defunct satellites by:
 | **Total Objects**        | 67,264 records     | Complete SATCAT universe (1957-2026)                |
 | **In-Orbit Objects**     | 32,687 (48.6%)     | Currently active kinetic threats                    |
 | **Total Mass**           | 16,300 metric tons | Cumulative kinetic mass (ESA +7.8% worst-case)      |
-| **Zombie Satellites**    | 5,200+ payloads    | Defunct assets exceeding 110% design life           |
+| **Zombie Satellites**    | 5,278 payloads    | Defunct assets exceeding 110% design life (30.1% of payloads) |
 | **Kinetic Energy**       | 312 Terajoules     | Total destructive potential at orbital velocities   |
 | **Data Completeness**    | 100% imputation    | Physics-reconstructed across 51 engineered features |
 | **UCS Enrichment**       | 7,542 satellites   | High-fidelity mass/lifetime data synchronized       |
@@ -425,10 +422,10 @@ _Figure 7: High-resolution KDE analysis revealing vertical orbital segregation. 
 
 ---
 
-### **Figure 8: Zombie Satellite Risk Index**
+### **Figure 8: Zombie Satellite Distribution**
 
 ![Zombie Index](./images/zombie_index.png)  
-_Figure 8: Top 10 "Zombie Satellites" ranked by composite risk metric (mass × altitude × age penalty). These defunct payloads represent ideal Active Debris Removal (ADR) targets: large enough to track (500-5,000kg), high enough to persist (600-1200km altitudes with decade+ decay timelines), and old enough to represent imminent failure risk (15-40 years beyond design life). The Zombie Index prioritizes removal candidates by collision energy potential and orbital longevity._
+_Figure 8: The Zombie Satellite distribution showing (Left) age histogram of 5,278 defunct payloads with 25-year average age, and (Right) top 5 owners by zombie count. "Zombies" are operationally dead payloads or satellites exceeding design life by 10%+ (`sat_age_years > lifetime_years × 1.10`). The United States leads with 2,211 zombie satellites (42% of total), followed by Russia/CIS with 1,429 (27%). This geopolitical breakdown reveals Cold War legacy: US and Soviet programs created the majority of today's uncontrolled payload population, representing imminent collision risks as these aged platforms enter unpredictable decay spirals._
 
 ---
 ### **Figure 9: Geopolitical Liability Attribution**
@@ -570,8 +567,8 @@ orbital-debris-assessment/
 
 1. **Active Debris Removal (ADR) Prioritization:**
 
-   - Zombie Index provides quantitative framework for removal target selection
-   - Top 100 zombies carry 40%+ of defunct payload mass in high-traffic LEO
+   - 5,278 zombie satellites represent priority removal targets (30% of payload population)
+   - Geopolitical concentration: US and Russia control 69% of zombie inventory, suggesting bilateral cleanup coordination
    - ROI justification: Removing 1 high-mass zombie = preventing 1,000+ trackable debris fragments (per ESA collision models)
 
 2. **Launch Licensing Reform:**
