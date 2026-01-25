@@ -41,8 +41,8 @@ This project delivers a comprehensive orbital debris risk assessment by engineer
   - **Web Development (JavaScript/Vue.js):** Full-stack web applications, reactive UI frameworks
   - **Cloud Computing (AWS):** Infrastructure-as-code, serverless functions, scalable deployment
   - **Data Science (Python):** This project - physics-informed analytics, statistical imputation, production ETL
-- Real-world dataset requiring domain research (ESA debris standards, Keplerian mechanics, NORAD tracking protocols)
-- Production-grade transparency: documented all imputation assumptions, validated against external benchmarks, communicated uncertainty bounds
+    - Real-world dataset requiring domain research (ESA debris standards, Keplerian mechanics, NORAD tracking protocols)
+    - Production-grade transparency: documented all imputation assumptions, validated against external benchmarks, communicated uncertainty bounds
 
 ---
 
