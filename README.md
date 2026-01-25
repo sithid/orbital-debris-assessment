@@ -257,7 +257,7 @@ v = √(μ/a)  where:
 **Kinetic Energy Calculation:**
 
 ```python
-KE = 0.5 × dry_mass_kg × velocity_m_s²
+KE = 0.5 × proxy_mass_kg × velocity_m_s²
 ```
 
 **Output:** `kinetic_master.csv` (67,264 records, 51 features)
@@ -265,12 +265,12 @@ KE = 0.5 × dry_mass_kg × velocity_m_s²
 **Vital Statistics:**
 
 - **In-Orbit Objects:** 32,687 (48.6% of catalog)
-- **Total Mass:** ~16.3 Kilotons ⚠️ _(exceeds ESA 2025 benchmark by 7.2%)_
-- **Kinetic Energy:** ~333 Terajoules
+- **Total Mass:** 16.28 Kilotons (16,281 metric tons)
+- **Kinetic Energy:** 333.37 Terajoules
 - **Zombie Satellites:** 5,278 defunct payloads
 - **Average Orbital Velocity:** 6.90 km/s (altitude-adjusted via Vis-Viva)
 
-Verified the final `kinetic_master.csv` contains **32,687** in-orbit objects representing **~16.3 Kilotons** of mass (worst-case estimate) and **~333 Terajoules** of kinetic energy.
+Verified the final `kinetic_master.csv` contains **32,687** in-orbit objects representing **16.28 Kilotons** of mass (worst-case estimate) and **333.37 Terajoules** of kinetic energy.
 
 ---
 
@@ -363,7 +363,7 @@ This distribution reveals the Cold War legacy effect: US and Soviet space progra
 | **In-Orbit Objects**     | 32,687 (48.6%)     | Currently active kinetic threats                    |
 | **Total Mass**           | 16,281 metric tons | Cumulative kinetic mass (ESA +7.2% worst-case)      |
 | **Zombie Satellites**    | 5,278 payloads    | Defunct assets exceeding 110% design life (30.1% of payloads) |
-| **Kinetic Energy**       | 333 Terajoules     | Total destructive potential at orbital velocities   |
+| **Kinetic Energy**       | 333.37 Terajoules     | Total destructive potential at orbital velocities   |
 | **Data Completeness**    | 100% imputation    | Physics-reconstructed across 51 engineered features |
 | **UCS Enrichment**       | 7,542 satellites   | High-fidelity mass/lifetime data synchronized       |
 | **Avg Orbital Velocity** | 6.90 km/s          | Altitude-adjusted via Vis-Viva equation             |
@@ -542,7 +542,7 @@ orbital-debris-assessment/
 
 - **Mass Composition:** Validated against ESA 2025 benchmarks (payload/rocket body/debris ratios match within 0.7%)
 - **Velocity Sanity Check:** Average orbital velocity (6.90 km/s) aligns with expected LEO range (6.5-7.8 km/s across all orbital regimes)
-- **Kinetic Energy:** Total 312 TJ represents realistic worst-case scenario for in-orbit kinetic load
+- **Kinetic Energy:** Total 333.37 TJ represents realistic worst-case scenario for in-orbit kinetic load
 
 ---
 
