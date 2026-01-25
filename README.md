@@ -668,7 +668,7 @@ pip install -r requirements.txt
 
 ## **AI Assistance & Transparency Statement**
 
-In alignment with academic integrity and professional data science standards, I utilized **Claude Sonnet 4.5** as a technical thought partner throughout this project. This disclosure documents where AI assisted versus where I made independent analytical decisions:
+In alignment with academic integrity and professional data science standards, I utilized CoPilot as a technical thought partner throughout this project. This disclosure documents where AI assisted versus where I made independent analytical decisions:
 
 **AI-Assisted Components:**
 
@@ -684,9 +684,8 @@ In alignment with academic integrity and professional data science standards, I 
 - **Threshold selections** (110% lifetime for zombies, ESA proxy values, regime classifications) were determined through domain research and validation
 - **Visual narrative** (figure selection, KDE analysis methodology, risk metric design) reflects my understanding of orbital mechanics
 
-**Why This Matters:** As a student completing my 4th independent capstone, I want to demonstrate that using AI as a tool doesn't diminish the work—it accelerates it. You still have to understand the underlying principles of what the AI is doing for you, of what the AI is speeding up for you. I can't use `scipy.optimize.curve_fit` without understanding exponential vs. linear regression. I can't validate Vis-Viva velocity calculations without understanding orbital mechanics. AI helped me write faster, debug smarter, and document cleaner—but the physics, the insights, and the analytical framework are mine. The difference between using AI as a crutch versus a tool is whether you can explain *why* the code works, not just *that* it works.
+**Why This Matters:** As a student completing my 4th independent capstone, I want to demonstrate that using AI as a tool doesn't diminish the work—it accelerates it. You still have to understand the underlying principles of what the AI is doing for you, of what the AI is speeding up for you. AI helped me write faster, debug smarter, and document cleaner—but the methodology, the insights, and the analytical framework are mine. The difference between using AI as a crutch versus a tool is whether you can explain _why_ the code works, not just _that_ it works. Every analytical decision in this project is defensible—and that rigor is what distinguishes tooling from dependency.
 
----
 
 ## **About This Project**
 
