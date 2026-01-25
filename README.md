@@ -1,15 +1,37 @@
 # Orbital Clutter: Mapping the Kessler Acceleration
 
 **Lead Analyst:** James Glosser  
-**Course:** Data Analysis Pathway with **Code:You**
+**Course:** Data Analysis Pathway with **Code:You**  
+
 
 ---
 
-### **Project Description**
+## **Project Description**
 
 This project investigates the growing crisis of space debris and satellite congestion in Low Earth Orbit (LEO). By merging active satellite data with the **CelesTrak SATCAT Registry**, this analysis quantifies the **Visibility Gap** and evaluates the environment against the **Kessler Syndrome**—the tipping point where orbital collisions become a self-sustaining cascade.
 
-### **Key Insights**
+---
+
+## **Data Sources**
+
+This analysis synthesizes two authoritative orbital tracking datasets:
+
+1. **[UCS Satellite Database](https://www.ucsusa.org/resources/satellite-database)** (Union of Concerned Scientists)
+
+   - **Coverage:** 7,500+ active satellites as of January 2024
+   - **Features:** Operational status, design life, power, mass, owner, purpose
+   - **Update Frequency:** Quarterly
+
+2. **[CelesTrak SATCAT](https://celestrak.org/satcat/search.php)** (NORAD Satellite Catalog)
+   - **Coverage:** 67,000+ tracked objects (active + debris + decayed)
+   - **Features:** Orbital parameters, launch dates, decay dates, RCS size
+   - **Update Frequency:** Daily (active objects)
+
+**Merge Strategy:** Left-join on `norad_id` with UCS as the "Source of Truth" for active satellites, SATCAT as the physics backbone for all objects.
+
+---
+
+## **Key Insights**
 
 - **The 47.6% Zombie Blind Spot:** Analysis of the 'Visibility Gap' reveals that nearly half of all tracking failures are caused by **Inactive 'Zombie' Satellites**. This debunks the myth that small fragmentation is the primary driver of catalog uncertainty; the real risk is large, uncontrolled payloads drifting through commercial lanes.
 - **The 2014 Great Kessler Acceleration:** Mathematical modeling identifies **2014** as the critical "Decoupling Point." Since this year, orbital growth has abandoned the linear 20th-century model and locked into an **Exponential Kessler Arc**, tripling in velocity due to commercial proliferation.
@@ -17,63 +39,93 @@ This project investigates the growing crisis of space debris and satellite conge
 - **The 100% Density Achievement:** This project utilized **Physics-Informed Reconstruction** to achieve 100% data density across 20+ physical and orbital features for the active fleet, revealing the true kinetic energy of the "invisible" population.
 - **The Kessler Canyon (Orbital Segregation):** KDE analysis reveals a distinct segregation of risk. While active satellites cluster in the "Commuter Lane" (~550km), massive abandoned rocket bodies form a permanent "Deadly Ring" at ~900km.
 
+### **Summary Table**
+
+| Finding                  | Metric                     | Implication                                            |
+| :----------------------- | :------------------------- | :----------------------------------------------------- |
+| **Zombie Blind Spot**    | 47.6% of tracking failures | Focus ADR on defunct payloads, not small debris        |
+| **2014 Acceleration**    | Exponential decoupling     | Historical models obsolete; new risk framework needed  |
+| **Doubling Time**        | 2.8 years                  | Orbital population growing 4× faster than 20th century |
+| **Altitude Compression** | 64km gap                   | "Commuter Lane" and "Graveyard" have merged            |
+| **Energy Disparity**     | 1.9× rocket body advantage | Legacy debris more dangerous than modern satellites    |
+
 ---
 
-### **Visualizing the Crisis**
+## **Visualizing the Crisis**
 
-#### **1. Geospatial & Operator Intelligence**
+### **1. Geospatial & Operator Intelligence**
 
 **The Hegemony Shift: State Stability vs. Commercial Acceleration**
-![Hegemony Map](./images/geospatial_shift.png)  
+![Hegemony Map](./images/geospatial_shift.png)
+
 _Figure 1: A comparative geospatial audit showing the transition from the balanced Cold War era (Status: Stable) to the modern 'Orbital Overheat' (Status: Critical), where active assets have surged by orders of magnitude across global actors._
 
 **The Operator Oligopoly**
-![Operator Oligopoly](./images/operator_oligopoly.png)  
+![Operator Oligopoly](./images/operator_oligopoly.png)
+
 _Figure 2: Dominance Alert: A handful of commercial titans now control the majority of LEO. The top operator alone accounts for 54.1% of the entire active sky, representing a massive consolidation of orbital management._
 
 **Kinetic Liability: Mass vs. Traffic**
-![Liability vs Traffic](./images/liability_vs_traffic.png)  
+![Liability vs Traffic](./images/liability_vs_traffic.png)
+
 _Figure 3: Correlating geopolitical 'Kinetic Liability' (Total Mass) against 'Operational Traffic' (Object Count). This highlights how the US leads in both categories, followed by the CIS and PRC._
 
 ---
 
-#### **2. Kinetic Potential & Vertical Congestion**
+### **2. Kinetic Potential & Vertical Congestion**
 
 **Mass Distribution: The Swarm vs. The Giants**
-![Mass Profile](./images/mass_distribution_log.png)  
+![Mass Profile](./images/mass_distribution_log.png)
+
 _Figure 4: A logarithmic profile of kinetic potential. While the 'CubeSat Swarm' dominates in numbers, the 'White Whale' (ISS) and large rocket bodies represent the true shrapnel potential in a collision event._
 
 **The LEO Wall: Vertical Congestion**
-![Orbit Congestion](./images/orbit_congestion_leo.png)  
+![Orbit Congestion](./images/orbit_congestion_leo.png)
+
 _Figure 5: Proving the congestion crisis is regime-specific. The LEO 'Wall' shows a vertical surge to 882+ annual launches, while MEO and GEO remains comparatively flat._
 
+**The Kessler Canyon: Altitude vs. Kinetic Energy**
+![Kessler Canyon](./images/kessler_canyon.png)
+
+_Figure 6: High-resolution KDE analysis revealing the vertical segregation of orbital risk. The cyan "Commuter Lane" (active satellites, ~550km) is dangerously close to the crimson "Deadly Ring" (rocket bodies, ~800km+), with an altitude gap of only 64km._
+
+**The Zombie Index: Silent Killers**
+![Zombie Index](./images/zombie_index.png)
+
+_Figure 7: Necropsy of the fleet. Left: Age distribution of defunct payloads averaging 17+ years in orbit. Right: Geopolitical attribution revealing the "Zombie Lords"—state actors responsible for the highest count of abandoned assets._
+
 ---
 
-#### **3. The Great Acceleration (Mathematical Divergence)**
+### **3. The Great Acceleration (Mathematical Divergence)**
 
 **The Kessler Delta: Regime Shift**
-![Temporal Regime Shift](./images/temporal_regime_shift.png)  
-_Figure 6: Visualizing the 'Mega-Constellation Impact.' The transition from the Legacy Era of state actors to the current era of Commercial Acceleration is marked by a massive spike in active satellites launched per year._
+![Temporal Regime Shift](./images/temporal_regime_shift.png)
+
+_Figure 8: Visualizing the 'Mega-Constellation Impact.' The transition from the Legacy Era of state actors to the current era of Commercial Acceleration is marked by a massive spike in active satellites launched per year._
 
 **Mathematical Divergence: Linear vs. Exponential Growth**
-![Model Divergence](./images/model_divergence_audit.png)  
-_Figure 7: The 'Divergence Gap.' Modern launch volume has abandoned the legacy linear model, resulting in a gap of 1,147 satellites per year above 20th-century projections._
+![Model Divergence](./images/model_divergence_audit.png)
+
+_Figure 9: The 'Divergence Gap.' Modern launch volume has abandoned the legacy linear model, resulting in a gap of 1,147 satellites per year above 20th-century projections._
 
 **Velocity Analysis: Breaking the Speed Limit**
-![Velocity Shift](./images/velocity_shift.png)  
-_Figure 8: Pinpointing the moment the orbital growth rate broke the legacy limit (~2014). This exponential acceleration marks the transition to a high-velocity orbital environment._
+![Velocity Shift](./images/velocity_shift.png)
+
+_Figure 10: Pinpointing the moment the orbital growth rate broke the legacy limit (~2014). This exponential acceleration marks the transition to a high-velocity orbital environment._
 
 **The Great Acceleration: Cumulative Mass in Orbit**
-![Great Acceleration](./images/great_acceleration.png)  
-_Figure 9: The 'Pivot' of 2014. Cumulative mass in orbit has shifted from steady growth to a vertical climb, nearing 22,000 cumulative mass tons._
+![Great Acceleration](./images/great_acceleration.png)
+
+_Figure 11: The 'Pivot' of 2014. Cumulative mass in orbit has shifted from steady growth to a vertical climb, nearing 22,000 cumulative mass tons._
 
 ---
 
-#### **4. Data Integrity & The Visibility Trap**
+### **4. Data Integrity & The Visibility Trap**
 
 **The Visibility Trap vs. Kinetic Reality**
-![Visibility Trap](./images/visibility_trap.png)  
-_Figure 10: Quantitative analysis of the tracking gap. While 'Debris' leads in object count (The Trap), 'Active Satellites' and 'Rocket Bodies' represent over 90% of the actual kinetic mass in orbit (The Reality)._
+![Visibility Trap](./images/visibility_trap.png)
+
+_Figure 12: Quantitative analysis of the tracking gap. While 'Debris' leads in object count (The Trap), 'Active Satellites' and 'Rocket Bodies' represent over 90% of the actual kinetic mass in orbit (The Reality)._
 
 ---
 
@@ -100,7 +152,7 @@ The project has transitioned from raw data ingestion to a **Physics-Complete** e
 
 - **Synthesis (`03_orbital_risk_synthesis.ipynb`):**
   - **The Master Merge:** Executed a prioritized Left-Join to fuse the 67,000+ object SATCAT backbone with deep UCS operational intelligence.
-  - **Kinetic Engineering:** Calculated Mean Orbital Velocity ($v$) and Kinetic Energy ($E_k$) using the Vis-Viva equation ($v=\sqrt{{\mu/a}}$) and standard kinetic formula ($E_k = \frac{1}{2}mv^2$).
+  - **Kinetic Engineering:** Calculated Mean Orbital Velocity ($v$) and Kinetic Energy ($E_k$) using the Vis-Viva equation ($v=\sqrt{\mu/a}$) and standard kinetic formula ($E_k = \frac{1}{2}mv^2$).
   - **Power Modeling:** Engineered `proxy_power_watts` using Regime-Specific densities to estimate "Design Capacity."
   - **Zombie Identification:** Algorithmically flagged ~5,200 "Living Dead" payloads (Active status but Age > Design Life + 10%).
   - **Vital Signs:** Verified the final `kinetic_master.csv` contains **32,687** in-orbit objects representing **~21.6 Kilotons** of mass and **~475 Terajoules** of kinetic energy.
@@ -116,7 +168,7 @@ This algorithm identifies ~5,200 high-mass threats masquerading as "active" in l
 
 ---
 
-### **Final Master Registry Statistics**
+## **Final Master Registry Statistics**
 
 | Metric                | Value              | Description                                       |
 | :-------------------- | :----------------- | :------------------------------------------------ |
@@ -128,7 +180,7 @@ This algorithm identifies ~5,200 high-mass threats masquerading as "active" in l
 
 ---
 
-### **Data Quality Achievements**
+## **Data Quality Achievements**
 
 | Domain           | Feature          | Density           | Status |
 | :--------------- | :--------------- | :---------------- | :----- |
@@ -166,7 +218,8 @@ This algorithm identifies ~5,200 high-mass threats masquerading as "active" in l
 | `owner_code`     | Standardized ISO-style country/entity code for geopolitical risk aggregation.                  |
 | `orbit_class`    | Standardized regime (LEO, MEO, GEO, Elliptical) for spatial congestion analysis.               |
 | `kinetic_joules` | **[NEW]** The raw destructive energy ($E_k = \frac{1}{2}mv^2$) derived from Mass and Velocity. |
-| `velocity_kms`   | **[NEW]** Mean orbital velocity derived via Vis-viva equation ($v=\sqrt{{\mu/a}}$).            |
+| `velocity_kms`   | **[NEW]** Mean orbital velocity derived via Vis-viva equation ($v=\sqrt{\mu/a}$)
+.            |
 
 #### **2. Fleet Intelligence & Sector Flags (UCS Derived)**
 
@@ -182,9 +235,9 @@ This algorithm identifies ~5,200 high-mass threats masquerading as "active" in l
 
 ---
 
-### **AI Attribution & Usage Disclosure**
+## **AI Attribution & Usage Disclosure**
 
-In alignment with professional data science standards, I utilized the **Gemini** model family as a technical thought partner and high-precision analytical tool to assist with specific engineering and analytical goals:
+In alignment with professional data science standards, I utilized the **Claude Sonnet 4.5** language model as a technical thought partner and high-precision analytical tool to assist with specific engineering and analytical goals:
 
 - **Mathematical Prototyping:** I collaborated with AI to prototype the `scipy.optimize` curve-fitting logic and the HUD-style visualization coordinate transforms for the Kessler Clock.
 - **Data Engineering Audit:** I used AI to peer-review my **Physics Reconstruction Engine** and verify the accuracy of the grouped median imputation logic.
@@ -194,7 +247,7 @@ In alignment with professional data science standards, I utilized the **Gemini**
 
 ---
 
-### **Installation & Setup**
+## **Installation & Setup**
 
 To ensure the analysis runs with the correct library versions, please use a virtual environment.
 
@@ -217,9 +270,10 @@ To ensure the analysis runs with the correct library versions, please use a virt
 
 ---
 
-### **License**
+## **License**
 
 **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**
+
 This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/).
 
 **You are free to:**
@@ -231,5 +285,19 @@ This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 In
 
 - **Attribution** — You must give appropriate credit, provide a link to the license, and indicate if changes were made.
 - **NonCommercial** — You may **NOT** use the material for commercial purposes. This includes selling the code, charging for access to the analysis, or using the models within a commercial product or service.
+
+---
+
+## **Contact & Attribution**
+
+**Author:** James Glosser  
+**LinkedIn:** [linkedin.com/in/james-glosser-249100204](https://www.linkedin.com/in/james-glosser-249100204/)  
+**Project Repository:** [github.com/sithid/orbital-debris-assessment](https://github.com/sithid/orbital-debris-assessment)
+
+**Acknowledgments:**
+
+- **Union of Concerned Scientists** for maintaining the UCS Satellite Database
+- **CelesTrak/Dr. T.S. Kelso** for public SATCAT access
+- **Code:You** for curriculum guidance and project mentorship
 
 ---
