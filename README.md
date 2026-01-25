@@ -4,7 +4,7 @@
 **Contact:** DemonicUrges05@gmail.com | [LinkedIn](https://www.linkedin.com/in/james-glosser-249100204/)  
 **Repository:** [github.com/sithid/orbital-debris-assessment](https://github.com/sithid/orbital-debris-assessment)  
 **Last Updated:** January 2026  
-**Status:** Code:You Capstone Project #4 (Data Science Pathway)
+**Status:** Code:You Capstone Project #4 (Data Analysis Pathway)
 
 ---
 
@@ -277,7 +277,7 @@ Verified the final `kinetic_master.csv` contains **32,687** in-orbit objects rep
 
 ### **Stage 3: Strategic Analytics & Visualization**
 
-#### **Notebook 04: Cadence Analysis (The 2014 Pivot)**
+#### **Notebook 04: Active Fleet Intelligence (The 2014 Pivot)**
 
 **Objective:** Mathematically prove the "Great Acceleration" hypothesis using curve-fitting and root-finding algorithms.
 
@@ -522,7 +522,7 @@ orbital-debris-assessment/
 │   ├── 01_ucs_cleanup.ipynb           # UCS ETL pipeline
 │   ├── 02_satcat_cleanup.ipynb        # SATCAT reconstruction
 │   ├── 03_orbital_risk_synthesis.ipynb # Master registry merge
-│   ├── 04_cadence_analysis.ipynb      # 2014 pivot proof
+│   ├── 04_active_fleet_intelligence.ipynb # 2014 pivot proof
 │   └── 05_strategic_analysis.ipynb    # Kessler Canyon analysis
 ├── images/                # Visualization exports
 ├── README.md             # This file
@@ -629,7 +629,7 @@ pip install -r requirements.txt
 
 1. **Data Cleaning:** Run `01_ucs_cleanup.ipynb` → `02_satcat_cleanup.ipynb`
 2. **Synthesis:** Run `03_orbital_risk_synthesis.ipynb`
-3. **Analytics:** Run `04_cadence_analysis.ipynb` → `05_strategic_analysis.ipynb`
+3. **Analytics:** Run `04_active_fleet_intelligence.ipynb` → `05_strategic_analysis.ipynb`
 
 **Note:** Raw data files (`satcat.csv`, `UCS-Satellite-Database.csv`) must be placed in `data/original/` before execution.
 
