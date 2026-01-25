@@ -376,55 +376,67 @@ This composite metric ranks defunct satellites by:
 
 ## **Key Visualizations**
 
-### **Figure 1: The Visibility Trap**
+### **Figure 1: Kinetic Mass Distribution (The White Whale)**
+
+![Mass Distribution Log](./images/mass_distribution_log.png)  
+_Figure 1: Logarithmic mass distribution revealing the 6-order-of-magnitude disparity in orbital objects. The International Space Station (450,000 kg) represents the "White Whale" outlier, while CubeSat swarms (<10 kg) populate the extreme left. This histogram proves why simple object counts mislead risk assessments—the ISS alone carries more kinetic mass than 450,000 CubeSats combined. The logarithmic scale is necessary to visualize both populations simultaneously, exposing the "invisible mass" hiding in aggregate statistics._
+
+---
+
+### **Figure 2: The Visibility Trap**
 
 ![Visibility Trap](./images/visibility_trap.png)  
-_Figure 1: Mass vs. Count distribution revealing the inverse relationship between object size and tracking visibility. While debris fragments dominate by count (>60% of catalog), rocket bodies and defunct payloads carry 99%+ of the kinetic mass. This "visibility trap" explains why collision risk is underestimated—the most dangerous objects are often categorized as "just another catalog entry" when sorted by count alone._
+_Figure 2: Mass vs. Count distribution revealing the deceptive inversion between object prevalence and kinetic risk. By count, the orbital population appears balanced: debris (38.8%) and active satellites (37.6%) are statistically equivalent. However, by mass, rocket bodies (7.3% of count) carry ~30% of total kinetic energy—a 4:1 mass-to-count ratio. This creates the "visibility trap": regulatory frameworks focused on satellite proliferation (count-based metrics) systematically miss the legacy debris threat (mass-based physics). The most dangerous objects—multi-ton rocket bodies—are statistically invisible when sorted by count alone, appearing as "just 2,401 catalog entries" while carrying more collision energy than 12,000+ debris fragments combined._
 
 ---
 
-### **Figure 2: The Great Acceleration (2014 Pivot)**
+### **Figure 3: The Great Acceleration (2014 Pivot)**
 
 ![Great Acceleration](./images/great_acceleration.png)  
-_Figure 2: Dual-cadence curve fitting proving the 2014 acceleration hypothesis. The linear model (red, 1957-2013) shows steady Cold War era growth (~100 satellites/year). The exponential model (cyan, 2014-2026) captures commercial mega-constellation deployment. Brent's Method root-finding identifies mid-2014 as the mathematical crossover point where exponential velocity surpassed linear trends. This is not subjective interpretation—it's calculus-verified proof of a regime change._
+_Figure 3: Dual-cadence curve fitting proving the 2014 acceleration hypothesis. The linear model (red, 1957-2013) shows steady Cold War era growth (~100 satellites/year). The exponential model (cyan, 2014-2026) captures commercial mega-constellation deployment. Brent's Method root-finding identifies mid-2014 as the mathematical crossover point where exponential velocity surpassed linear trends. This is not subjective interpretation—it's calculus-verified proof of a regime change._
 
 ---
 
-### **Figure 3: Cumulative Mass Acceleration**
+### **Figure 4: Temporal Regime Shift**
 
-![Cumulative Mass](./images/cumulative_mass.png)  
-_Figure 3: Time-series visualization of total in-orbit mass accumulation (1957-2026). Note the sharp inflection post-2014 as Starlink/OneWeb deployments begin. While individual satellites are smaller (260-500kg vs. legacy 2-5 ton platforms), the sheer deployment volume drives exponential mass growth. The "knee" in the curve represents the Kessler Acceleration—the point where launch rates outpace natural orbital decay._
-
----
-
-### **Figure 4: Launch Activity Heatmap (Country × Year)**
-
-![Launch Heatmap](./images/launch_heatmap.png)  
-_Figure 4: Geopolitical ownership matrix showing launch activity intensity by country and year. The dramatic shift from Cold War bipolarity (USA/Russia dominance) to modern multipolarity (China, EU, India, Commercial) is visible. The 2014-2020 period shows explosive growth in the "Commercial" category (primarily SpaceX Starlink). This heatmap contextualizes the acceleration as both a technological and geopolitical shift._
+![Temporal Regime Shift](./images/temporal_regime_shift.png)  
+_Figure 4: Strategic synthesis visualization showing the acceleration inflection point. The magenta "Risk Surplus" zone represents satellites that would not exist under legacy linear growth patterns. The 2014 pivot marks the mathematical crossover where exponential commercial deployment overtook 67 years of Cold War-era linear trends. The HUD overlay quantifies the growth rate and doubling time, contextualizing the Kessler Acceleration as a measurable, ongoing exponential process._
 
 ---
 
-### **Figure 5: Orbital Regime Population Density**
+### **Figure 5: Operator Oligopoly Analysis**
 
-![Orbit Class Distribution](./images/orbit_class_distribution.png)  
-_Figure 5: Stacked bar chart showing object type composition across orbital regimes. LEO (Low Earth Orbit, <2000km) dominates by count but also shows the highest debris-to-payload ratio—evidence of historical collision events and mission-related debris. GEO (Geostationary, ~36,000km) shows inverse pattern: high payload concentration, low debris (evidence of graveyard orbit protocols). MEO (Medium Earth Orbit) represents the GPS/navigation band with moderate debris accumulation._
+![Operator Oligopoly](./images/operator_oligopoly.png)  
+_Figure 5: Market concentration analysis revealing the commercial space oligopoly. SpaceX (Starlink) dominates by object count with 60%+ of active satellites, while traditional aerospace giants (Lockheed Martin, Boeing) and government operators maintain higher individual satellite masses. This visualization quantifies the shift from government/military space programs to commercial mega-constellation dominance, with the top 5 operators controlling 75%+ of LEO traffic._
 
 ---
 
-### **Figure 6: The Kessler Canyon (KDE Spatial Analysis)**
+### **Figure 6: LEO Orbit Congestion Analysis**
+
+![LEO Orbit Congestion](./images/orbit_congestion_leo.png)  
+_Figure 6: Altitude-band population density showing object distribution within Low Earth Orbit (200-2000km). The 400-600km "Starlink band" shows dramatic concentration of modern mega-constellations, while the 800-1200km band contains legacy rocket bodies and defunct satellites. This granular LEO analysis reveals the vertical segregation that creates the "Kessler Canyon" pincer effect—active assets operating directly beneath a ceiling of uncontrolled high-mass objects._
+
+---
+
+### **Figure 7: The Kessler Canyon (KDE Spatial Analysis)**
 
 ![Kessler Canyon](./images/kessler_canyon.png)  
-_Figure 6: High-resolution KDE analysis revealing vertical orbital segregation. The cyan "Commuter Lane" (active satellites, ~550km median) sits 64km below the crimson "Deadly Ring" (rocket bodies, ~800km+ median). This altitude gap creates the "Kessler Canyon" pincer effect—modern mega-constellations operate directly beneath a ceiling of uncontrolled, high-mass legacy objects. **Note:** Energy calculations include ~10,000 payloads with imputed 260-500kg masses; the 1.9× rocket body energy advantage reflects measured vs. imputed mass distributions._
+_Figure 7: High-resolution KDE analysis revealing vertical orbital segregation. The cyan "Commuter Lane" (active satellites, ~550km median) sits 64km below the crimson "Deadly Ring" (rocket bodies, ~800km+ median). This altitude gap creates the "Kessler Canyon" pincer effect—modern mega-constellations operate directly beneath a ceiling of uncontrolled, high-mass legacy objects. **Note:** Energy calculations include ~10,000 payloads with imputed 260-500kg masses; the 1.9× rocket body energy advantage reflects measured vs. imputed mass distributions._
 
 ---
 
-### **Figure 7: Zombie Satellite Risk Index**
+### **Figure 8: Zombie Satellite Risk Index**
 
 ![Zombie Index](./images/zombie_index.png)  
-_Figure 7: Top 10 "Zombie Satellites" ranked by composite risk metric (mass × altitude × age penalty). These defunct payloads represent ideal Active Debris Removal (ADR) targets: large enough to track (500-5,000kg), high enough to persist (600-1200km altitudes with decade+ decay timelines), and old enough to represent imminent failure risk (15-40 years beyond design life). The Zombie Index prioritizes removal candidates by collision energy potential and orbital longevity._
+_Figure 8: Top 10 "Zombie Satellites" ranked by composite risk metric (mass × altitude × age penalty). These defunct payloads represent ideal Active Debris Removal (ADR) targets: large enough to track (500-5,000kg), high enough to persist (600-1200km altitudes with decade+ decay timelines), and old enough to represent imminent failure risk (15-40 years beyond design life). The Zombie Index prioritizes removal candidates by collision energy potential and orbital longevity._
 
 ---
+### **Figure 9: Geopolitical Liability Attribution**
 
+![Liability vs Traffic](./images/liability_vs_traffic.png)  
+_Figure 9: Dual-metric geopolitical analysis comparing operational traffic (object count) versus kinetic liability (total mass). Russia and the United States dominate by mass despite lower satellite counts—evidence of legacy Cold War programs leaving high-mass rocket bodies and defunct platforms. China shows balanced growth across both metrics. Commercial operators (USA-flagged SpaceX) dominate traffic but contribute lower per-object mass. This visualization quantifies orbital "ownership" responsibility: who operates the most satellites versus who contributed the most collision-generating mass._
+
+---
 ## **Technical Implementation**
 
 ### **Core Technologies**
