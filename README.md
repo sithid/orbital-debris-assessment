@@ -506,21 +506,25 @@ sns.kdeplot(
 ```
 orbital-debris-assessment/
 ├── data/
-│   ├── original/          # Raw source files (SATCAT, UCS)
-│   └── clean/             # Processed datasets
+│   └── clean/             # Processed datasets (version controlled)
 │       ├── ucs_cleaned.csv
 │       ├── satcat_cleaned.csv
 │       └── kinetic_master.csv
 ├── notebooks/
+│   ├── 00_exploratory_research.ipynb  # Initial data exploration
 │   ├── 01_ucs_cleanup.ipynb           # UCS ETL pipeline
 │   ├── 02_satcat_cleanup.ipynb        # SATCAT reconstruction
 │   ├── 03_orbital_risk_synthesis.ipynb # Master registry merge
 │   ├── 04_active_fleet_intelligence.ipynb # 2014 pivot proof
 │   └── 05_strategic_analysis.ipynb    # Kessler Canyon analysis
 ├── images/                # Visualization exports
+├── docs/                  # Documentation
+├── .gitignore            # Git exclusions (data/original/, venv/)
 ├── README.md             # This file
 └── requirements.txt      # Python dependencies
 ```
+
+**Note:** Raw data files (`data/original/`) are excluded from version control. Run notebooks 01-02 to fetch and process fresh data from public sources.
 
 ---
 
@@ -620,11 +624,13 @@ pip install -r requirements.txt
 
 ### **Execution Order**
 
-1. **Data Cleaning:** Run `01_ucs_cleanup.ipynb` → `02_satcat_cleanup.ipynb`
-2. **Synthesis:** Run `03_orbital_risk_synthesis.ipynb`
+1. **Data Acquisition:** Run `01_ucs_cleanup.ipynb` to fetch UCS data → `02_satcat_cleanup.ipynb` to fetch SATCAT data
+   - Notebooks automatically download raw data to `data/original/` (git-ignored)
+   - SATCAT rate-limited: 20 requests/day per IP; plan accordingly if re-running
+2. **Synthesis:** Run `03_orbital_risk_synthesis.ipynb` to merge datasets
 3. **Analytics:** Run `04_active_fleet_intelligence.ipynb` → `05_strategic_analysis.ipynb`
 
-**Note:** Raw data files (`satcat.csv`, `UCS-Satellite-Database.csv`) must be placed in `data/original/` before execution.
+**Data Freshness:** To regenerate with latest orbital data, delete `data/original/` and re-run notebooks 01-02. Cleaned outputs (`data/clean/`) are committed for immediate analysis without fetching raw data.
 
 ---
 
