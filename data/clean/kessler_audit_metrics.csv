@@ -1,2 +1,0 @@
-median_sat_km,median_rb_km,altitude_delta_km,separation_threshold_km,rb_intrusion_pct_<=650,sat_rising_pct_>=600_<=750,rb_mass_below_650_tons,sat_mass_above_600_tons,energy_ratio_rb_vs_sat,lane_mass_500_600_tons,ring_mass_750_1000_tons,rb_commuter_frac_500_650,sat_grey_frac_600_750,overlap_index,total_satellites_plotted,total_rocket_bodies_plotted
-539.0,607.0,68.0,75,15.7554379776602,4.528539892778303,1860.025,1686.6473999999998,3.261830307314737,2120.8682000000003,798.0,0.157554379776602,0.045285398927783035,0.10141988935219251,15855,1701

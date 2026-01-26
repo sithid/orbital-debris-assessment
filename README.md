@@ -26,7 +26,7 @@ This project delivers a comprehensive orbital debris risk assessment by engineer
 - Merged 67,264 SATCAT objects + 7,542 UCS satellites → 32,687 physics-complete in-orbit records
 - Achieved 100% feature density across 40 engineered attributes through tiered imputation (UCS verified → Keplerian derivation → ESA proxies)
 - Implemented Vis-Viva equation to reconstruct orbital velocity for 100% of tracked objects (critical for kinetic energy modeling)
-- Validated total mass estimate against ESA 2025 benchmarks (composition match within 0.7%)
+- Total mass now sits inside the ESA 2025 benchmark range after aligning payload proxies to the 355 kg ESA mean; composition deltas are documented in validation
 
 **Analytical Innovation:**
 
@@ -188,27 +188,27 @@ This analysis implements a 3-tier imputation hierarchy validated against ESA's 2
 
 **Proxy Values Applied:**
 
-- **Rocket Bodies:** 2,000 kg (ESA standard average)
-- **Unknown Payloads:** 500 kg (conservative median for non-UCS satellites)
-- **Debris Fragments:** 50 kg (trackable fragment average)
+- **Rocket Bodies:** 2,000 kg (conservative; no ESA class-average published)
+- **Unknown Payloads:** 355 kg (ESA mean active payload mass, Sec. 3.5/Fig. 2.31)
+- **Debris Fragments:** 50 kg (trackable fragment average; external safety assumption)
 - **Unclassified Objects:** 100 kg (safety fallback)
 
 **ESA Grounding for Proxies (what the report actually states):**
 
-- **Payload mean mass:** 355 kg with 6 m² cross-section for active payloads in LEO (Sec. 3.5, Fig. 2.31; p.75). Our 500 kg fallback is intentionally conservative vs. the ESA average.
+- **Payload mean mass:** 355 kg with 6 m² cross-section for active payloads in LEO (Sec. 3.5, Fig. 2.31; p.75). The proxy now matches this ESA mean.
 - **Rocket bodies:** The 2025 report does not publish a class-average rocket body mass; histograms in Sec. 3.1 (Fig. 3.2) show multi-ton distributions but no mean. The 2,000 kg proxy remains a conservative assumption, not an explicit ESA value.
 - **Debris fragments:** Sec. 2.4 (MASTER size distributions) provides counts and size-density curves but no fragment mass averages. The 50 kg proxy is an external safety assumption; ESA does not supply a mean mass for the >10 cm catalogued fragment class in this report.
 
 **Validation Results:**
 
-| Metric                  | This Analysis | ESA 2025 Benchmark | Deviation            |
-| :---------------------- | :------------ | :----------------- | :------------------- |
-| **Total In-Orbit Mass** | 16.3 kilotons | 13.6-15.1 kilotons | +7.2% (conservative) |
-| **Payload Mass %**      | 70.8%         | 71.5%              | -0.7% ✅             |
-| **Rocket Body Mass %**  | 28.1%         | 27.4%              | +0.7% ✅             |
-| **Debris Mass %**       | 1.1%          | 1.1%               | 0.0% ✅              |
+| Metric                  | This Analysis | ESA 2025 Benchmark | Deviation                    |
+| :---------------------- | :------------ | :----------------- | :--------------------------- |
+| **Total In-Orbit Mass** | 14.61 kilotons | 13.6-15.1 kilotons | Within ESA range ✅          |
+| **Payload Mass %**      | 62.5%         | 71.5%              | -9.0 pp (lower)              |
+| **Rocket Body Mass %**  | 32.9%         | 27.4%              | +5.5 pp (higher)             |
+| **Debris Mass %**       | 4.6%          | 1.1%               | +3.5 pp (higher; proxy-heavy) |
 
-**Interpretation:** The 7.8% overshoot represents a **worst-case mass scenario** due to conservative 500kg proxies applied to ~10,000 unknown payloads. Composition percentages match ESA benchmarks, validating the tiered methodology. This deviation is documented transparently rather than hidden—demonstrating production data engineering ethics.
+**Interpretation:** After aligning the payload proxy to the ESA mean (355 kg), total mass falls inside the ESA 2025 range. Composition skews toward rocket bodies/debris because payload proxies dropped; these deltas are transparent and traceable to the proxy choice rather than hidden model error.
 
 **Critical Transparency Statement:**
 
@@ -273,12 +273,12 @@ KE = 0.5 × proxy_mass_kg × velocity_m_s²
 **Vital Statistics:**
 
 - **In-Orbit Objects:** 32,687 (48.6% of catalog)
-- **Total Mass:** 16.28 Kilotons (16,281 metric tons)
-- **Kinetic Energy:** 333.37 Terajoules
+- **Total Mass:** 14.61 Kilotons (14,610 metric tons)
+- **Kinetic Energy:** 289.68 Terajoules
 - **Zombie Satellites:** 5,278 defunct payloads
 - **Average Orbital Velocity:** 6.90 km/s (altitude-adjusted via Vis-Viva)
 
-Verified the final `kinetic_master.csv` contains **32,687** in-orbit objects representing **16.28 Kilotons** of mass (worst-case estimate) and **333.37 Terajoules** of kinetic energy.
+Verified the final `kinetic_master.csv` contains **32,687** in-orbit objects representing **14.61 Kilotons** of mass and **289.68 Terajoules** of kinetic energy after aligning payload proxies to the ESA mean.
 
 ---
 
@@ -369,9 +369,9 @@ This distribution reveals the Cold War legacy effect: US and Soviet space progra
 | :----------------------- | :----------------- | :-------------------------------------------------- |
 | **Total Objects**        | 67,264 records     | Complete SATCAT universe (1957-2026)                |
 | **In-Orbit Objects**     | 32,687 (48.6%)     | Currently active kinetic threats                    |
-| **Total Mass**           | 16,281 metric tons | Cumulative kinetic mass (ESA +7.2% worst-case)      |
-| **Zombie Satellites**    | 5,278 payloads    | Defunct assets exceeding 110% design life (30.1% of payloads) |
-| **Kinetic Energy**       | 333.37 Terajoules     | Total destructive potential at orbital velocities   |
+| **Total Mass**           | 14,610 metric tons | Cumulative kinetic mass (ESA-aligned 355 kg payload mean) |
+| **Zombie Satellites**    | 5,278 payloads     | Defunct assets exceeding 110% design life (30.1% of payloads) |
+| **Kinetic Energy**       | 289.68 Terajoules  | Total destructive potential at orbital velocities   |
 | **Data Completeness**    | 100% imputation    | Physics-reconstructed across 51 engineered features |
 | **UCS Enrichment**       | 7,542 satellites   | High-fidelity mass/lifetime data synchronized       |
 | **Avg Orbital Velocity** | 6.90 km/s          | Altitude-adjusted via Vis-Viva equation             |
@@ -548,9 +548,9 @@ orbital-debris-assessment/
 
 ### **Physics Validation**
 
-- **Mass Composition:** Validated against ESA 2025 benchmarks (payload/rocket body/debris ratios match within 0.7%)
+- **Mass Composition:** Total mass within ESA 2025 range; composition deltas vs ESA: payload -9.0 pp, rocket bodies +5.5 pp, debris +3.5 pp (driven by lowered payload proxy)
 - **Velocity Sanity Check:** Average orbital velocity (6.90 km/s) aligns with expected LEO range (6.5-7.8 km/s across all orbital regimes)
-- **Kinetic Energy:** Total 333.37 TJ represents realistic worst-case scenario for in-orbit kinetic load
+- **Kinetic Energy:** Total 289.68 TJ after ESA-aligned payload proxy (355 kg)
 
 ---
 
