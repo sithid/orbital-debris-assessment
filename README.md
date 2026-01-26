@@ -98,10 +98,12 @@ This analysis identifies **5,278 defunct payloads** (satellites only; debris and
    - **Limitations:** Active payloads only (excludes debris/rocket bodies)
 
 3. **ESA Space Environment Report (2025)**
-   - **Source:** European Space Agency debris standards
+  - **Source:** [ESA Space Environment Report 2025 (PDF)](https://www.sdo.esoc.esa.int/publications/Space_Environment_Report_I9R1_20251021.pdf)
    - **Coverage:** Statistical proxies for untracked/unknown objects
    - **Scope:** Mass averages, composition percentages, size distributions
    - **Application:** Tier 3 imputation fallback for objects without UCS/SATCAT mass data
+  - **References used:** Section 2 (Space Environmental History in Numbers; object count/mass/area evolution) and Section 2.4 (Non-catalogued and modelled objects; MASTER size-density distributions, Figs. 2.8–2.11)
+  - **Citation:** ESA Space Debris Office, *Space Environment Report*, Issue 9 Rev 1, 21 Oct 2025
 
 ---
 
@@ -190,6 +192,12 @@ This analysis implements a 3-tier imputation hierarchy validated against ESA's 2
 - **Unknown Payloads:** 500 kg (conservative median for non-UCS satellites)
 - **Debris Fragments:** 50 kg (trackable fragment average)
 - **Unclassified Objects:** 100 kg (safety fallback)
+
+**ESA Grounding for Proxies (what the report actually states):**
+
+- **Payload mean mass:** 355 kg with 6 m² cross-section for active payloads in LEO (Sec. 3.5, Fig. 2.31; p.75). Our 500 kg fallback is intentionally conservative vs. the ESA average.
+- **Rocket bodies:** The 2025 report does not publish a class-average rocket body mass; histograms in Sec. 3.1 (Fig. 3.2) show multi-ton distributions but no mean. The 2,000 kg proxy remains a conservative assumption, not an explicit ESA value.
+- **Debris fragments:** Sec. 2.4 (MASTER size distributions) provides counts and size-density curves but no fragment mass averages. The 50 kg proxy is an external safety assumption; ESA does not supply a mean mass for the >10 cm catalogued fragment class in this report.
 
 **Validation Results:**
 
