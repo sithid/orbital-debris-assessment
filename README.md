@@ -15,7 +15,7 @@ This project delivers a comprehensive orbital debris risk assessment by engineer
 ### **Key Findings**
 
 - **The 2014 Pivot:** Mathematical proof (via Brent's Method root-finding) that exponential satellite growth officially surpassed linear Cold War trends in mid-2014
-- **68km Compression Crisis:** KDE analysis reveals modern mega-constellations occupy a narrow 200-600km band (median: 539km), with rocket bodies distributed across all of LEO but centered 68km higher (median: 607km)—the populations overlap significantly in the 500-700km danger zone
+- **The Overlap Crisis:** KDE analysis reveals modern mega-constellations cluster tightly at ~539km median, but rocket bodies are **bimodally distributed** across all of LEO—with the **highest concentration (29%) in the 400-600km band**, directly overlapping active satellites. The 68km median-to-median "gap" dramatically understates the true collision risk
 - **Zombie Protocol Imperative:** Identified 5,263 defunct payloads (satellites only; excludes debris/rocket bodies) exceeding 110% design life, representing high-mass collision catalysts in high-traffic orbits
 - **Double Threat Topology:** The orbital environment exhibits vertical segregation where active satellites operate in a "kinetic canyon" bounded by legacy debris above and exponential launch rates below
 
@@ -62,9 +62,11 @@ Using curve-fitting and root-finding algorithms, this project identifies **mid-2
 
 High-resolution Kernel Density Estimation reveals a dangerous vertical overlap:
 
-- **"Commuter Lane" (200-600km):** Modern mega-constellations cluster tightly (median: 539km)
-- **"Deadly Ring" (200-2000km):** Rocket bodies span ALL of LEO, but their center of mass (median: 607km) sits just 68km above the satellite median
-- **Critical Insight:** The 68km figure is a **median-to-median** measure—not a clean boundary. Both populations overlap heavily in the **500-700km danger zone**, where Starlink shells intersect legacy rocket body orbits
+- **"Commuter Lane" (400-600km):** Modern mega-constellations cluster tightly (median: 539km)
+- **"Deadly Ring" (200-2000km):** Rocket bodies span ALL of LEO with a **bimodal distribution**:
+  - **Peak concentration (29%)** in 400-600km—**directly inside the Commuter Lane**
+  - Secondary peaks at 200-400km (20%) and 800-1000km (18%)
+- **Critical Insight:** The 68km "median gap" is misleading. Nearly **50% of rocket bodies orbit below 600km**, physically intermixing with active satellite operations
 
 ### **The "Zombie Satellite" Population**
 
@@ -339,9 +341,9 @@ Commercial mega-constellations (post-2014) represent a fundamentally different g
 
 **The "Double Threat" Topology:**
 
-1. **Floor Rising:** Modern mega-constellations compress into 200-600km band
-2. **No Clean Separation:** Rocket bodies are distributed across ALL of LEO (200-2000km)—there is no isolated "graveyard"
-3. **Overlap Zone (500-700km):** The satellite and rocket body populations physically intersect, with medians only 68km apart
+1. **Floor Rising:** Modern mega-constellations compress into 400-600km band (median: 539km)
+2. **Bimodal Threat:** Rocket bodies peak in **two zones**—the 400-600km active satellite band (29% of RBs) AND the 800-1000km legacy graveyard (18%)
+3. **The Misleading Median:** While the RB median is 607km, nearly **50% of rocket bodies are below 600km**—the "68km gap" understates direct collision exposure
 
 **Energy Disparity Analysis:**
 
@@ -425,7 +427,7 @@ _Figure 6: Altitude-band population density showing object distribution within L
 ### **Figure 7: The Kessler Canyon (KDE Spatial Analysis)**
 
 ![Kessler Canyon](./images/kessler_canyon.png)  
-_Figure 7: High-resolution KDE analysis of kinetic energy vs. altitude. **How to read:** Y-axis separates objects by mass (velocity is ~constant per altitude), X-axis shows orbital location. The cyan cloud (satellites, 539km median) and crimson band (rocket bodies, 607km median) **overlap significantly** in the 500-700km zone—there is no clean "gap." The 68km figure is median-to-median; both populations physically intermix across LEO. Rocket bodies span all altitudes (200-2000km), carrying 4.1× more energy per object than the average satellite. **Note:** ~11,000 payloads use the 355 kg ESA-mean proxy._
+_Figure 7: High-resolution KDE analysis of kinetic energy vs. altitude. **How to read:** Y-axis separates objects by mass (velocity is ~constant per altitude), X-axis shows orbital location. The crimson band (rocket bodies) spans the full width because they're distributed across ALL altitudes—the vertical line at 607km marks only the **median**, not a concentration zone. **Key insight:** 29% of rocket bodies occupy the 400-600km band (the satellite operating zone), with 50% total below 600km. The "68km gap" is misleading—rocket bodies physically intermix with the cyan satellite cluster. RBs carry 4.1× more energy per object. **Note:** ~11,000 payloads use the 355 kg ESA-mean proxy._
 
 ---
 
