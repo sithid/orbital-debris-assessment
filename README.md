@@ -345,8 +345,8 @@ Commercial mega-constellations (post-2014) represent a fundamentally different g
 
 **Energy Disparity Analysis:**
 
-- **Energy Disparity (Adjusted):** Rocket bodies carry **1.9× more kinetic energy** than satellites in the same orbital regime
-  - **Caveat:** This ratio includes ~10,000 unknown payloads imputed at the 355 kg ESA mean; actual disparity for measured objects may vary
+- **Energy Disparity (Adjusted):** Rocket bodies carry **4.1× more kinetic energy** than satellites in the same orbital regime
+  - **Caveat:** This ratio includes ~11,000 unknown payloads imputed at the 355 kg ESA mean; actual disparity for measured objects may vary
   - **Implication:** While rocket bodies remain high-risk shrapnel sources, modern mega-constellation satellites (e.g., Starlink: 260kg) represent a **swarm threat** where quantity multiplies kinetic load
 
 **Zombie Geopolitical Distribution:**
@@ -425,7 +425,7 @@ _Figure 6: Altitude-band population density showing object distribution within L
 ### **Figure 7: The Kessler Canyon (KDE Spatial Analysis)**
 
 ![Kessler Canyon](./images/kessler_canyon.png)  
-_Figure 7: High-resolution KDE analysis revealing vertical orbital segregation. The cyan "Commuter Lane" (active satellites, ~550km median) sits 64km below the crimson "Deadly Ring" (rocket bodies, ~800km+ median). This altitude gap creates the "Kessler Canyon" pincer effect—modern mega-constellations operate directly beneath a ceiling of uncontrolled, high-mass legacy objects. **Note:** Energy calculations include ~10,000 payloads with the 355 kg ESA-mean proxy; the 1.9× rocket body energy advantage reflects measured vs. imputed mass distributions._
+_Figure 7: High-resolution KDE analysis revealing vertical orbital segregation. The cyan "Commuter Lane" (active satellites, ~550km median) sits 64km below the crimson "Deadly Ring" (rocket bodies, ~800km+ median). This altitude gap creates the "Kessler Canyon" pincer effect—modern mega-constellations operate directly beneath a ceiling of uncontrolled, high-mass legacy objects. **Note:** Energy calculations include ~11,000 payloads with the 355 kg ESA-mean proxy; the 4.1× rocket body energy advantage reflects measured vs. imputed mass distributions._
 
 ---
 
