@@ -16,14 +16,14 @@ This project delivers a comprehensive orbital debris risk assessment by engineer
 
 - **The 2014 Pivot:** Mathematical proof (via Brent's Method root-finding) that exponential satellite growth officially surpassed linear Cold War trends in mid-2014
 - **64km Compression Crisis:** KDE analysis reveals modern mega-constellations occupy a narrow 200-600km band, creating a "commuter lane" 64km below a dense field of uncontrolled rocket bodies (800-1200km)
-- **Zombie Protocol Imperative:** Identified 5,278 defunct payloads (satellites only; excludes debris/rocket bodies) exceeding 110% design life, representing high-mass collision catalysts in high-traffic orbits
+- **Zombie Protocol Imperative:** Identified 5,263 defunct payloads (satellites only; excludes debris/rocket bodies) exceeding 110% design life, representing high-mass collision catalysts in high-traffic orbits
 - **Double Threat Topology:** The orbital environment exhibits vertical segregation where active satellites operate in a "kinetic canyon" bounded by legacy debris above and exponential launch rates below
 
 ### **Technical Impact**
 
 **Data Engineering Achievement:**
 
-- Merged 67,264 SATCAT objects + 7,542 UCS satellites → 32,687 physics-complete in-orbit records
+- Merged 67,264 SATCAT objects + 7,542 UCS satellites → 32,843 physics-complete in-orbit records
 - Achieved 100% feature density across 40 engineered attributes through tiered imputation (UCS verified → Keplerian derivation → ESA proxies)
 - Implemented Vis-Viva equation to reconstruct orbital velocity for 100% of tracked objects (critical for kinetic energy modeling)
 - Total mass now sits inside the ESA 2025 benchmark range after aligning payload proxies to the 355 kg ESA mean; composition deltas are documented in validation
