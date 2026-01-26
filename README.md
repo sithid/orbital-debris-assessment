@@ -68,7 +68,7 @@ High-resolution Kernel Density Estimation reveals a dangerous vertical segregati
 
 ### **The "Zombie Satellite" Population**
 
-This analysis identifies **5,278 defunct payloads** (satellites only; debris and rocket bodies are excluded from this classification) that:
+This analysis identifies **5,263 defunct payloads** (satellites only; debris and rocket bodies are excluded from this classification) that:
 
 - Exceed 110% of their design lifetime (e.g., 15-year satellite now 16.5+ years old)
 - Average age of 25.2 years (significantly beyond typical 10-15 year design lives)
