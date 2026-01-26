@@ -31,5 +31,8 @@ desktop.ini
 # Data - raw sources (force pipeline refresh)
 data/original/
 
+# Generated reports (diagnostic exports)
+data/clean/reports/
+
 # Logs
 *.log
