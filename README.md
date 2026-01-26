@@ -10,12 +10,12 @@
 
 ## **Executive Summary**
 
-This project delivers a comprehensive orbital debris risk assessment by engineering a **physics-reconstructed master registry** that merges 67,264 tracked SATCAT objects with high-fidelity Union of Concerned Scientists (UCS) satellite data. By implementing **Vis-Viva velocity calculations**, **ESA-standard mass imputation**, and **Kernel Density Estimation (KDE) spatial analysis**, this analysis quantifies the 2014 "Kessler Acceleration"—the mathematical inflection point where commercial mega-constellation deployment rates surpassed 67 years of legacy launch activity.
+This project delivers a comprehensive orbital debris risk assessment by engineering a **physics-reconstructed master registry** that merges 67,464 tracked SATCAT objects with high-fidelity Union of Concerned Scientists (UCS) satellite data. By implementing **Vis-Viva velocity calculations**, **ESA-standard mass imputation**, and **Kernel Density Estimation (KDE) spatial analysis**, this analysis quantifies the 2014 "Kessler Acceleration"—the mathematical inflection point where commercial mega-constellation deployment rates surpassed 67 years of legacy launch activity.
 
 ### **Key Findings**
 
 - **The 2014 Pivot:** Mathematical proof (via Brent's Method root-finding) that exponential satellite growth officially surpassed linear Cold War trends in mid-2014
-- **64km Compression Crisis:** KDE analysis reveals modern mega-constellations occupy a narrow 200-600km band, creating a "commuter lane" 64km below a dense field of uncontrolled rocket bodies (800-1200km)
+- **68km Compression Crisis:** KDE analysis reveals modern mega-constellations occupy a narrow 200-600km band (median: 539km), with rocket bodies distributed across all of LEO but centered 68km higher (median: 607km)—the populations overlap significantly in the 500-700km danger zone
 - **Zombie Protocol Imperative:** Identified 5,263 defunct payloads (satellites only; excludes debris/rocket bodies) exceeding 110% design life, representing high-mass collision catalysts in high-traffic orbits
 - **Double Threat Topology:** The orbital environment exhibits vertical segregation where active satellites operate in a "kinetic canyon" bounded by legacy debris above and exponential launch rates below
 
@@ -23,16 +23,16 @@ This project delivers a comprehensive orbital debris risk assessment by engineer
 
 **Data Engineering Achievement:**
 
-- Merged 67,264 SATCAT objects + 7,542 UCS satellites → 32,843 physics-complete in-orbit records
+- Merged 67,464 SATCAT objects + 7,542 UCS satellites → 32,843 physics-complete in-orbit records
 - Achieved 100% feature density across 40 engineered attributes through tiered imputation (UCS verified → Keplerian derivation → ESA proxies)
 - Implemented Vis-Viva equation to reconstruct orbital velocity for 100% of tracked objects (critical for kinetic energy modeling)
 - Total mass now sits inside the ESA 2025 benchmark range after aligning payload proxies to the 355 kg ESA mean; composition deltas are documented in validation
 
 **Analytical Innovation:**
 
-- Identified zombie satellite distribution by owner, revealing US (2,211 satellites, 42%) and Russia/CIS (1,429 satellites, 27%) as primary contributors to defunct payload population
+- Identified zombie satellite distribution by owner, revealing US (2,199 satellites, 42%) and Russia/CIS (1,430 satellites, 27%) as primary contributors to defunct payload population
 - Applied dual-cadence curve fitting (linear 1957-2013 vs. exponential 2014-2026) to prove acceleration hypothesis
-- Performed 2D KDE spatial analysis to quantify the 64km altitude compression between active/inactive populations
+- Performed 2D KDE spatial analysis to quantify the 68km altitude compression between active/inactive populations
 
 **Portfolio Differentiation:**
 
@@ -60,11 +60,11 @@ Using curve-fitting and root-finding algorithms, this project identifies **mid-2
 
 ### **The "Kessler Canyon" Threat Topology**
 
-High-resolution Kernel Density Estimation reveals a dangerous vertical segregation:
+High-resolution Kernel Density Estimation reveals a dangerous vertical overlap:
 
-- **"Commuter Lane" (200-600km):** Modern mega-constellations operate in a compressed 400km band
-- **"Deadly Ring" (800-1200km):** Legacy rocket bodies and defunct satellites loom 64km above
-- **The Pincer Effect:** Active satellites sprint through a canyon where the ceiling is made of multi-ton kinetic bombs
+- **"Commuter Lane" (200-600km):** Modern mega-constellations cluster tightly (median: 539km)
+- **"Deadly Ring" (200-2000km):** Rocket bodies span ALL of LEO, but their center of mass (median: 607km) sits just 68km above the satellite median
+- **Critical Insight:** The 68km figure is a **median-to-median** measure—not a clean boundary. Both populations overlap heavily in the **500-700km danger zone**, where Starlink shells intersect legacy rocket body orbits
 
 ### **The "Zombie Satellite" Population**
 
@@ -72,10 +72,10 @@ This analysis identifies **5,263 defunct payloads** (satellites only; debris and
 
 - Exceed 110% of their design lifetime (e.g., 15-year satellite now 16.5+ years old)
 - Average age of 25.2 years (significantly beyond typical 10-15 year design lives)
-- Represent 30.1% of the total payload population (17,562 active + inactive satellites)
+- Represent 29.7% of the total satellite population (17,733 active + inactive satellites)
 - Geopolitical distribution reveals Cold War legacy: US (42%) and Russia/CIS (27%) account for 69% of zombie population
 
-**Methodology Note:** The zombie algorithm applies exclusively to objects classified as `PAYLOAD` in SATCAT, filtering out non-operational satellites via status codes or age-to-lifetime ratios. The total in-orbit population includes an additional 12,672 debris fragments and 2,401 rocket bodies that are not counted in zombie statistics.
+**Methodology Note:** The zombie algorithm applies exclusively to objects classified as satellites in the master registry, filtering out non-operational satellites via status codes or age-to-lifetime ratios. The total in-orbit population includes an additional 12,655 debris fragments and 2,403 rocket bodies that are not counted in zombie statistics.
 
 ---
 
@@ -86,7 +86,7 @@ This analysis identifies **5,263 defunct payloads** (satellites only; debris and
 1. **SATCAT (Satellite Catalog) - CelesTrak**
 
    - **Source:** [`https://celestrak.org/pub/satcat.csv`](https://celestrak.org/pub/satcat.csv)
-   - **Coverage:** 67,264 tracked objects (1957-present)
+   - **Coverage:** 67,464 tracked objects (1957-present)
    - **Scope:** Global registry including active satellites, rocket bodies, and debris fragments
    - **Limitations:** Mass-blind (no mass data), 0.0 placeholders, inconsistent string formatting
 
@@ -221,7 +221,7 @@ This analysis implements a 3-tier imputation hierarchy validated against ESA's 2
 - Applied orbit-specific fuel fraction ratios (LEO payloads: 0.65, GEO: 0.55, debris/rocket bodies: 1.0)
 - Derived `dry_mass_kg` for collision modeling (structural mass only)
 
-**Output:** `satcat_cleaned.csv` (67,264 records, 40 features, 100% imputation coverage)
+**Output:** `satcat_cleaned.csv` (67,464 records, 27 features, 100% imputation coverage)
 
 ---
 
@@ -268,17 +268,17 @@ v = √(μ/a)  where:
 KE = 0.5 × proxy_mass_kg × velocity_m_s²
 ```
 
-**Output:** `kinetic_master.csv` (67,264 records, 51 features)
+**Output:** `kinetic_master.csv` (67,464 records, 44 features)
 
 **Vital Statistics:**
 
-- **In-Orbit Objects:** 32,687 (48.6% of catalog)
+- **In-Orbit Objects:** 32,843 (48.7% of catalog)
 - **Total Mass:** 14.61 Kilotons (14,610 metric tons)
 - **Kinetic Energy:** 289.68 Terajoules
-- **Zombie Satellites:** 5,278 defunct payloads
-- **Average Orbital Velocity:** 6.90 km/s (altitude-adjusted via Vis-Viva)
+- **Zombie Satellites:** 5,263 defunct payloads
+- **Average Orbital Velocity:** 6.91 km/s (altitude-adjusted via Vis-Viva)
 
-Verified the final `kinetic_master.csv` contains **32,687** in-orbit objects representing **14.61 Kilotons** of mass and **289.68 Terajoules** of kinetic energy after aligning payload proxies to the ESA mean.
+Verified the final `kinetic_master.csv` contains **32,843** in-orbit objects representing **14.61 Kilotons** of mass and **289.68 Terajoules** of kinetic energy after aligning payload proxies to the ESA mean.
 
 ---
 
@@ -333,15 +333,15 @@ Commercial mega-constellations (post-2014) represent a fundamentally different g
 
 **Key Finding:**
 
-- **Active Satellites (Median):** 550km altitude
-- **Rocket Bodies (Median):** 814km altitude
-- **Vertical Gap:** **64km separation**
+- **Active Satellites (Median):** 539km altitude
+- **Rocket Bodies (Median):** 607km altitude
+- **Vertical Gap:** **68km separation**
 
 **The "Double Threat" Topology:**
 
 1. **Floor Rising:** Modern mega-constellations compress into 200-600km band
-2. **Ceiling Heavy:** Legacy rocket bodies create dense field at 800-1200km
-3. **Pincer Effect:** Active satellites operate in a "canyon" bounded by kinetic threats above/below
+2. **No Clean Separation:** Rocket bodies are distributed across ALL of LEO (200-2000km)—there is no isolated "graveyard"
+3. **Overlap Zone (500-700km):** The satellite and rocket body populations physically intersect, with medians only 68km apart
 
 **Energy Disparity Analysis:**
 
@@ -351,15 +351,15 @@ Commercial mega-constellations (post-2014) represent a fundamentally different g
 
 **Zombie Geopolitical Distribution:**
 
-The 5,278 zombie satellites break down by owner:
+The 5,263 zombie satellites break down by owner:
 
-- **United States:** 2,211 satellites (41.9%)
-- **Russia/CIS:** 1,429 satellites (27.1%)
-- **China (PRC):** 372 satellites (7.0%)
-- **United Kingdom:** 148 satellites (2.8%)
+- **United States:** 2,199 satellites (41.8%)
+- **Russia/CIS:** 1,430 satellites (27.2%)
+- **China (PRC):** 372 satellites (7.1%)
+- **United Kingdom:** 147 satellites (2.8%)
 - **Japan:** 147 satellites (2.8%)
 
-This distribution reveals the Cold War legacy effect: US and Soviet space programs created 69% of today's defunct payload population, representing long-term collision risks as these aged platforms (average 25.2 years old) enter unpredictable decay spirals.
+This distribution reveals the Cold War legacy effect: US and Soviet space programs created 69% of today's defunct payload population, representing long-term collision risks as these aged platforms (average 25.3 years old) enter unpredictable decay spirals.
 
 ---
 
@@ -367,14 +367,14 @@ This distribution reveals the Cold War legacy effect: US and Soviet space progra
 
 | Metric                   | Value              | Description                                         |
 | :----------------------- | :----------------- | :-------------------------------------------------- |
-| **Total Objects**        | 67,264 records     | Complete SATCAT universe (1957-2026)                |
-| **In-Orbit Objects**     | 32,687 (48.6%)     | Currently active kinetic threats                    |
+| **Total Objects**        | 67,464 records     | Complete SATCAT universe (1957-2026)                |
+| **In-Orbit Objects**     | 32,843 (48.7%)     | Currently active kinetic threats                    |
 | **Total Mass**           | 14,610 metric tons | Cumulative kinetic mass (ESA-aligned 355 kg payload mean) |
-| **Zombie Satellites**    | 5,278 payloads     | Defunct assets exceeding 110% design life (30.1% of payloads) |
+| **Zombie Satellites**    | 5,263 payloads     | Defunct assets exceeding 110% design life (29.7% of satellites) |
 | **Kinetic Energy**       | 289.68 Terajoules  | Total destructive potential at orbital velocities   |
-| **Data Completeness**    | 100% imputation    | Physics-reconstructed across 51 engineered features |
+| **Data Completeness**    | 100% imputation    | Physics-reconstructed across 44 engineered features |
 | **UCS Enrichment**       | 7,542 satellites   | High-fidelity mass/lifetime data synchronized       |
-| **Avg Orbital Velocity** | 6.90 km/s          | Altitude-adjusted via Vis-Viva equation             |
+| **Avg Orbital Velocity** | 6.91 km/s          | Altitude-adjusted via Vis-Viva equation             |
 
 ---
 
@@ -390,7 +390,7 @@ _Figure 1: Logarithmic mass distribution revealing the 6-order-of-magnitude disp
 ### **Figure 2: The Visibility Trap**
 
 ![Visibility Trap](./images/visibility_trap.png)  
-_Figure 2: Mass vs. Count distribution revealing the deceptive inversion between object prevalence and kinetic risk. By count, the orbital population appears balanced: debris (38.8%) and active satellites (37.6%) are statistically equivalent. However, by mass, rocket bodies (7.3% of count) carry ~30% of total kinetic energy—a 4:1 mass-to-count ratio. This creates the "visibility trap": regulatory frameworks focused on satellite proliferation (count-based metrics) systematically miss the legacy debris threat (mass-based physics). The most dangerous objects—multi-ton rocket bodies—are statistically invisible when sorted by count alone, appearing as "just 2,401 catalog entries" while carrying more collision energy than 12,000+ debris fragments combined._
+_Figure 2: Mass vs. Count distribution revealing the deceptive inversion between object prevalence and kinetic risk. By count, the orbital population shows debris (38.5%) and active satellites (38.0%) as statistically comparable. However, by mass, rocket bodies (7.3% of count) carry ~33% of total kinetic energy—a 4.5:1 mass-to-count ratio. This creates the "visibility trap": regulatory frameworks focused on satellite proliferation (count-based metrics) systematically miss the legacy debris threat (mass-based physics). The most dangerous objects—multi-ton rocket bodies—are statistically invisible when sorted by count alone, appearing as "just 2,403 catalog entries" while carrying more collision energy than 12,655 debris fragments combined._
 
 ---
 
@@ -418,21 +418,21 @@ _Figure 5: Market concentration analysis revealing the commercial space oligopol
 ### **Figure 6: LEO Orbit Congestion Analysis**
 
 ![LEO Orbit Congestion](./images/orbit_congestion_leo.png)  
-_Figure 6: Altitude-band population density showing object distribution within Low Earth Orbit (200-2000km). The 400-600km "Starlink band" shows dramatic concentration of modern mega-constellations, while the 800-1200km band contains legacy rocket bodies and defunct satellites. This granular LEO analysis reveals the vertical segregation that creates the "Kessler Canyon" pincer effect—active assets operating directly beneath a ceiling of uncontrolled high-mass objects._
+_Figure 6: Altitude-band population density showing object distribution within Low Earth Orbit (200-2000km). The 400-600km "Starlink band" shows dramatic concentration of modern mega-constellations. Rocket bodies are distributed across ALL altitude bands (200-2000km), with notable presence in the 600-800km range. The 500-700km zone represents the critical overlap region where active satellites physically intermix with legacy rocket bodies._
 
 ---
 
 ### **Figure 7: The Kessler Canyon (KDE Spatial Analysis)**
 
 ![Kessler Canyon](./images/kessler_canyon.png)  
-_Figure 7: High-resolution KDE analysis revealing vertical orbital segregation. The cyan "Commuter Lane" (active satellites, ~550km median) sits 64km below the crimson "Deadly Ring" (rocket bodies, ~800km+ median). This altitude gap creates the "Kessler Canyon" pincer effect—modern mega-constellations operate directly beneath a ceiling of uncontrolled, high-mass legacy objects. **Note:** Energy calculations include ~11,000 payloads with the 355 kg ESA-mean proxy; the 4.1× rocket body energy advantage reflects measured vs. imputed mass distributions._
+_Figure 7: High-resolution KDE analysis of kinetic energy vs. altitude. **How to read:** Y-axis separates objects by mass (velocity is ~constant per altitude), X-axis shows orbital location. The cyan cloud (satellites, 539km median) and crimson band (rocket bodies, 607km median) **overlap significantly** in the 500-700km zone—there is no clean "gap." The 68km figure is median-to-median; both populations physically intermix across LEO. Rocket bodies span all altitudes (200-2000km), carrying 4.1× more energy per object than the average satellite. **Note:** ~11,000 payloads use the 355 kg ESA-mean proxy._
 
 ---
 
 ### **Figure 8: Zombie Satellite Distribution**
 
 ![Zombie Index](./images/zombie_index.png)  
-_Figure 8: The Zombie Satellite distribution showing (Left) age histogram of 5,278 defunct payloads with 25-year average age, and (Right) top 5 owners by zombie count. "Zombies" are operationally dead payloads or satellites exceeding design life by 10%+ (`sat_age_years > lifetime_years × 1.10`). The United States leads with 2,211 zombie satellites (42% of total), followed by Russia/CIS with 1,429 (27%). This geopolitical breakdown reveals Cold War legacy: US and Soviet programs created the majority of today's uncontrolled payload population, representing imminent collision risks as these aged platforms enter unpredictable decay spirals._
+_Figure 8: The Zombie Satellite distribution showing (Left) age histogram of 5,263 defunct payloads with 25.3-year average age, and (Right) top 5 owners by zombie count. "Zombies" are operationally dead payloads or satellites exceeding design life by 10%+ (`sat_age_years > lifetime_years × 1.10`). The United States leads with 2,199 zombie satellites (42% of total), followed by Russia/CIS with 1,430 (27%). This geopolitical breakdown reveals Cold War legacy: US and Soviet programs created the majority of today's uncontrolled payload population, representing imminent collision risks as these aged platforms enter unpredictable decay spirals._
 
 ---
 ### **Figure 9: Geopolitical Liability Attribution**
@@ -564,7 +564,7 @@ orbital-debris-assessment/
 
 1. **Active Debris Removal (ADR) Prioritization:**
 
-   - 5,278 zombie satellites represent priority removal targets (30% of payload population)
+   - 5,263 zombie satellites represent priority removal targets (29.7% of satellite population)
    - Geopolitical concentration: US and Russia control 69% of zombie inventory, suggesting bilateral cleanup coordination
    - ROI justification: Removing 1 high-mass zombie = preventing 1,000+ trackable debris fragments (per ESA collision models)
 
@@ -575,8 +575,8 @@ orbital-debris-assessment/
    - Precedent: ITU frequency allocation model (first-come-first-served → congestion management)
 
 3. **Mega-Constellation Design Standards:**
-   - 64km canyon gap suggests coordination zones for active vs. passive objects
-   - Proposal: Mandate 600-700km "buffer zone" free of persistent debris (via guaranteed deorbit compliance)
+   - 68km canyon gap is dangerously narrow—closer than the assumed 200km+ separation
+   - Proposal: Mandate stricter altitude coordination; the 600-700km band should be designated a "buffer zone" with mandatory deorbit compliance
 
 ### **The Technical Innovations This Analysis Enables**
 
@@ -693,7 +693,7 @@ In alignment with academic integrity and professional data science standards, I 
 
 **Independent Analytical Work:**
 
-- **All strategic insights and findings** (2014 Pivot, Zombie Protocol, 64km Compression Crisis) are my original interpretations of the processed data
+- **All strategic insights and findings** (2014 Pivot, Zombie Protocol, 68km Compression Crisis) are my original interpretations of the processed data
 - **Data pipeline architecture** (3-tier imputation hierarchy, merge strategy, zombie algorithm design) represents my engineering decisions
 - **Threshold selections** (110% lifetime for zombies, ESA proxy values, regime classifications) were determined through domain research and validation
 - **Visual narrative** (figure selection, KDE analysis methodology, risk metric design) reflects my understanding of orbital mechanics
