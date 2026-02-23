@@ -23,7 +23,8 @@ Table satellites {
 // ORBITAL & PHYSICAL PROFILE — orbit geometry + mass + size (1:1 with satellites)
 // =============================================================================
 Table orbital_data {
-  norad_id integer [primary key, note: 'FK → satellites']
+  orbital_data_id integer [primary key, increment, note: 'Primary key for orbital_data']
+  norad_id integer [not null, unique, note: 'FK → satellites (unique to preserve 1:1)']
   orbit_class varchar [note: 'LEO, MEO, GEO, HEO, etc.']
   orbit_type varchar [note: 'Sun-synchronous, polar, equatorial, etc.']
   period_minutes decimal [note: 'Orbital period in minutes']
@@ -71,7 +72,8 @@ Table launch_events {
 // UCS ACTIVE SATELLITE DETAILS — enrichment for active payloads only (1:1 subset)
 // =============================================================================
 Table ucs_details {
-  norad_id integer [primary key, note: 'FK → satellites']
+  ucs_detail_id integer [primary key, increment, note: 'Primary key for ucs_details']
+  norad_id integer [not null, unique, note: 'FK → satellites (unique for one UCS row per satellite)']
   lifetime_years decimal [note: 'Design lifetime (years)']
   sat_age_years decimal [note: 'Current age = 2026 − launch_year']
   primary_purpose varchar [note: 'High-level mission (communications, Earth observation, etc.)']
@@ -84,7 +86,8 @@ Table ucs_details {
 // RISK ASSESSMENT — derived analytics per object (1:1)
 // =============================================================================
 Table risk_assessment {
-  norad_id integer [primary key, note: 'FK → satellites']
+  risk_assessment_id integer [primary key, increment, note: 'Primary key for risk_assessment']
+  norad_id integer [not null, unique, note: 'FK → satellites (unique to preserve 1:1)']
   velocity_kms decimal [note: 'Mean orbital velocity (km/s) via Vis-Viva']
   kinetic_joules decimal [note: 'Kinetic energy (joules)']
   is_zombie boolean [note: 'Exceeds 110% of design lifetime?']
@@ -94,7 +97,7 @@ Table risk_assessment {
 // RELATIONSHIPS
 // =============================================================================
 
-// 1:1 — child tables share the same norad_id as their parent satellite record
+// 1:1 — child tables use their own PKs and keep norad_id as a unique FK to satellites
 ref: orbital_data.norad_id > satellites.norad_id
 ref: ucs_details.norad_id > satellites.norad_id
 ref: risk_assessment.norad_id > satellites.norad_id
