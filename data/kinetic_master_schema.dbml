@@ -1,5 +1,10 @@
 // Orbital Debris Assessment — SQL Schema (DBML)
-// Docs: https://dbml.dbdiagram.io/docs
+// Each table has its own primary key to uniquely identify its row type (satellites.norad_id,
+// orbital_data.orbital_data_id, ucs_details.ucs_detail_id, risk_assessment.risk_assessment_id, etc.).
+// I use norad_id as a foreign key in child tables (orbital_data, ucs_details, risk_assessment) with a
+// unique constraint to preserve a one-to-one relationship back to satellites, rather than duplicating
+// child table IDs inside the parent table. This avoids circular dependencies and keeps normalization 
+// clean while still enforcing relational links.
 
 // =============================================================================
 // CORE IDENTITY TABLE — one row per tracked space object
