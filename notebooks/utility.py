@@ -1,0 +1,503 @@
+# All utility functions should have complete docstrings for clarity and maintainability.
+# All utility functions that were assisted by AI have 'AI Assisted Function' in comment headers for easy identification.
+import pandas as pd
+import numpy as np
+import sqlite3 as sql
+
+# Various constants for calculations.
+earth_radius = 6378.137
+mu = 398600.4418 # Earth's gravitational parameter (km^3/s^2)
+
+def calculate_dry_mass(row):
+    """
+    Estimate the dry mass of a satellite based on its wet mass, object type, and orbital regime.
+
+    Parameters:
+    row (pd.Series): A row from the satellite DataFrame containing 'proxy_mass_kg', 'object_type', and 'orbit_class'.
+
+    Returns:
+    float: The estimated dry mass in kilograms.
+    """
+    wet_mass = row['proxy_mass_kg']
+    obj_type = row['object_type']
+    regime = row['orbit_class']
+    
+    # Station-Keeping: The act of maintaining a satellite's orbit.
+    # Typically requires small amounts of fuel for minor adjustments to keep
+    # the satellite in its intended orbit. Satellites are affected by a variety
+    # of external factors requiring periodic thruster adjustments.
+
+    # Debris and Rocket Bodies are essentially dry structures (no fuel)
+    if obj_type in ['DEBRIS', 'ROCKET BODY']:
+        return wet_mass 
+    
+    # Payloads follow orbit-specific fuel-fraction logic
+    if obj_type == 'PAYLOAD':
+        if regime == 'LEO':
+            # LEO satellites typically carry minimal fuel (<10%). They get carried into
+            # orbit by a launch vehicle and use small propulsion for station-keeping.
+            # Conservative estimate: 90% Dry Mass.
+            return wet_mass * 0.90
+        else:
+            # GEO/MEO/Deep Space satellites often require significant fuel reserves
+            # to reach and maintain their orbits, as well as for station-keeping maneuvers
+            # Standard estimate: 55% Dry Mass.
+            return wet_mass * 0.55
+            
+    return wet_mass
+
+# basic RCS size categorization
+def categorize_rcs(val):
+    """
+    Categorize the radar cross-section (RCS) value into size classes.
+
+    Parameters:
+    val (float): The RCS value in square meters.
+
+    Returns:
+    str: The size category ('UNKNOWN', 'SMALL', 'MEDIUM', 'LARGE').
+    """
+    if pd.isna(val): return 'UNKNOWN'
+    elif val < 0.1:    return 'SMALL'
+    elif val < 1.0:    return 'MEDIUM'
+    else: return 'LARGE'
+
+def derive_category(row):
+    """
+    Derive the category of a space object based on its type and status.
+
+    Parameters:
+    row (pd.Series): A row from the satellite DataFrame.
+
+    Returns:
+    str: The category of the space object.
+    """
+    if row['object_type'] == 'DEBRIS': return 'Debris'
+    elif row['object_type'] == 'ROCKET BODY': return 'Rocket Body'
+    elif row['object_type'] == 'PAYLOAD':
+        return 'Inactive Satellite' if row['is_zombie'] == 1 else 'Active Satellite'
+    return 'Unknown'
+
+def impute_power_smart(row, odm, gdm):
+    """
+    Impute power consumption for satellites based on available data and object type.
+
+    Parameters:
+    row (pd.Series): A row from the satellite DataFrame.
+    odm (dict): Orbit-dependent power ratios.
+    gdm (float): Global default power ratio.
+
+    Returns:
+    float: Imputed power consumption in watts.
+    """
+    if pd.notna(row['proxy_power_watts']):
+        return row['proxy_power_watts']
+    
+    if row['object_type'] == 'PAYLOAD':
+        mass = row['proxy_mass_kg']
+        orbit = row['orbit_class']
+        
+        if pd.isna(orbit):
+            ratio = gdm
+        else:
+            ratio = odm.get(orbit, gdm)
+        
+        return mass * ratio
+    
+    return 0.0
+
+def load_query_result(query_name):
+    """
+    Load query results from a parquet file for a given query.
+    
+    Parameters:
+    query_name (str): The name of the query whose results are to be loaded.
+    
+    Returns:
+    pd.DataFrame: The query results as a pandas DataFrame.
+    """
+    file_path = f'../data/clean/results/{query_name}.parquet'
+    return pd.read_parquet(file_path)
+
+def run_query(sql, conn):
+    """
+    Execute a SQL query and return the results as a pandas DataFrame.
+    
+    Parameters:
+    sql (str): The SQL query to be executed.
+    conn (sql.Connection): The database connection object.
+    
+    Returns:
+    pd.DataFrame: The results of the SQL query as a pandas DataFrame.
+    """
+    return pd.read_sql(sql, conn)
+
+# Standardize Primary Purpose (Mission)
+def standardize_purpose(text):
+    if pd.isna(text) or text == 'Unknown':
+        return 'Unknown'
+    
+    # Take the first primary term if there are multiple (e.g. "Comms/Nav")
+    primary = text.split('/')[0].strip()
+    
+    mapping = {
+        'Earth Science': 'Earth Observation',
+        'Meteorological': 'Earth Observation',
+        'Surveillance': 'Earth Observation',
+        'Earth': 'Earth Observation',
+        'Earth/Space Observation': 'Earth Observation',
+        'Space Observation': 'Space Science',
+        'Technology Demonstration': 'Technology Development',
+        'Mission Extension Technology': 'Technology Development',
+        'Platform': 'Technology Development',
+        'Satellite Positioning': 'Navigation',
+        'Navigation': 'Navigation',
+        'Communications': 'Communications',
+        'Space Science': 'Space Science',
+        'Educational': 'Educational'
+    }
+    
+    return mapping.get(primary, primary)
+
+def classify_orbit(period):
+    """
+    Translates orbital period into standardized regimes.
+
+    Parameters:
+    period (float): The orbital period in minutes.
+
+    Returns:
+    str: The classified orbital regime ('LEO', 'MEO', 'GEO', 'Elliptical', or 'UNKNOWN').
+    """
+    if pd.isnull(period) or period <= 0:
+        return 'UNKNOWN'
+    elif period < 128:
+        return 'LEO'
+    elif 1400 <= period <= 1460:
+        return 'GEO'
+    elif 128 <= period < 1400:
+        return 'MEO'
+    else:
+        return 'Elliptical'
+    
+def first_non_null(series):
+    """
+    Return the first non-null, non-empty value from a pandas Series.
+
+    Parameters:
+    series (pd.Series): The input pandas Series.
+
+    Returns:
+    The first non-null, non-empty value from the series, or None if no such value exists.
+    """
+
+    # Drop nulls, return None if the series is empty after.
+    s = series.dropna()
+    if s.empty:
+        return None
+    
+    # Strip whitespace and filter out empty strings.
+    s = s.astype(str).str.strip()
+    s = s[s != '']
+
+    # Return the first valid value or None if none exist.
+    return s.iloc[0] if not s.empty else None
+
+def get_first_available_value(row, column_names):
+    """
+    Return the first available value from a row for any of the provided column names.
+
+    Parameters:
+    row (pd.Series): A row from a DataFrame.
+    column_names (list[str] | tuple[str, ...]): Candidate column names in priority order.
+
+    Returns:
+    object: The value from the first matching column, or np.nan if none are present.
+    """
+    for column_name in column_names:
+        if column_name in row.index:
+            return row[column_name]
+    return np.nan
+
+def calculate_kepler_period(row):
+    """
+    Calculate orbital period using Kepler's Third Law when period is missing.
+
+    This helper rewritten to support both raw source columns and the normalized snake_case
+    schema used later in the cleaning pipelines.
+
+    Parameters:
+    row (pd.Series): A row containing period, perigee, and apogee values.
+
+    Returns:
+    float: The existing period when available, the reconstructed period in
+    minutes when enough geometry is present, or np.nan if reconstruction is
+    not possible.
+    """
+    period = get_first_available_value(
+        row,
+        ['period_minutes', 'Period (minutes)', 'Period (Minutes)', 'PERIOD']
+    )
+
+    # If period is already available just return that.
+    if pd.notna(period):
+        return period
+    
+    # find first avail column name for perigee and apogee
+    perigee = get_first_available_value(
+        row,
+        ['perigee_km', 'Perigee (km)', 'Perigee (KM)', 'PERIGEE']
+    )
+    
+    apogee = get_first_available_value(
+        row,
+        ['apogee_km', 'Apogee (km)', 'Apogee (KM)', 'APOGEE']
+    )
+
+    # If either perigee or apogee is missing, we cannot calculate the period, return nan.
+    if pd.isna(perigee) or pd.isna(apogee):
+        return np.nan
+
+    # Kepler's Third Law: T = 2 * pi * sqrt(a^3 / mu), where T is the orbital period in seconds,
+    # a is the semi-major axis in kilometers, and mu is Earth's gravitational parameter.
+    a = earth_radius + ((perigee + apogee) / 2)
+    period_seconds = 2 * np.pi * np.sqrt(a**3 / mu)
+
+    # Convert the period from seconds to minutes before returning.
+    return period_seconds / 60
+
+def query_all_satellites(conn):
+    """
+    Query all satellites from the database.
+
+    Parameters:
+    conn (sql.Connection): The database connection object.
+
+    Returns:
+    pd.DataFrame: A DataFrame containing all satellite information.
+    """
+    query = """
+    SELECT
+      norad_id,
+      cospar_id,
+      object_name,
+      launch_year,
+      launch_date,
+      launch_site,
+      owner,
+      country_operator,
+      object_type
+    FROM satellites
+    JOIN launch_events ON launch_events.launch_id = satellites.launch_id
+    JOIN ownership_operators ON ownership_operators.owner_code = satellites.owner_code;
+    """
+    return run_query(query, conn)
+
+# Gets a single satellite's information based on NORAD ID
+def query_satellite_info(norad_id, conn):
+    """
+    Query a single satellite's information based on NORAD ID.
+
+    Parameters:
+    norad_id (int): The NORAD ID of the satellite.
+    conn (sql.Connection): The database connection object.
+
+    Returns:
+    pd.DataFrame: A DataFrame containing the satellite's information.
+    """
+    query = f"""
+    SELECT
+      norad_id,
+      cospar_id,
+      object_name,
+      launch_year,
+      launch_date,
+      launch_site,
+      owner,
+      country_operator,
+      object_type
+    FROM satellites
+    JOIN launch_events ON launch_events.launch_id = satellites.launch_id
+    JOIN ownership_operators ON ownership_operators.owner_code = satellites.owner_code
+    WHERE norad_id = {norad_id};
+    """
+    return run_query(query, conn)
+
+def query_satellite_info_list(norad_ids, conn):
+    """
+    Query information for a list of satellites based on their NORAD IDs.
+
+    Parameters:
+    norad_ids (list of int): The NORAD IDs of the satellites.
+    conn (sql.Connection): The database connection object.
+
+    Returns:
+    pd.DataFrame: A DataFrame containing the information of the specified satellites.
+    """
+    # This will create a comma-separated string of NORAD IDs for the SQL IN clause
+    ids = ','.join(str(id) for id in norad_ids)
+    
+    query = f"""
+    SELECT
+      norad_id,
+      cospar_id,
+      object_name,
+      launch_year,
+      launch_date,
+      launch_site,
+      owner,
+      country_operator,
+      object_type
+    FROM satellites
+    JOIN launch_events ON launch_events.launch_id = satellites.launch_id
+    JOIN ownership_operators ON ownership_operators.owner_code = satellites.owner_code
+    WHERE norad_id IN ({ids});
+    """
+    return run_query(query, conn)
+
+#########################################################################################################
+# AI Assisted Function: derive_eccentricity                                                             #
+#                                                                                                       #
+# What this does                                                                                        #
+# - Calculates orbital eccentricity from perigee and apogee altitudes.                                  #
+# - Uses the formula: e = (ra - rp) / (ra + rp), where ra and rp are distances from Earth's center.     #
+# - Accounts for Earth's radius to convert altitudes to distances from Earth's center.                  #
+#                                                                                                       #
+# How AI assistance was used                                                                            #
+# - I understand the concept of eccentricity but wasn't sure how to implement the formula in code.      #
+# - AI helped adapt the formula into a python function.                                                 #
+# 
+# AI (GitHub Copilot, GPT-5.3-Codex) assisted with implementation structure.                            #
+#########################################################################################################
+def derive_eccentricity(row):
+    ra = row['apogee_km'] + earth_radius  # Distance from Earth center to apogee
+    rp = row['perigee_km'] + earth_radius  # Distance from Earth center to perigee
+    return (ra - rp) / (ra + rp)
+
+#########################################################################################################
+# AI Assisted Function: fit_growth_regimes                                                              #
+#                                                                                                       #
+# What this does                                                                                        #
+# - Splits the yearly series into pre/post regimes using a candidate split year.                        #
+# - Fits a linear trend to the legacy regime (pre-split).                                               #
+# - Fits an exponential trend to the modern regime (post-split) using a log-space linear fit.           #
+# - Uses year-centering and exponent clipping for numerical stability in exponential reconstruction.    #
+# - Returns fitted segments and key metrics (legacy slope, exponential growth rate, doubling time).     #
+#                                                                                                       #
+# How AI assistance was used                                                                            #
+# - I defined the analysis method (legacy linear vs modern exponential) and fit requirements.           #
+# - AI helped draft a clean reusable function structure and stability safeguards.                       #
+#                                                                                                       #
+# AI (GitHub Copilot, GPT-5.3-Codex) assisted with implementation structure.                            #
+#                                                                                                       #
+#########################################################################################################
+def fit_growth_regimes(df, split_year, y_col):
+    """
+    Fit linear and exponential growth regimes to the data split by a candidate year.
+    
+    Parameters:
+    df (pd.DataFrame): The input DataFrame containing 'launch_year' and the target y_col.
+    split_year (int): The candidate year to split the data into legacy and modern regimes.
+    y_col (str): The name of the column in df that contains the values to fit.
+    
+    Returns:
+    pre (pd.DataFrame): The subset of df for the legacy regime with an added 'trend_linear' column.
+    post (pd.DataFrame): The subset of df for the modern regime with an added 'trend_exponential' column.
+    m_pre (float): The slope of the linear fit for the legacy regime.
+    b_exp (float): The exponential growth rate for the modern regime.
+    doubling_time (float): The doubling time for the modern regime based on the exponential fit.
+    """
+    pre = df[df['launch_year'] <= split_year].copy()
+    post = df[df['launch_year'] > split_year].copy()
+
+    if len(pre) < 3 or len(post) < 3:
+        raise ValueError('Not enough data points on both sides of split year.')
+
+    # Legacy regime: linear fit y = m_pre * year + b_pre
+    m_pre, b_pre = np.polyfit(pre['launch_year'], pre[y_col], 1)
+    pre['trend_linear'] = m_pre * pre['launch_year'] + b_pre
+
+    # Modern regime: exponential fit y = a0 * exp(b_exp * (year - year0))
+    # Centering the year axis keeps exponent values numerically stable.
+    post_fit = post[post[y_col] > 0].copy()
+    if len(post_fit) < 3:
+        raise ValueError('Not enough positive post-split values for exponential fit.')
+
+    year0 = float(post_fit['launch_year'].min())
+    x_post = post_fit['launch_year'] - year0
+    b_exp, log_a0 = np.polyfit(x_post, np.log(post_fit[y_col]), 1)
+    a0 = np.exp(log_a0)
+
+    x_all_post = post['launch_year'] - year0
+    exp_term = np.exp(np.clip(b_exp * x_all_post, -700, 700))
+    post['trend_exponential'] = a0 * exp_term
+
+    # Doubling time from exponential rate: ln(2)/b
+    doubling_time = np.inf if b_exp <= 0 else (np.log(2) / b_exp)
+    return pre, post, m_pre, b_exp, doubling_time
+
+
+#########################################################################################################
+# AI Assisted Function: choose_split_year                                                               #
+#                                                                                                       #
+# What this does                                                                                        #
+# - Builds candidate split years from observed launch years.                                            #
+# - Applies minimum sample-size constraints for pre/post regimes.                                       #
+# - Calls fit_growth_regimes for each valid candidate split year.                                       #
+# - Computes SSE/RMSE for each candidate and ranks model fit quality.                                   #
+# - Returns the best split year (lowest RMSE) plus a diagnostics table for transparency.                #
+# - Skips candidates that fail fitting (insufficient/invalid post-split behavior).                      #
+#                                                                                                       #
+# Why AI assistance was used                                                                            #
+# - I defined the objective (data-selected decoupling year, not a pre-asserted date).                   #
+# - AI helped structure the candidate-evaluation loop and diagnostics output schema.                    #
+#                                                                                                       #
+# AI (GitHub Copilot, GPT-5.3-Codex) assisted with implementation structure.                            # 
+#########################################################################################################
+def choose_split_year(df, y_col, min_pre_points=8, min_post_points=6):
+    """
+    Choose the optimal split year for separating legacy and modern growth regimes.
+
+    Parameters:
+    df (pd.DataFrame): The input DataFrame containing 'launch_year' and the target y_col.
+    y_col (str): The name of the column in df that contains the values to fit.
+    min_pre_points (int): Minimum number of data points required in the pre-split regime. 
+    min_post_points (int): Minimum number of data points required in the post-split regime.
+
+    Returns:
+    best_split_year (int): The year that provides the best split based on RMSE.   
+    split_diagnostics (pd.DataFrame): A DataFrame containing diagnostics for each candidate split year.   
+    """
+    years = sorted(df['launch_year'].dropna().astype(int).unique())
+    results = []
+
+    for split_year in years:
+        pre_n = (df['launch_year'] <= split_year).sum()
+        post_n = (df['launch_year'] > split_year).sum()
+        if pre_n < min_pre_points or post_n < min_post_points:
+            continue
+
+        try:
+            pre, post, _, _, _ = fit_growth_regimes(df, split_year=split_year, y_col=y_col)
+            pre_sse = ((pre[y_col] - pre['trend_linear']) ** 2).sum()
+            post_sse = ((post[y_col] - post['trend_exponential']) ** 2).sum()
+            total_sse = pre_sse + post_sse
+            total_n = len(pre) + len(post)
+            rmse = np.sqrt(total_sse / max(total_n, 1))
+
+            results.append({
+                'split_year': split_year,
+                'pre_n': int(pre_n),
+                'post_n': int(post_n),
+                'rmse': float(rmse),
+                'total_sse': float(total_sse)
+            })
+        except Exception:
+            continue
+
+    if not results:
+        raise ValueError('No valid candidate split year found with current constraints.')
+
+    split_diagnostics = pd.DataFrame(results).sort_values('rmse').reset_index(drop=True)
+    best_split_year = int(split_diagnostics.loc[0, 'split_year'])
+    return best_split_year, split_diagnostics
