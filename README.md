@@ -162,7 +162,7 @@ pip install -r requirements.txt
 
 For a full rebuild, including downloading raw dataset CSVs, run these notebooks in sequence. If you already have the original dataset CSVs, you can skip step 1.
 
-1. `notebooks/00_pipeline_refresh.ipynb.ipynb`
+1. `notebooks/00_pipeline_refresh.ipynb`
 2. `notebooks/01_ucs_cleanup.ipynb`
 3. `notebooks/02_satcat_cleanup.ipynb`
 4. `notebooks/03_kinetic_master_synthesis.ipynb`

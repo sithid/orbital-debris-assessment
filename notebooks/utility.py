@@ -157,6 +157,9 @@ def standardize_purpose(text):
         'Educational': 'Educational'
     }
     
+    # dict.get( p1, p2 )
+    # where p1: the key to look up in the dictionary (in this case, the primary purpose term)
+    # and p2: the default value to return if the key is not found in the dictionary (in this case, the original primary term)
     return mapping.get(primary, primary)
 
 def classify_orbit(period):
@@ -164,7 +167,7 @@ def classify_orbit(period):
     Translates orbital period into standardized regimes.
 
     Parameters:
-    period (float): The orbital period in minutes.
+    period (float): The orbital period in minutes. Period is a key parameter that can be used to classify the orbital regime of a satellite.
 
     Returns:
     str: The classified orbital regime ('LEO', 'MEO', 'GEO', 'Elliptical', or 'UNKNOWN').
