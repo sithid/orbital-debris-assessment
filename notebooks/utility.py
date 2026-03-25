@@ -137,7 +137,7 @@ def standardize_purpose(text):
     if pd.isna(text) or text == 'Unknown':
         return 'Unknown'
     
-    # Take the first primary term if there are multiple (e.g. "Comms/Nav")
+    # Take the first primary term if there are multiple.
     primary = text.split('/')[0].strip()
     
     mapping = {

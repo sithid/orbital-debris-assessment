@@ -35,31 +35,29 @@ This README follows the project narrative laid out in [docs/Capstone Project Pro
 
 The repo is organized as a staged analysis pipeline. Each notebook handles a distinct phase of the project.
 
-1. **Analysis scratchpad**  
+1. **Pipeline Refresh**   
+   `notebooks/00_pipeline_refresh.ipynb.ipynb` downloads original datasets from their respective sources.
+
+2. **Analysis scratchpad**  
    `notebooks/00_analysis_scratchpad.ipynb` is the project's working notebook for raw notes, exploratory checks, math research, diagnostic snippets, and in-progress thinking.
 
-2. **UCS cleanup**  
+3. **UCS cleanup**  
    `notebooks/01_ucs_cleanup.ipynb` standardizes and validates the UCS satellite registry, producing `data/clean/ucs_cleaned.csv`.
 
-3. **SATCAT cleanup and reconstruction**  
+4. **SATCAT cleanup and reconstruction**  
    `notebooks/02_satcat_cleanup.ipynb` cleans the SATCAT catalog, repairs missing orbital values, and exports `data/clean/satcat_cleaned.csv`.
 
-4. **Master synthesis**  
+5. **Master synthesis**  
    `notebooks/03_kinetic_master_synthesis.ipynb` merges the cleaned sources into the physics-informed master dataset `data/clean/kinetic_master.csv`.
 
-5. **SQLite normalization**  
+6. **SQLite normalization**  
    `notebooks/04_orbital_debris_synthesis.ipynb` converts the master dataset into a normalized SQLite database at `data/clean/orbital_debris.db`.
 
-6. **Analytical query layer**  
+7. **Analytical query layer**  
    `notebooks/05_orbital_debris_queries.ipynb` runs project queries against the SQLite database and exports compact parquet result sets to `data/clean/queries/`.
 
-7. **Visualization layer**  
+8. **Visualization layer**  
    `notebooks/06_visualizations.ipynb` reads the query outputs and generates the final figures in `images/`.
-
-Two supporting notebooks are also present:
-
-- `notebooks/00_pipeline_refresh.ipynb.ipynb` for reruns and refresh work during iteration
-- `notebooks/_todo.ipynb` for project notes and scratch planning
 
 ## Repository Structure
 
@@ -173,7 +171,6 @@ For a full rebuild, including downloading raw dataset CSVs, run these notebooks 
 Optional notebooks:
 
 - `notebooks/00_analysis_scratchpad.ipynb` for exploratory checks, working notes, and scratch analysis
-- `notebooks/_todo.ipynb` for project goals and planning notes
 
 If the cleaned data, SQLite database, and parquet query outputs already exist and you only want the figures, running `notebooks/06_visualizations.ipynb` is enough.
 
@@ -196,25 +193,14 @@ The old flat-file-centered workflow made it too easy to mix cleaning, modeling, 
 
 ## AI Assistance and Authorship Note
 
-This project includes AI-assisted support (primarily GitHub Copilot) as part of normal development workflow. AI was used as a productivity and drafting tool, not as a substitute for analysis ownership.
+This project used AI assistance (primarily GitHub Copilot) as part of the development process. AI supported drafting, cleanup, troubleshooting, and documentation, but did not replace analytical ownership.
 
-### Where AI helped
+Project ownership remained with me, including:
+- research direction and framing
+- all data-cleaning and validation logic, including schema and pipeline design decisions
+- query logic, interpretation, and conclusions
+- final assumptions and tradeoff decisions
 
-- suggested draft structures for a small number of helper functions and report templates
-- assisted with syntax cleanup, refactoring ideas, and debugging support for pandas, plotting, and notebook workflow issues
-- helped with markdown editing and README wording during documentation passes
+All AI-assisted content was reviewed and edited before inclusion, and AI-assisted functions are clearly marked in their headers.
 
-### What remains my work
-
-- project direction, research questions, and narrative framing
-- data-cleaning rules, validation decisions, and schema/pipeline design choices
-- SQL/query logic, interpretation of outputs, and final conclusions
-- threshold choices, assumptions, and tradeoff decisions used in analysis
-
-### Process transparency
-
-- the notebook sequence and scratchpad notebook show iterative development and thought process
-- commit history in this repository serves as the source of truth for project evolution
-- AI-assisted blocks are reviewed, edited, and integrated by me before being treated as project code
-
-AI can speed up drafting and troubleshooting, but understanding, verification, and analytical accountability remain mine.
+Understanding, verification, and accountability for this work are mine.
