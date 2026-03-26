@@ -78,9 +78,9 @@ def derive_category(row):
         return 'Inactive Satellite' if row['is_zombie'] == 1 else 'Active Satellite'
     return 'Unknown'
 
-def impute_power_smart(row, odm, gdm):
+def fill_power_smart(row, odm, gdm):
     """
-    Impute power consumption for satellites based on available data and object type.
+    Fill power consumption for satellites based on available data and object type.
 
     Parameters:
     row (pd.Series): A row from the satellite DataFrame.
@@ -226,8 +226,9 @@ def calculate_kepler_period(row):
     """
     Calculate orbital period using Kepler's Third Law when period is missing.
 
-    This helper rewritten to support both raw source columns and the normalized snake_case
-    schema used later in the cleaning pipelines.
+    This helper function was rewritten to support both raw source columns and the normalized snake_case
+    schema used later in the cleaning pipelines. This allows the function to be used anywhere within any of the cleaning pipelines
+    without needing to modify it for different column naming conventions.
 
     Parameters:
     row (pd.Series): A row containing period, perigee, and apogee values.
@@ -367,9 +368,9 @@ def query_satellite_info_list(norad_ids, conn):
 # - Accounts for Earth's radius to convert altitudes to distances from Earth's center.                  #
 #                                                                                                       #
 # How AI assistance was used                                                                            #
-# - I understand the concept of eccentricity but wasn't sure how to implement the formula in code.      #
-# - AI helped adapt the formula into a python function.                                                 #
-# 
+# - I understand the concept of eccentricity but wasn't sure of the formula to use                      #
+#   (the function itself is straightforward once the formula is known)                                  #
+#                                                                                                       #
 # AI (GitHub Copilot, GPT-5.3-Codex) assisted with implementation structure.                            #
 #########################################################################################################
 def derive_eccentricity(row):
