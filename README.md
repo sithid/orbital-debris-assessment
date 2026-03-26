@@ -170,7 +170,20 @@ For a full rebuild, including downloading raw dataset CSVs, run these notebooks 
 
 Optional notebooks:
 
-- `notebooks/00_analysis_scratchpad.ipynb` for exploratory checks, working notes, and scratch analysis
+- `notebooks/00_analysis_scratchpad.ipynb` for exploratory checks, working notes, and scratch analysis, etc.
+
+### 3. Quick Start
+If you do not wish to run each notebook indivudually, in correct order, you can run execute.py to do it for you.
+
+```bash
+# Run all notebooks in order. Download original datasets.
+python execute.py --refresh
+
+# Run all notebooks excluding 00_pipeline_refresh.  Do NOT download source datasets.
+# Run this if you already ran the pipeline refresh / already have the original source documents and only want
+# to rerun all notebooks after pipeline_refresh.
+python execute.py
+```
 
 If the cleaned data, SQLite database, and parquet query outputs already exist and you only want the figures, running `notebooks/06_visualizations.ipynb` is enough.
 

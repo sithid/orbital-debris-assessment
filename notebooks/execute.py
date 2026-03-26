@@ -2,7 +2,9 @@ import papermill as pm
 import sys
 import argparse
 
-# 1. Define your sequence (Order matters!)
+# Define note sequence, the order actually matters. Each notebook continues where the previous
+# left off, so we can't just run them in parallel or out of order because of file dependencies.
+# This sequence will be looped through in the run_pipeline function.
 notebook_pipeline = [
     "./00_pipeline_refresh.ipynb",
     "./01_ucs_cleanup.ipynb",
@@ -22,6 +24,11 @@ def run_pipeline(download_originals=False):
             continue
                 
         try:
+            # papermill makes executing notebooks trivial.
+            # it will run the notebook and save the output back to the same file, or
+            # you can specify a different output path if you want to keep the original clean
+            # without output cells. Here we overwrite the original for simplicity but I may
+            # decide to change this later if I want to keep the original notebooks as templates
             print(f"Running: {nb}...")
             pm.execute_notebook(
                 input_path=nb,
