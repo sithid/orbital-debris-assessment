@@ -7,7 +7,7 @@
 
 | Feature Name      | Type     | Description                                                                 |
 | :---------------- | :------- | :-------------------------------------------------------------------------- |
-| `norad_id`        | `str`    | Unique USSPACECOM catalog number. Primary join key for SATCAT.              |
+| `norad_id`        | `int`    | Unique USSPACECOM catalog number. Primary join key for SATCAT.              |
 | `cospar_id`       | `str`    | International launch designator.                                            |
 | `primary_purpose` | `str`    | Simplified mission category for analysis.                                   |
 | `un_registry`     | `str`    | Country or organization of UN registration.                                 |

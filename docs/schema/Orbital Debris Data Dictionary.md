@@ -6,8 +6,8 @@
 
 ## 1. satellites
 
-| Feature Name    | Type     | Description                                      |
-| :-------------- | :------- | :----------------------------------------------- |
+| Feature Name      | Type     | Description                                      |
+| :---------------- | :------- | :----------------------------------------------- |
 | `norad_id`        | `int`    | Unique USSPACECOM catalog number (primary key).  |
 | `cospar_id`       | `str`    | International launch designator.                 |
 | `object_name`     | `str`    | Universal object label.                          |

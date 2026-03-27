@@ -35,7 +35,7 @@
 
 | Feature Name      | Type     | Description                                                                 |
 | :---------------- | :------- | :-------------------------------------------------------------------------- |
-| `norad_id`        | `str`    | Primary merge key, normalized for 1:1 join-readiness.                       |
+| `norad_id`        | `int`    | Primary merge key, normalized for 1:1 join-readiness.                       |
 | `cospar_id`       | `str`    | International designator (COSPAR ID), scrubbed and capitalized.             |
 | `object_type`     | `str`    | Controlled vocabulary: `PAYLOAD`, `ROCKET BODY`, `DEBRIS`, `UNKNOWN`.       |
 | `ops_status`      | `str`    | Health status: `OPERATIONAL`, `NON-OPERATIONAL`, etc.                       |

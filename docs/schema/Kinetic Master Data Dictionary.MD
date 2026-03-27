@@ -14,7 +14,7 @@
 
 | Feature Name      | Type     | Scope     | Description                                                           |
 | :---------------- | :------- | :-------- | :-------------------------------------------------------------------- |
-| `norad_id`        | `str`    | Global    | Unique USSPACECOM catalog number (primary key).                       |
+| `norad_id`        | `int`    | Global    | Unique USSPACECOM catalog number (primary key).                       |
 | `cospar_id`       | `str`    | Global    | International Designator (Launch Year + Launch Number).               |
 | `object_name`     | `str`    | Global    | Universal label (UCS name for Payloads; SATCAT for Debris).           |
 | `satellite_name`  | `str`    | Payload   | Commercial/common name (Payloads only).                               |
