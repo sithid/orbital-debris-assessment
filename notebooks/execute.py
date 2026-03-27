@@ -2,7 +2,7 @@ import papermill as pm
 import sys
 import argparse
 
-# Define note sequence, the order actually matters. Each notebook continues where the previous
+# Define notebook sequence, the order actually matters. Each notebook continues where the previous
 # left off, so we can't just run them in parallel or out of order because of file dependencies.
 # This sequence will be looped through in the run_pipeline function.
 notebook_pipeline = [
