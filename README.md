@@ -1,5 +1,6 @@
-### IN PROGRESS
-# Orbital Debris Assessment: Mapping the Kessler Acceleration in Low Earth Orbit
+# IN PROGRESS
+
+## Orbital Debris Assessment: Mapping the Kessler Acceleration in Low Earth Orbit
 
 **Author:** James Glosser  
 **Contact:** [Email](mailto:DemonicUrges05@gmail.com) | [LinkedIn profile](https://www.linkedin.com/in/james-glosser-249100204/)  
@@ -35,29 +36,29 @@ This README follows the project narrative laid out in [docs/Capstone Project Pro
 
 The repo is organized as a staged analysis pipeline. Each notebook handles a distinct phase of the project.
 
-1. **Pipeline Refresh**   
+1. **Pipeline Refresh**  
    `notebooks/00_pipeline_refresh.ipynb.ipynb` downloads original datasets from their respective sources.
 
-2. **Analysis scratchpad**  
-   `notebooks/00_analysis_scratchpad.ipynb` is the project's working notebook for raw notes, exploratory checks, math research, diagnostic snippets, and in-progress thinking.
-
-3. **UCS cleanup**  
+2. **UCS cleanup**  
    `notebooks/01_ucs_cleanup.ipynb` standardizes and validates the UCS satellite registry, producing `data/clean/ucs_cleaned.csv`.
 
-4. **SATCAT cleanup and reconstruction**  
+3. **SATCAT cleanup and reconstruction**  
    `notebooks/02_satcat_cleanup.ipynb` cleans the SATCAT catalog, repairs missing orbital values, and exports `data/clean/satcat_cleaned.csv`.
 
-5. **Master synthesis**  
+4. **Master synthesis**  
    `notebooks/03_kinetic_master_synthesis.ipynb` merges the cleaned sources into the physics-informed master dataset `data/clean/kinetic_master.csv`.
 
-6. **SQLite normalization**  
+5. **SQLite normalization**  
    `notebooks/04_orbital_debris_synthesis.ipynb` converts the master dataset into a normalized SQLite database at `data/clean/orbital_debris.db`.
 
-7. **Analytical query layer**  
-   `notebooks/05_orbital_debris_queries.ipynb` runs project queries against the SQLite database and exports compact parquet result sets to `data/clean/queries/`.
+6. **Orbital Debris exploration**  
+   `notebooks/05_orbital_debris_exploration.ipynb` runs exploratory queries and visuals to explore the sql database thoroughly.
+
+7. **Story questions**  
+   `notebooks/06_orbital_debris_queries.ipynb` runs project question queries against the SQLite database and exports compact parquet result sets to `data/clean/queries/`.
 
 8. **Visualization layer**  
-   `notebooks/06_visualizations.ipynb` reads the query outputs and generates the final figures in `images/`.
+   `notebooks/07_orbital_debris_visualizations.ipynb` reads the query outputs and generates the final figures in `images/`.
 
 ## Repository Structure
 
@@ -83,6 +84,8 @@ orbital-debris-assessment/
 | `data/clean/orbital_debris.db` | Normalized SQLite analysis database | 6 relational tables |
 | `data/clean/queries/pq1_launch_trend.parquet` | Query output for launch growth analysis | 69 rows x 6 columns |
 | `data/clean/queries/pq2_high_risk.parquet` | Query output for high-risk distribution analysis | 18 rows x 12 columns |
+
+[OUTDATED]
 
 The SQLite database currently contains these tables:
 
@@ -132,6 +135,8 @@ The repo currently includes these exported visuals:
 - `images/high_risk_distribution_pq2.png`
 - `images/high_risk_distribution_pq2.svg`
 
+[OUTDATED]
+
 At the moment, the committed visualization layer is strongest for Primary Question 1 and Primary Question 2. The database and query structure are already in place to support the remaining analysis work.
 
 ## How To Reproduce
@@ -177,14 +182,11 @@ If you would prefer, you can also run each notebook in ordered sequence. If you 
 3. `notebooks/02_satcat_cleanup.ipynb`
 4. `notebooks/03_kinetic_master_synthesis.ipynb`
 5. `notebooks/04_orbital_debris_synthesis.ipynb`
-6. `notebooks/05_orbital_debris_queries.ipynb`
-7. `notebooks/06_visualizations.ipynb`
+6. `notebooks/05_orbital_debris_exploration.ipynb`
+7. `notebooks/06_orbital_debris_queries.ipynb`
+8. `notebooks/07_orbital_debris_visualizations.ipynb`
 
-Optional notebooks:
-
-- `notebooks/00_analysis_scratchpad.ipynb` for exploratory checks, working notes, and scratch analysis, etc.
-
-If the cleaned data, SQLite database, and parquet query outputs already exist and you need to regenerate the charts, running `notebooks/06_visualizations.ipynb` is enough.
+If the cleaned data, SQLite database, and parquet query outputs already exist and you need to regenerate the charts, running `notebooks/07_orbital_debris_visualizations.ipynb` is enough.
 
 ## Assumptions and Limitations
 
