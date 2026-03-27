@@ -3,6 +3,7 @@
 import pandas as pd
 import numpy as np
 import sqlite3 as sql
+from IPython.display import display, Markdown 
 
 # Various constants for calculations.
 earth_radius = 6378.137
@@ -293,7 +294,7 @@ def query_all_satellites(conn):
       object_type
     FROM satellites
     JOIN launch_events ON launch_events.launch_id = satellites.launch_id
-    JOIN ownership_operators ON ownership_operators.owner_code = satellites.owner_code;
+    JOIN ownership_operators ON ownership_operators.owner_code = satellites.owner_code
     """
     return run_query(query, conn)
 
@@ -358,6 +359,65 @@ def query_satellite_info_list(norad_ids, conn):
     WHERE norad_id IN ({ids});
     """
     return run_query(query, conn)
+
+def quick_report(df, title="Dataset Diagnostic", audit_cols=None, key_col=None):
+    """
+    This report focuses on the core stats and simple data quality indicators, without getting into complex analysis or visualizations.
+    It is designed to be a quick check of the dataset's health and structure.
+    """
+    # Basic Stats
+    rows, cols = df.shape
+    mem_usage = df.memory_usage(deep=True).sum() / 1024**2
+
+    # Build the report header
+    report = [
+        f"# {title}\n",
+        f"**Dimensions:** {rows:,} rows × {cols} columns\n",
+        f"**Memory Footprint:** {mem_usage:.2f} MB\n",
+    ]
+
+    # duplicate key audit if key_col is provided and exists in df
+    if key_col and key_col in df.columns:
+        dup_count = df.duplicated(subset=[key_col]).sum()
+        
+        if dup_count == 0:
+            report.append(f"**Primary Key Check**: ✅ No duplicate {key_col} values detected\n")
+        else:
+            report.append(f"**Primary Key Check**: ⚠️ {dup_count:,} duplicate {key_col} values detected\n")
+    report += [
+        "\n---",
+        "### 📊 Data Quality Audit",
+        "| Column | Type | Nulls | Fill % | Status |",
+        "| :--- | :--- | :--- | :--- | :--- |"
+    ]
+
+    # If no columns specified, use all columns
+    target_cols = audit_cols if audit_cols else df.columns
+
+    # Analyze each column for null counts, fill rates, and data types
+    for col in target_cols:
+        null_count = df[col].isna().sum()
+        fill_rate = (rows - null_count) / rows
+        dtype = str(df[col].dtype)
+        status = "✅" if fill_rate > 0.8 else "⚠️"
+        
+        row_str = f"| **{col}** | `{dtype}` | {null_count:,} | {fill_rate:.1%} | {status} |"
+        report.append(row_str)
+
+    # Add a quick object summary if any object columns exist
+    objs = df.select_dtypes(include='object')
+    if not objs.empty:
+        report.append("\n### 📝 Object Overview")
+        report.append(objs.describe().T.to_markdown())
+
+    # Add a quick numeric summary if any numeric columns exist
+    nums = df.select_dtypes(include='number')
+    if not nums.empty:
+        report.append("\n### 📈 Numeric Overview")
+        report.append(nums.describe().T.to_markdown())
+
+    # Join list into a single string and display
+    return display(Markdown("\n".join(report)))
 
 #########################################################################################################
 # AI Assisted Function: derive_eccentricity                                                             #
@@ -444,6 +504,10 @@ def fit_growth_regimes(df, split_year, y_col):
 #########################################################################################################
 # AI Assisted Function: choose_split_year                                                               #
 #                                                                                                       #
+# Definitions:                                                                                          #
+# SSE: Sum of Squared Errors, a measure of the total deviation of predicted values from observed values.#                                                                                 
+# RMSE: Root Mean Squared Error, a measure of the differences between predicted and observed values.    #
+# 
 # What this does                                                                                        #
 # - Builds candidate split years from observed launch years.                                            #
 # - Applies minimum sample-size constraints for pre/post regimes.                                       #

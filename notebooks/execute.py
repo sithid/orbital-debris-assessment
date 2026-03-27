@@ -11,8 +11,9 @@ notebook_pipeline = [
     "./02_satcat_cleanup.ipynb",
     "./03_kinetic_master_synthesis.ipynb",
     "./04_orbital_debris_synthesis.ipynb",
-    "./05_orbital_debris_queries.ipynb",
-    "./06_visualizations.ipynb"
+    "./05_orbital_debris_exploration.ipynb",
+    "./06_orbital_debris_queries.ipynb",
+    "./07_orbital_debris_visualizations.ipynb"
 ]
 
 def run_pipeline(download_originals=False):

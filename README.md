@@ -158,7 +158,19 @@ pip install -r requirements.txt
 
 ### 2. Run the notebooks in pipeline order
 
-For a full rebuild, including downloading raw dataset CSVs, run these notebooks in sequence. If you already have the original dataset CSVs, you can skip step 1.
+If you do not wish to run each notebook indivudually, in ordered sequence, you can run execute.py to do it for you.
+
+```bash
+# Run all notebooks in order. Download original datasets.
+python execute.py --refresh
+
+# Run all notebooks excluding 00_pipeline_refresh.  Do NOT download source datasets.
+# Run this if you already ran the pipeline refresh / already have the original source documents and only
+# want to rerun all notebooks after pipeline_refresh.
+python execute.py
+```
+
+If you would prefer, you can also run each notebook in ordered sequence. If you already have the original dataset CSVs, you can skip `00_pipeline_refresh.ipynb`.
 
 1. `notebooks/00_pipeline_refresh.ipynb`
 2. `notebooks/01_ucs_cleanup.ipynb`
@@ -172,20 +184,7 @@ Optional notebooks:
 
 - `notebooks/00_analysis_scratchpad.ipynb` for exploratory checks, working notes, and scratch analysis, etc.
 
-### 3. Quick Start
-If you do not wish to run each notebook indivudually, in correct order, you can run execute.py to do it for you.
-
-```bash
-# Run all notebooks in order. Download original datasets.
-python execute.py --refresh
-
-# Run all notebooks excluding 00_pipeline_refresh.  Do NOT download source datasets.
-# Run this if you already ran the pipeline refresh / already have the original source documents and only want
-# to rerun all notebooks after pipeline_refresh.
-python execute.py
-```
-
-If the cleaned data, SQLite database, and parquet query outputs already exist and you only want the figures, running `notebooks/06_visualizations.ipynb` is enough.
+If the cleaned data, SQLite database, and parquet query outputs already exist and you need to regenerate the charts, running `notebooks/06_visualizations.ipynb` is enough.
 
 ## Assumptions and Limitations
 
@@ -204,16 +203,15 @@ The old flat-file-centered workflow made it too easy to mix cleaning, modeling, 
 - query outputs that freeze the logic for each research question
 - a visualization notebook that focuses only on presentation
 
-## AI Assistance and Authorship Note
+## AI Usage & Authorship Note
 
-This project used AI assistance (primarily GitHub Copilot) as part of the development process. AI supported drafting, cleanup, troubleshooting, and documentation, but did not replace analytical ownership.
+AI assistance (primary GitHub Copilot) was utilized as a development tool for formula research, some functions, error debugging, and documentation adjustments.
 
-Project ownership remained with me, including:
-- research direction and framing
-- all data-cleaning and validation logic, including schema and pipeline design decisions
-- query logic, interpretation, and conclusions
-- final assumptions and tradeoff decisions
+**Human Authorship & Governance** I retain full authorship and responsibility for the following core components:
 
-All AI-assisted content was reviewed and edited before inclusion, and AI-assisted functions are clearly marked in their headers.
+- **Strategic Framework:** Research direction, conceptual framing, and methodology.
+- **Data Architecture:** All data-cleaning logic, schema definitions, and pipeline design.
+- **Analytical Logic:** Query structure, data interpretation, and final conclusions.
+- **Critical Judgment:** Final assumptions and technical tradeoff decisions.
 
-Understanding, verification, and accountability for this work are mine.
+**Verification & Accountability** All AI-generated suggestions underwent rigorous manual review, verification, and editing prior to implementation. AI-assisted functions are explicitly identified in their respective headers. I remain fully accountable for the accuracy, integrity, and logic of the completed work.
