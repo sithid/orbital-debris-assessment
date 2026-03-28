@@ -2,6 +2,8 @@ import papermill as pm
 import sys
 import argparse
 
+import os
+import shutil
 # Define notebook sequence, the order actually matters. Each notebook continues where the previous
 # left off, so we can't just run them in parallel or out of order because of file dependencies.
 # This sequence will be looped through in the run_pipeline function.
@@ -16,9 +18,44 @@ notebook_pipeline = [
     "./07_orbital_debris_visualizations.ipynb"
 ]
 
-def run_pipeline(download_originals=False):
-    print(f"🔔 Starting execution of {len(notebook_pipeline)} notebooks...\n")
+def purge_outputs():
     
+    print("\n⚠️  Purging all exported/cleaned outputs...")
+    
+    # Cleaned datasets
+    clean_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/clean'))
+    if os.path.exists(clean_dir):
+        for fname in os.listdir(clean_dir):
+            fpath = os.path.join(clean_dir, fname)
+            if os.path.isfile(fpath):
+                os.remove(fpath)
+            elif os.path.isdir(fpath):
+                shutil.rmtree(fpath)
+                
+    # Database file
+    db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/clean/orbital_debris.db'))
+    if os.path.exists(db_path):
+        os.remove(db_path)
+        
+    # Charts/images
+    charts_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../charts'))
+    if os.path.exists(charts_dir):
+        for root, dirs, files in os.walk(charts_dir):
+            for file in files:
+                if file.endswith(('.png', '.svg')):
+                    os.remove(os.path.join(root, file))
+                    
+    # Query results (if you have a results dir)
+    results_dir = os.path.abspath(os.path.join(clean_dir, 'results'))
+    if os.path.exists(results_dir):
+        shutil.rmtree(results_dir)
+        
+    print("✅ Purge complete.\n")
+    
+def run_pipeline(download_originals=False, purge=False):
+    if purge:
+        purge_outputs()
+        
     for nb in notebook_pipeline:
         if nb == "./00_pipeline_refresh.ipynb" and not download_originals:
             print(f"Skipping {nb} (original data refresh) per download_originals parameter.")
@@ -49,16 +86,33 @@ def run_pipeline(download_originals=False):
     print("\n🎉 Pipeline finished successfully!")
 
 if __name__ == "__main__":
+    
     # Setup command line arguments
     parser = argparse.ArgumentParser(description="Run the orbital debris pipeline.")
     
-    # This adds the --refresh flag. If you don't include it, it defaults to False.
     parser.add_argument(
-        "--refresh", 
-        action="store_true", 
+        "--refresh",
+        action="store_true",
         help="Run the first notebook to download fresh data."
     )
     
-    args = parser.parse_args()
+    parser.add_argument(
+        "--purge",
+        action="store_true",
+        help="Purge all exported/cleaned outputs before running the pipeline."
+    )
     
-    run_pipeline(download_originals=args.refresh)
+    parser.add_argument(
+        "--purge-only",
+        action="store_true",
+        help="Only purge outputs and do not run the pipeline."
+    )
+    
+    # Parse arguments and execute accordingly
+    # If --purge-only is set, we purge outputs and exit immediately. Otherwise, we run the pipeline with the specified options.
+    args = parser.parse_args()
+    if args.purge_only:
+        purge_outputs()
+        sys.exit(0)
+        
+    run_pipeline(download_originals=args.refresh, purge=args.purge)
