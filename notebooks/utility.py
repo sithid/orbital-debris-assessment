@@ -384,6 +384,7 @@ def quick_report(df, title="Dataset Diagnostic", audit_cols=None, key_col=None):
             report.append(f"**Primary Key Check**: ✅ No duplicate {key_col} values detected\n")
         else:
             report.append(f"**Primary Key Check**: ⚠️ {dup_count:,} duplicate {key_col} values detected\n")
+    
     report += [
         "\n---",
         "### 📊 Data Quality Audit",
