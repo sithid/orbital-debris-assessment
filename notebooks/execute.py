@@ -22,22 +22,30 @@ def purge_outputs():
     
     print("\n⚠️  Purging all exported/cleaned outputs...")
     
-    # Cleaned datasets
+    # Purge datasets in the clean folder but skip the results folder.
+    # This is where we save any exported datasets or cleaned versions of the original data that we want to keep separate from the raw downloads in the clean folder. We want to purge these on demand because they can be large and we don't want to accidentally delete them every time we run the pipeline, but we also want to give the option to start fresh if needed.
+    
     clean_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/clean'))
     if os.path.exists(clean_dir):
         for fname in os.listdir(clean_dir):
             fpath = os.path.join(clean_dir, fname)
+            
+            # Skip the results folder
+            if fname == 'results' and os.path.isdir(fpath):
+                continue
             if os.path.isfile(fpath):
                 os.remove(fpath)
             elif os.path.isdir(fpath):
                 shutil.rmtree(fpath)
                 
-    # Database file
+    # Explicitly remove the database file if it exists still.
+    # The previous loop should have removed it, but if it was open or locked
+    # for some reason it might still be there, so we do this as a final cleanup step to ensure a fresh start.
     db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/clean/orbital_debris.db'))
     if os.path.exists(db_path):
         os.remove(db_path)
         
-    # Charts/images
+    # Purge images in charts directory but leave the folder structure intact.
     charts_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../charts'))
     if os.path.exists(charts_dir):
         for root, dirs, files in os.walk(charts_dir):
@@ -45,10 +53,19 @@ def purge_outputs():
                 if file.endswith(('.png', '.svg')):
                     os.remove(os.path.join(root, file))
                     
-    # Query results (if you have a results dir)
+    # Purge items inside results but leave the folder structure intact.
     results_dir = os.path.abspath(os.path.join(clean_dir, 'results'))
+    
     if os.path.exists(results_dir):
-        shutil.rmtree(results_dir)
+        for fname in os.listdir(results_dir):
+            fpath = os.path.join(results_dir, fname)
+            try:
+                if os.path.isfile(fpath) or os.path.islink(fpath):
+                    os.remove(fpath)
+                elif os.path.isdir(fpath):
+                    shutil.rmtree(fpath)
+            except Exception as e:
+                print(f"Warning: Could not delete {fpath}: {e}")
         
     print("✅ Purge complete.\n")
     
@@ -62,11 +79,6 @@ def run_pipeline(download_originals=False, purge=False):
             continue
                 
         try:
-            # papermill makes executing notebooks trivial.
-            # it will run the notebook and save the output back to the same file, or
-            # you can specify a different output path if you want to keep the original clean
-            # without output cells. Here we overwrite the original for simplicity but I may
-            # decide to change this later if I want to keep the original notebooks as templates
             print(f"Running: {nb}...")
             pm.execute_notebook(
                 input_path=nb,
