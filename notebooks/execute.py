@@ -4,6 +4,9 @@ import argparse
 
 import os
 import shutil
+
+# https://docs.python.org/3/library/filesys.html
+
 # Define notebook sequence, the order actually matters. Each notebook continues where the previous
 # left off, so we can't just run them in parallel or out of order because of file dependencies.
 # This sequence will be looped through in the run_pipeline function.
@@ -35,8 +38,6 @@ def purge_outputs():
                 continue
             if os.path.isfile(fpath):
                 os.remove(fpath)
-            elif os.path.isdir(fpath):
-                shutil.rmtree(fpath)
                 
     # Explicitly remove the database file if it exists still.
     # The previous loop should have removed it, but if it was open or locked
@@ -62,8 +63,7 @@ def purge_outputs():
             try:
                 if os.path.isfile(fpath) or os.path.islink(fpath):
                     os.remove(fpath)
-                elif os.path.isdir(fpath):
-                    shutil.rmtree(fpath)
+                    
             except Exception as e:
                 print(f"Warning: Could not delete {fpath}: {e}")
         
