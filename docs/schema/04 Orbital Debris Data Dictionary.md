@@ -1,3 +1,4 @@
+
 # Orbital Debris Database: Data Dictionary
 
 **Purpose:** Defines the schema for the synthesized orbital_debris.db SQL database, the analytical backbone for all orbital debris queries and risk modeling.
