@@ -70,7 +70,7 @@ The repo is organized as a staged analysis pipeline. Each notebook handles a dis
 
 ### Repository Structure
 
-```text
+```bash
 orbital-debris-assessment/
 |- charts/                        # question-driven figures (by type/phase)
 |  \- questions/
