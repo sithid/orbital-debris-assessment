@@ -2,7 +2,7 @@
 
 This readme is a work in progress and is not intended as the complete/final version of the document.  This readme will be considered final at the time I turn it in for grading, or on April 10th, 2026, whichever comes first.
 
-## Orbital Debris Assessment: Mapping the Kessler Acceleration in Low Earth Orbit 
+## Orbital Debris Assessment: Mapping the Kessler Acceleration in Low Earth Orbit  
 
 **Author:** James Glosser  
 **Contact:** [Email](mailto:DemonicUrges05@gmail.com) | [LinkedIn profile](https://www.linkedin.com/in/james-glosser-249100204/)  

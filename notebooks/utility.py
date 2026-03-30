@@ -214,13 +214,14 @@ def classify_risk_category(
     if pd.isna(ke):
         return 'Unknown'
 
-    # Optional: filter out very small objects (e.g., <1 kg) as always low risk
+    # If use_mass_filter is True, filter out very small objectsas always low risk
     if use_mass_filter and (pd.isna(mass) or mass < mass_cutoff):
         return 'Low Risk'
 
     for category, min_ke in thresholds.items():
         if ke >= min_ke:
             return category
+        
     return 'Low Risk'
     
 def classify_orbit(period):
@@ -244,6 +245,10 @@ def classify_orbit(period):
     else:
         return 'Elliptical'
     
+# Used in 04_orbital_debris_synthesis.ipynb to get the first non-null, non-empty value from a series
+# for aggregation of multiple columns. Strips whitespace and treats empty strings as 
+# nulls as well.  This is a common pattern in the data where multiple columns may have the same
+# underlying value but with different formatting, and we want to get the first valid one.
 def first_non_null(series):
     """
     Return the first non-null, non-empty value from a pandas Series.
@@ -267,73 +272,13 @@ def first_non_null(series):
     # Return the first valid value or None if none exist.
     return s.iloc[0] if not s.empty else None
 
-def get_first_available_value(row, column_names):
-    """
-    Return the first available value from a row for any of the provided column names.
-
-    Parameters:
-    row (pd.Series): A row from a DataFrame.
-    column_names (list[str] | tuple[str, ...]): Candidate column names in priority order.
-
-    Returns:
-    object: The value from the first matching column, or np.nan if none are present.
-    """
-    for column_name in column_names:
-        if column_name in row.index:
-            return row[column_name]
-    return np.nan
-
-def calculate_kepler_period(row):
-    """
-    Calculate orbital period using Kepler's Third Law when period is missing.
-
-    This helper function was rewritten to support both raw source columns and the normalized snake_case
-    schema used later in the cleaning pipelines. This allows the function to be used anywhere within any of the cleaning pipelines
-    without needing to modify it for different column naming conventions.
-
-    Parameters:
-    row (pd.Series): A row containing period, perigee, and apogee values.
-
-    Returns:
-    float: The existing period when available, the reconstructed period in
-    minutes when enough geometry is present, or np.nan if reconstruction is
-    not possible.
-    """
-    period = get_first_available_value(
-        row,
-        ['period_minutes', 'Period (minutes)', 'Period (Minutes)', 'PERIOD']
-    )
-
-    # If period is already available just return that.
-    if pd.notna(period):
-        return period
-    
-    # find first avail column name for perigee and apogee
-    perigee = get_first_available_value(
-        row,
-        ['perigee_km', 'Perigee (km)', 'Perigee (KM)', 'PERIGEE']
-    )
-    
-    apogee = get_first_available_value(
-        row,
-        ['apogee_km', 'Apogee (km)', 'Apogee (KM)', 'APOGEE']
-    )
-
-    # If either perigee or apogee is missing, we cannot calculate the period, return nan.
-    if pd.isna(perigee) or pd.isna(apogee):
-        return np.nan
-
-    # Kepler's Third Law: T = 2 * pi * sqrt(a^3 / mu), where T is the orbital period in seconds,
-    # a is the semi-major axis in kilometers, and mu is Earth's gravitational parameter.
-    a = earth_radius + ((perigee + apogee) / 2)
-    period_seconds = 2 * np.pi * np.sqrt(a**3 / mu)
-
-    # Convert the period from seconds to minutes before returning.
-    return period_seconds / 60
-
 def query_all_satellites(conn):
     """
-    Query all satellites from the database.
+    Query all satellites from the database and return a merged DataFrame with all fields from 
+    from EVERY table for EVERY satellite. This is a utility function to get a comprehensive view of
+    the data in one shot for all satellites. Smaller queries should be used when less data is required.
+    This helps minimize strain on the database and allows for more efficient querying when only a subset of data
+    is needed for a specific analysis or notebook.
 
     Parameters:
     conn (sql.Connection): The database connection object.
@@ -341,84 +286,26 @@ def query_all_satellites(conn):
     Returns:
     pd.DataFrame: A DataFrame containing all satellite information.
     """
-    query = """
-    SELECT
-      norad_id,
-      cospar_id,
-      object_name,
-      launch_year,
-      launch_date,
-      launch_site,
-      owner,
-      country_operator,
-      object_type
-    FROM satellites
-    JOIN launch_events ON launch_events.launch_id = satellites.launch_id
-    JOIN ownership_operators ON ownership_operators.owner_code = satellites.owner_code
-    """
-    return run_query(query, conn)
-
-# Gets a single satellite's information based on NORAD ID
-def query_satellite_info(norad_id, conn):
-    """
-    Query a single satellite's information based on NORAD ID.
-
-    Parameters:
-    norad_id (int): The NORAD ID of the satellite.
-    conn (sql.Connection): The database connection object.
-
-    Returns:
-    pd.DataFrame: A DataFrame containing the satellite's information.
-    """
-    query = f"""
-    SELECT
-      norad_id,
-      cospar_id,
-      object_name,
-      launch_year,
-      launch_date,
-      launch_site,
-      owner,
-      country_operator,
-      object_type
-    FROM satellites
-    JOIN launch_events ON launch_events.launch_id = satellites.launch_id
-    JOIN ownership_operators ON ownership_operators.owner_code = satellites.owner_code
-    WHERE norad_id = {norad_id};
-    """
-    return run_query(query, conn)
-
-def query_satellite_info_list(norad_ids, conn):
-    """
-    Query information for a list of satellites based on their NORAD IDs.
-
-    Parameters:
-    norad_ids (list of int): The NORAD IDs of the satellites.
-    conn (sql.Connection): The database connection object.
-
-    Returns:
-    pd.DataFrame: A DataFrame containing the information of the specified satellites.
-    """
-    # This will create a comma-separated string of NORAD IDs for the SQL IN clause
-    ids = ','.join(str(id) for id in norad_ids)
     
-    query = f"""
-    SELECT
-      norad_id,
-      cospar_id,
-      object_name,
-      launch_year,
-      launch_date,
-      launch_site,
-      owner,
-      country_operator,
-      object_type
-    FROM satellites
-    JOIN launch_events ON launch_events.launch_id = satellites.launch_id
-    JOIN ownership_operators ON ownership_operators.owner_code = satellites.owner_code
-    WHERE norad_id IN ({ids});
-    """
-    return run_query(query, conn)
+    # query should return all columns from all tables
+    q1 = run_query("SELECT * FROM satellites;", conn)
+    q2 = run_query("SELECT * FROM orbital_data;", conn)
+    q3 = run_query("SELECT * FROM ucs_details;", conn)
+    q4 = run_query("SELECT * FROM risk_assessment;", conn)
+    q5 = run_query("SELECT * FROM ownership_operators;", conn)
+    q6 = run_query("SELECT * FROM launch_events;", conn)
+    
+    # merge all query results.
+    df = q1.merge(q2, on='norad_id', how='left') \
+        .merge(q3, on='norad_id', how='left') \
+        .merge(q4, on='norad_id', how='left') \
+        .merge(q5, on='owner_code', how='left') \
+        .merge(q6, on='launch_id', how='left')
+    
+    # drop duplicates
+    df = df.drop_duplicates(subset=['norad_id'])
+    
+    return df
 
 def quick_report(df, title="Dataset Diagnostic", audit_cols=None, key_col=None):
     """
@@ -481,6 +368,94 @@ def quick_report(df, title="Dataset Diagnostic", audit_cols=None, key_col=None):
     return display(Markdown("\n".join(report)))
 
 #########################################################################################################
+# AI Assisted Function: calculate_orbital_period                                                        #
+#                                                                                                       #
+# What this does                                                                                        #
+# - Calculates orbital period using Kepler's Third Law when period is missing.                          #
+# - Uses the formula: T = 2 * pi * sqrt(a^3 / mu), where T is the orbital period in seconds,            #
+#   a is the semi-major axis in kilometers, and mu is Earth's gravitational parameter.                  #
+# - Accounts for Earth's radius to convert altitudes to distances from Earth's center.                  #
+#                                                                                                       #
+# How AI assistance was used                                                                            #
+# - I understand the concept of orbital period, and how to use it to derive orbital regime,             #
+#   but I wasn't sure of the formula to use, the function itself is straightforward once the            #
+#   formula is known.  AI provided the formula for orbital period, I provided the implementation.       #
+#                                                                                                       #
+# AI (GitHub Copilot, GPT-5.3-Codex) assisted with formula reconstruction.                              #
+#########################################################################################################
+def calculate_orbital_period(row):
+    """
+    Calculate orbital period using Kepler's Third Law when period is missing.
+
+    This helper function was rewritten to support both raw source columns and the normalized snake_case
+    schema used later in the cleaning pipelines. This allows the function to be used anywhere within any of the cleaning pipelines
+    without needing to modify it for different column naming conventions.
+
+    Parameters:
+    row (pd.Series): A row containing period, perigee, and apogee values.
+
+    Returns:
+    float: The existing period when available, the reconstructed period in
+    minutes when enough geometry is present, or np.nan if reconstruction is
+    not possible.
+    """
+    
+    # find first avail column name for period
+    period = get_first_available_value(
+        row,
+        ['period_minutes', 'Period (minutes)', 'Period (Minutes)', 'PERIOD_MINUTES', 'PERIOD']
+    )
+
+    # if period is already available, return it directly without any calculations
+    if pd.notna(period):
+        return period
+    
+    # find first avail column name for perigee
+    perigee = get_first_available_value(
+        row,
+        ['perigee_km', 'Perigee (km)', 'Perigee (KM)', 'PERIGEE_KM', 'PERIGEE']
+    )
+    
+    # find first avail column name for apogee
+    apogee = get_first_available_value(
+        row,
+        ['apogee_km', 'Apogee (km)', 'Apogee (KM)', 'APOGEE_KM', 'APOGEE']
+    )
+
+    # if either perigee or apogee are missing, we cannot calculate the period, return nan.
+    if pd.isna(perigee) or pd.isna(apogee):
+        return np.nan
+
+    # Kepler's Third Law: T = 2 * pi * sqrt(a^3 / mu), where T is the orbital period in seconds,
+    # a is the semi-major axis in kilometers, and mu is Earth's gravitational parameter.
+    alt_km = (perigee + apogee) / 2
+    a = earth_radius + alt_km
+    period_seconds = 2 * np.pi * np.sqrt(a**3 / mu)
+
+    # Convert the period from seconds to minutes before returning.
+    return period_seconds / 60
+
+def get_first_available_value(row, column_names):
+    """
+    Return the first available value from a row for any of the provided column names.
+    This allows us to support multiple potential column name variations for the same underlying data,
+    which is common in our dataset. The function checks for the presence of each candidate column name
+    in the row and returns the value from the first one that exists. If none of the candidate columns are
+    present, it returns np.nan.
+
+    Parameters:
+    row (pd.Series): A row from a DataFrame.
+    column_names (list[str] | tuple[str, ...]): Candidate column names in priority order.
+
+    Returns:
+    object: The value from the first matching column, or np.nan if none are present.
+    """
+    for column_name in column_names:
+        if column_name in row.index:
+            return row[column_name]
+    return np.nan
+
+#########################################################################################################
 # AI Assisted Function: derive_eccentricity                                                             #
 #                                                                                                       #
 # What this does                                                                                        #
@@ -490,9 +465,10 @@ def quick_report(df, title="Dataset Diagnostic", audit_cols=None, key_col=None):
 #                                                                                                       #
 # How AI assistance was used                                                                            #
 # - I understand the concept of eccentricity but wasn't sure of the formula to use                      #
-#   (the function itself is straightforward once the formula is known)                                  #
+#   (the function itself is straightforward once the formula is known). AI provided the formula for     #
+#   eccentricity, I provided the implementation.                                                        #
 #                                                                                                       #
-# AI (GitHub Copilot, GPT-5.3-Codex) assisted with implementation structure.                            #
+# AI (GitHub Copilot, GPT-5.3-Codex) assisted with formula reconstruction.                              #
 #########################################################################################################
 def derive_eccentricity(row):
     ra = row['apogee_km'] + earth_radius  # Distance from Earth center to apogee
@@ -513,8 +489,7 @@ def derive_eccentricity(row):
 # - I defined the analysis method (legacy linear vs modern exponential) and fit requirements.           #
 # - AI helped draft a clean reusable function structure and stability safeguards.                       #
 #                                                                                                       #
-# AI (GitHub Copilot, GPT-5.3-Codex) assisted with implementation structure.                            #
-#                                                                                                       #
+# AI (GitHub Copilot, GPT-5.3-Codex) assisted with formula and function implementation.                 #
 #########################################################################################################
 def fit_growth_regimes(df, split_year, y_col):
     """
@@ -577,11 +552,11 @@ def fit_growth_regimes(df, split_year, y_col):
 # - Returns the best split year (lowest RMSE) plus a diagnostics table for transparency.                #
 # - Skips candidates that fail fitting (insufficient/invalid post-split behavior).                      #
 #                                                                                                       #
-# Why AI assistance was used                                                                            #
+# How AI assistance was used                                                                            #
 # - I defined the objective (data-selected decoupling year, not a pre-asserted date).                   #
-# - AI helped structure the candidate-evaluation loop and diagnostics output schema.                    #
+# - AI helped structure the candidate-evaluation loop and diagnostics output.                           #
 #                                                                                                       #
-# AI (GitHub Copilot, GPT-5.3-Codex) assisted with implementation structure.                            # 
+# AI (GitHub Copilot, GPT-5.3-Codex) assisted with formula and function design/implementation.          #
 #########################################################################################################
 def choose_split_year(df, y_col, min_pre_points=8, min_post_points=6):
     """
