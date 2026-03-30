@@ -1,6 +1,8 @@
-# IN PROGRESS
+# WORK IN PROGRESS
 
-## Orbital Debris Assessment: Mapping the Kessler Acceleration in Low Earth Orbit
+This readme is a work in progress and is not intended as the complete/final version of the document.  This readme will be considered final at the time I turn it in for grading, or on April 10th, 2026, whichever comes first.
+
+# Orbital Debris Assessment: Mapping the Kessler Acceleration in Low Earth Orbit
 
 **Author:** James Glosser  
 **Contact:** [Email](mailto:DemonicUrges05@gmail.com) | [LinkedIn profile](https://www.linkedin.com/in/james-glosser-249100204/)  
@@ -161,14 +163,9 @@ The project combines data engineering, orbital mechanics, and query-driven analy
 - **Relational structure:** separate the master dataset into reusable SQLite tables so the main project questions can be answered with focused queries rather than repeated notebook-only transforms
 - **Narrative emphasis:** connect launch growth, altitude crowding, and non-operational object persistence into a single collision-risk story
 
-## Current Outputs
+## Usage & Reproduction
 
-[OUTDATED]
-A full list of repo outputs will be listed by the end of the completed project.
-
-## How To Reproduce
-
-### 1. Installation
+### 1. Installation & Environment Setup
 
 ```bash
 # Clone the repository
@@ -186,92 +183,62 @@ source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
-
-# Get started quickly!
-cd notebooks
-python execute.py --first-run
 ```
 
-### 2. Run the notebooks in pipeline order
+### 2. Pipeline Execution
 
-If you do not wish to run each notebook indivudually, in ordered sequence, there are various
-command line options available for use with execute.py.
-
-To use execute.py, navigate to `orbital-debris-assessment/notebooks`
+From the `notebooks/` directory, run the pipeline using the provided CLI options:
 
 ```bash
-# From the project root directory.
 cd notebooks
-python execute.py --optional-flag
 
-# Run pipeline start to finish without re-downloading original datasets or purging outputs.
-# For a fresh clone of the project, use execute.py --first-run instead.
-
-python execute.py
-
-# First run for the project. Downloads original datasets, runs entire pipeline start to finish.
+# First run: downloads original datasets, purges outputs, runs the full pipeline
 python execute.py --first-run
 
-# Refresh dataset originals and run entire pipeline start to finish
+# Standard run: uses existing datasets, runs the full pipeline
+python execute.py
+
+# Refresh datasets and rerun pipeline
 python execute.py --refresh
 
-# Purge all outputs (but not original datasets) and rerun pipeline.
-# This option can be ran with --refresh.
+# Purge outputs and rerun pipeline
 python execute.py --purge
-python execute.py --refresh --purge
 
-# Purge all outputs and exit.  Do NOT rerun pipeline.
+# Purge outputs only, do not rerun pipeline
 python execute.py --purge-only
 
-# Rerun only the data processing and systhesis parts of the pipeline (notebooks 01 - 04)
-# This option can be ran with --refresh and or --purge.
+# Data-only: rerun only data cleaning/synthesis (notebooks 01-04)
 python execute.py --data-only
-python execute.py --data-only --refresh
-python execute.py --data-only --purge
-python eecute.py --data-only --refresh --purge
 
-# Rerun only the exploration and visualization parts of the pipeline.
-# This option techniqually allows --refresh but there isn't really a point because the visuals
-# will not be using the updated sources.
+# Vis-only: rerun only exploration/query/visualization/presentation notebooks (notebooks 05-08)
 python execute.py --vis-only
-python execute.py --vis-only --refresh
 ```
 
-#### Flag Interaction Notes
+**Flag Interaction Notes:**  
 
-- If you use --vis-only with --purge, purge is ignored to prevent deleting data needed for visualizations.
-- If you use both --vis-only and --data-only, the full pipeline will run.
-- --first-run always runs the full pipeline with purge and refresh, ignoring --vis-only and --data-only.
+- `--first-run` always runs the full pipeline with purge and refresh, ignoring other flags.
+- `--vis-only` with `--purge` ignores purge to avoid deleting required data.
+- Using both `--vis-only` and `--data-only` runs the full pipeline.
 
-### Notes
+**Refresh Usage:**  
+CelesTrak allows ~10 refreshes per day. Use `--refresh` sparingly to avoid throttling.
 
-If you would prefer, you can also run each notebook in ordered sequence. If you already have the original dataset CSVs, you can skip `00_pipeline_refresh.ipynb`.
+### 3. Output & Documentation Review
 
-1. `notebooks/00_pipeline_refresh.ipynb`
-2. `notebooks/01_ucs_cleanup.ipynb`
-3. `notebooks/02_satcat_cleanup.ipynb`
-4. `notebooks/03_kinetic_master_synthesis.ipynb`
-5. `notebooks/04_orbital_debris_synthesis.ipynb`
-6. `notebooks/05_orbital_debris_exploration.ipynb`
-7. `notebooks/06_orbital_debris_story_queries.ipynb`
-8. `notebooks/07_orbital_debris_story_visualizations.ipynb`
+- Review executed notebooks in `notebooks/output/` (look for `_executed.ipynb` files).
+- For a summary, see `08_orbital_debris_assessment_presentation.ipynb`.
+- To view documentation in Jupyter, use `00_markdown_viewer.ipynb`.
 
-If the cleaned datasets and sql database already exist you can run `python execute.py --vis-only` on the command line to rerun querie and visual notebooks.
+**Recommended Workflow:**  
+This project is designed for reproducible, stepwise analysis—no manual notebook editing required. The recommended workflow is:
 
-If for some reason you only want to rerun the data cleaning and synthesis portion of the pipeline, you can run `python execute.py --data-only` but this feels a bit pointless considering any update to the data pipeline would result in changes in the visuals, even if minute.
+1. **Set up your environment** (one-time)
+2. **Run the pipeline** with a single command
+3. **Review outputs** in the output folder or use the markdown viewer for documentation
 
-## Recommended Usage & Output Review
+**Manual Execution:**  
+You may run each notebook in order for full control (see notebook list above), but the CLI is recommended for reproducibility.
 
-**Pipeline Outputs:**
-After running `python execute.py --first-run`, open the output folder at `<repo_root>/notebooks/output/` and review each executed notebook one by one. These executed notebooks (with `_executed.ipynb` suffix) are intended for review and contain all code, outputs, and results. The original notebooks are kept as clean templates for reference and reruns.
-
-**Streamlined Presentation:**
-Once the project is finalized, you may skip directly to `08_orbital_debris_assessment_presentation.ipynb` for a streamlined summary.
-
-**Documentation Review:**
-To view project documentation (such as the capstone proposal or data dictionaries) directly in Jupyter, use `notebooks/00_markdown_viewer.ipynb` to open and render markdown files interactively.
-
-**Recommended Workflow:**
 - Use the `execute.py` command to run the pipeline and generate outputs.
 - Review results in the output folder, not the original notebooks.
 - Use the markdown viewer notebook for in-notebook documentation access.

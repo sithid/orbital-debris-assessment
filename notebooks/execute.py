@@ -19,11 +19,12 @@ notebook_pipeline_complete = [
     os.path.join(ROOT_DIR, "notebooks/04_orbital_debris_synthesis.ipynb"),
     os.path.join(ROOT_DIR, "notebooks/05_orbital_debris_exploration.ipynb"),
     os.path.join(ROOT_DIR, "notebooks/06_orbital_debris_story_queries.ipynb"),
-    os.path.join(ROOT_DIR, "notebooks/07_orbital_debris_story_visualizations.ipynb")
+    os.path.join(ROOT_DIR, "notebooks/07_orbital_debris_story_visualizations.ipynb"),
+    os.path.join(ROOT_DIR, "notebooks/08_orbital_debris_assessment_presentation.ipynb")
 ]
 # notebook_pipeline_data_only should contain 01 - 04
 notebook_pipeline_data_only = notebook_pipeline_complete[1:5]  # Only the first 4 notebooks which are for data processing and synthesis
-notebook_pipeline_vis_only = notebook_pipeline_complete[-3:]  # Only the last 3 notebooks which are for exploration and visualization
+notebook_pipeline_vis_only = notebook_pipeline_complete[-4:]  # Only the last 4 notebooks which are for exploration, queries, visualization and presentation.
 
 def purge_outputs():
     print("\n⚠️  Purging all exported/cleaned outputs...")
