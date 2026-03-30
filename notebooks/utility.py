@@ -161,8 +161,68 @@ def standardize_purpose(text):
     # dict.get( p1, p2 )
     # where p1: the key to look up in the dictionary (in this case, the primary purpose term)
     # and p2: the default value to return if the key is not found in the dictionary (in this case, the original primary term)
+
     return mapping.get(primary, primary)
 
+def classify_risk_category(
+    row,
+    ke_col="kinetic_joules",
+    mass_col="proxy_mass_kg",
+    thresholds=None,
+    mass_cutoff=1.0,
+    use_mass_filter=True
+):
+    """
+    Classify orbital debris or satellite risk category based on kinetic energy and (optionally) mass.
+
+    Parameters:
+    row (pd.Series): Row of DataFrame with at least kinetic energy and mass columns.
+    ke_col (str): Name of the kinetic energy column (default 'kinetic_joules').
+    mass_col (str): Name of the mass column (default 'proxy_mass_kg').
+    thresholds (dict or None):
+        Ordered mapping of {category: min_ke_joules}. Example (descending):
+            {
+                'Extremely High Risk': 1e10,
+                'High Risk': 1e8,
+                'Moderate Risk': 1e6,
+                'Low Risk': 0
+            }
+        If None, uses NASA/ESA-aligned defaults.
+    mass_cutoff (float): Minimum mass (kg) to be considered for risk (default 1.0 kg).
+    use_mass_filter (bool): If True, objects below mass_cutoff are always 'Low Risk'.
+
+    Returns:
+    str: Risk category label.
+
+    Notes:
+    - Designed for DataFrame.apply(axis=1) usage.
+    - Defaults are based on NASA/ESA MMOD and kinetic energy risk guidelines.
+    - Set use_mass_filter=False to ignore mass in risk assignment.
+    """
+    # Default thresholds (descending order)
+    if thresholds is None:
+        thresholds = {
+            'Extremely High Risk': 1e10,
+            'High Risk': 1e8,
+            'Moderate Risk': 1e6,
+            'Low Risk': 0
+        }
+
+    ke = row.get(ke_col, np.nan)
+    mass = row.get(mass_col, np.nan)
+
+    if pd.isna(ke):
+        return 'Unknown'
+
+    # Optional: filter out very small objects (e.g., <1 kg) as always low risk
+    if use_mass_filter and (pd.isna(mass) or mass < mass_cutoff):
+        return 'Low Risk'
+
+    for category, min_ke in thresholds.items():
+        if ke >= min_ke:
+            return category
+    return 'Low Risk'
+    
 def classify_orbit(period):
     """
     Translates orbital period into standardized regimes.

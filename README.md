@@ -34,7 +34,13 @@ This README follows the project narrative laid out in [docs/Capstone Project Pro
 
 ## Current Workflow
 
-The repo is organized as a staged analysis pipeline. Each notebook handles a distinct phase of the project.
+
+The repo is organized as a staged analysis pipeline. Each notebook handles a distinct phase of the project. There is also a utility notebook for documentation viewing.
+
+**See the 'Recommended Usage & Output Review' section below for how to review outputs and documentation.**
+
+0. **Markdown Viewer Utility**  
+   `notebooks/00_markdown_viewer.ipynb` is a utility notebook for interactively viewing and rendering markdown files (such as documentation or proposals) within Jupyter. It is not part of the main data pipeline, but is useful for reviewing project documentation directly in the notebook interface.
 
 1. **Pipeline Refresh**  
    `notebooks/00_pipeline_refresh.ipynb.ipynb` downloads original datasets from their respective sources.
@@ -64,12 +70,45 @@ The repo is organized as a staged analysis pipeline. Each notebook handles a dis
 
 ```text
 orbital-debris-assessment/
+|- charts/                        # question-driven figures (by type/phase)
+|  \- questions/
+|     |- exploratory/
+|     |   |- png/
+|     |   \- svg/
+|     |- primary/
+|     |   |- png/
+|     |   \- svg/
+|     \- secondary/
+|         |- png/
+|         \- svg/
 |- data/
-|  |- original/              # raw source files
-|  \- clean/                 # cleaned CSVs, SQLite database, parquet query outputs
-|- docs/                     # capstone proposal and supporting documentation
-|- images/                   # exported figures and schema image
-|- notebooks/                # stepwise analysis pipeline
+|  |- original/                   # raw source files (satcat.csv, UCS-Satellite-Database.csv, etc.)
+|  \- clean/                      # cleaned CSVs, SQLite database, parquet query outputs
+|     |- kinetic_master.csv
+|     |- satcat_cleaned.csv
+|     |- ucs_cleaned.csv
+|     |- orbital_debris.db
+|     \- results/                 # compact query outputs (parquet)
+|- docs/                          # capstone proposal, data dictionaries, and supporting docs
+|  |- archive/
+|  |- misc/
+|  |- resources/
+|  \- schema/
+|- images/                        # exported figures and schema image
+|- notebooks/                     # stepwise analysis pipeline and utilities
+|  |- 00_markdown_viewer.ipynb    # utility: view markdown docs in Jupyter
+|  |- 00_pipeline_refresh.ipynb
+|  |- 01_ucs_cleanup.ipynb
+|  |- 02_satcat_cleanup.ipynb
+|  |- 03_kinetic_master_synthesis.ipynb
+|  |- 04_orbital_debris_synthesis.ipynb
+|  |- 05_orbital_debris_exploration.ipynb
+|  |- 06_orbital_debris_story_queries.ipynb
+|  |- 07_orbital_debris_story_visualizations.ipynb
+|  |- 08_orbital_debris_assessment_presentation.ipynb
+|  |- execute.py
+|  |- output/                     # executed notebooks with outputs
+|  \- utility.py
 |- README.md
 \- requirements.txt
 ```
@@ -82,10 +121,7 @@ orbital-debris-assessment/
 | `data/clean/satcat_cleaned.csv` | Cleaned SATCAT global catalog | 68,087 rows x 27 columns |
 | `data/clean/kinetic_master.csv` | Physics-informed synthesized master dataset | 33,234 rows x 47 columns |
 | `data/clean/orbital_debris.db` | Normalized SQLite analysis database | 6 relational tables |
-| `data/clean/queries/pq1_launch_trend.parquet` | Query output for launch growth analysis | 69 rows x 6 columns |
-| `data/clean/queries/pq2_high_risk.parquet` | Query output for high-risk distribution analysis | 18 rows x 12 columns |
-
-[OUTDATED]
+| `data/clean/results/*.parquet` | Compact query results for all queries used in any visualization | Dependent On Query |
 
 The SQLite database currently contains these tables:
 
@@ -127,17 +163,8 @@ The project combines data engineering, orbital mechanics, and query-driven analy
 
 ## Current Outputs
 
-The repo currently includes these exported visuals:
-
-- `images/orbital_debris_schema_erd.png`
-- `images/launch_trends_pq1.png`
-- `images/launch_trends_pq1.svg`
-- `images/high_risk_distribution_pq2.png`
-- `images/high_risk_distribution_pq2.svg`
-
 [OUTDATED]
-
-At the moment, the committed visualization layer is strongest for Primary Question 1 and Primary Question 2. The database and query structure are already in place to support the remaining analysis work.
+A full list of repo outputs will be listed by the end of the completed project.
 
 ## How To Reproduce
 
@@ -159,21 +186,64 @@ source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Get started quickly!
+cd notebooks
+python execute.py --first-run
 ```
 
 ### 2. Run the notebooks in pipeline order
 
-If you do not wish to run each notebook indivudually, in ordered sequence, you can run execute.py to do it for you.
+If you do not wish to run each notebook indivudually, in ordered sequence, there are various
+command line options available for use with execute.py.
+
+To use execute.py, navigate to `orbital-debris-assessment/notebooks`
 
 ```bash
-# Run all notebooks in order. Download original datasets.
+# From the project root directory.
+cd notebooks
+python execute.py --optional-flag
+
+# Run pipeline start to finish without re-downloading original datasets or purging outputs.
+# For a fresh clone of the project, use execute.py --first-run instead.
+
+python execute.py
+
+# First run for the project. Downloads original datasets, runs entire pipeline start to finish.
+python execute.py --first-run
+
+# Refresh dataset originals and run entire pipeline start to finish
 python execute.py --refresh
 
-# Run all notebooks excluding 00_pipeline_refresh.  Do NOT download source datasets.
-# Run this if you already ran the pipeline refresh / already have the original source documents and only
-# want to rerun all notebooks after pipeline_refresh.
-python execute.py
+# Purge all outputs (but not original datasets) and rerun pipeline.
+# This option can be ran with --refresh.
+python execute.py --purge
+python execute.py --refresh --purge
+
+# Purge all outputs and exit.  Do NOT rerun pipeline.
+python execute.py --purge-only
+
+# Rerun only the data processing and systhesis parts of the pipeline (notebooks 01 - 04)
+# This option can be ran with --refresh and or --purge.
+python execute.py --data-only
+python execute.py --data-only --refresh
+python execute.py --data-only --purge
+python eecute.py --data-only --refresh --purge
+
+# Rerun only the exploration and visualization parts of the pipeline.
+# This option techniqually allows --refresh but there isn't really a point because the visuals
+# will not be using the updated sources.
+python execute.py --vis-only
+python execute.py --vis-only --refresh
 ```
+
+#### Flag Interaction Notes
+
+- If you use --vis-only with --purge, purge is ignored to prevent deleting data needed for visualizations.
+- If you use both --vis-only and --data-only, the full pipeline will run.
+- --first-run always runs the full pipeline with purge and refresh, ignoring --vis-only and --data-only.
+
+### Notes
 
 If you would prefer, you can also run each notebook in ordered sequence. If you already have the original dataset CSVs, you can skip `00_pipeline_refresh.ipynb`.
 
@@ -183,10 +253,29 @@ If you would prefer, you can also run each notebook in ordered sequence. If you 
 4. `notebooks/03_kinetic_master_synthesis.ipynb`
 5. `notebooks/04_orbital_debris_synthesis.ipynb`
 6. `notebooks/05_orbital_debris_exploration.ipynb`
-7. `notebooks/06_orbital_debris_queries.ipynb`
-8. `notebooks/07_orbital_debris_visualizations.ipynb`
+7. `notebooks/06_orbital_debris_story_queries.ipynb`
+8. `notebooks/07_orbital_debris_story_visualizations.ipynb`
 
-If the cleaned data, SQLite database, and parquet query outputs already exist and you need to regenerate the charts, running `notebooks/07_orbital_debris_visualizations.ipynb` is enough.
+If the cleaned datasets and sql database already exist you can run `python execute.py --vis-only` on the command line to rerun querie and visual notebooks.
+
+If for some reason you only want to rerun the data cleaning and synthesis portion of the pipeline, you can run `python execute.py --data-only` but this feels a bit pointless considering any update to the data pipeline would result in changes in the visuals, even if minute.
+
+## Recommended Usage & Output Review
+
+**Pipeline Outputs:**
+After running `python execute.py --first-run`, open the output folder at `<repo_root>/notebooks/output/` and review each executed notebook one by one. These executed notebooks (with `_executed.ipynb` suffix) are intended for review and contain all code, outputs, and results. The original notebooks are kept as clean templates for reference and reruns.
+
+**Streamlined Presentation:**
+Once the project is finalized, you may skip directly to `08_orbital_debris_assessment_presentation.ipynb` for a streamlined summary.
+
+**Documentation Review:**
+To view project documentation (such as the capstone proposal or data dictionaries) directly in Jupyter, use `notebooks/00_markdown_viewer.ipynb` to open and render markdown files interactively.
+
+**Recommended Workflow:**
+- Use the `execute.py` command to run the pipeline and generate outputs.
+- Review results in the output folder, not the original notebooks.
+- Use the markdown viewer notebook for in-notebook documentation access.
+- Manual notebook execution is possible but not recommended for typical use.
 
 ## Assumptions and Limitations
 
