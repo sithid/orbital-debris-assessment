@@ -2,7 +2,7 @@ import papermill as pm
 import sys
 import argparse
 import os
-
+import shutil
 # https://docs.python.org/3/library/filesys.html
 
 # Set the root directory path (project root, one level up from this file)
@@ -22,6 +22,7 @@ notebook_pipeline_complete = [
     os.path.join(ROOT_DIR, "notebooks/07_orbital_debris_story_visualizations.ipynb"),
     os.path.join(ROOT_DIR, "notebooks/08_orbital_debris_assessment_presentation.ipynb")
 ]
+
 # notebook_pipeline_data_only should contain 01 - 04
 notebook_pipeline_data_only = notebook_pipeline_complete[1:5]  # Only the first 4 notebooks which are for data processing and synthesis
 notebook_pipeline_vis_only = notebook_pipeline_complete[-4:]  # Only the last 4 notebooks which are for exploration, queries, visualization and presentation.
@@ -29,62 +30,74 @@ notebook_pipeline_vis_only = notebook_pipeline_complete[-4:]  # Only the last 4 
 def purge_outputs():
     print("\n⚠️  Purging all exported/cleaned outputs...")
     
-    # Purge datasets in the clean folder but skip the results folder.
-    # This is where we save any exported datasets or cleaned versions of the original data that 
-    # we want to keep separate from the raw downloads in the clean folder.
-    # We want to purge these on demand because they can be large and we don't want to 
-    # accidentally delete them every time we run the pipeline, but we also want to give the
-    # option to start fresh if needed.
-    
-    clean_dir = os.path.join(ROOT_DIR, 'data/clean')
-    
-    if os.path.exists(clean_dir):
-        for fname in os.listdir(clean_dir):
-            fpath = os.path.join(clean_dir, fname)
-            if fname == 'results' and os.path.isdir(fpath):
-                continue
-            if os.path.isfile(fpath):
-                os.remove(fpath)
-    
-    # Explicitly remove the database file if it exists still.
-    # The previous loop should have removed it, but if it was open or thread-locked for some
-    # reason it might still be there, so we do this as a final cleanup step to ensure a fresh start.            
-    db_path = os.path.join(clean_dir, 'orbital_debris.db')
-    
-    if os.path.exists(db_path):
-        os.remove(db_path)
-    
-    # Purge images in charts directory but leave the folder structure intact.
-    charts_dir = os.path.join(ROOT_DIR, 'charts')
-    
-    if os.path.exists(charts_dir):
-        for root, dirs, files in os.walk(charts_dir):
-            for file in files:
-                if file.endswith(('.png', '.svg')):
-                    os.remove(os.path.join(root, file))
-    
-    # Purge items inside results but leave the folder structure intact.
-    results_dir = os.path.join(clean_dir, 'results')
-    
-    if os.path.exists(results_dir):
-        for fname in os.listdir(results_dir):
-            fpath = os.path.join(results_dir, fname)
-            try:
-                if os.path.isfile(fpath) or os.path.islink(fpath):
-                    os.remove(fpath)
-            except Exception as e:
-                print(f"Warning: Could not delete {fpath}: {e}")
-    
-    # Purge executed notebooks in the output folder (if it exists)
+    # Remove output directory
     output_dir = os.path.join(os.path.dirname(__file__), 'output')
     if os.path.exists(output_dir):
-        for fname in os.listdir(output_dir):
-            fpath = os.path.join(output_dir, fname)
-            if os.path.isfile(fpath) and fname.endswith('.ipynb'):
-                os.remove(fpath)
-                
-    print("✅ Purge complete.\n")
+        shutil.rmtree(output_dir)
+        
+    # Remove charts directory
+    charts_dir = os.path.join(ROOT_DIR, 'charts')
+    if os.path.exists(charts_dir):
+        shutil.rmtree(charts_dir)
+        
+    # Remove data/clean directory (all cleaned/intermediate files, CSVs, DBs, and results)
+    clean_dir = os.path.join(ROOT_DIR, 'data/clean')
+    if os.path.exists(clean_dir):
+        shutil.rmtree(clean_dir)
+    print("✅ Output, charts, and clean directories removed.")
 
+    print("💨 Reinitializing directory structure...")
+    build_directory_structure(True)
+    print("✅ Purge and reinitialization complete.\n")
+
+def build_directory_structure(silent=False):
+    if not silent:
+        print("💨 Initializing pipeline directory structure...")
+        
+    # Create the output directory if it doesn't exist
+    output_dir = os.path.join(os.path.dirname(__file__), 'output')
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+            
+    # Create the clean/results directory if it doesn't exist
+    clean_results_dir = os.path.join(ROOT_DIR, 'data/clean/results')
+    if not os.path.exists(clean_results_dir):
+        os.makedirs(clean_results_dir)
+        
+    # Create the charts directory and subdirectories if they don't exist.
+    charts_dir = os.path.join(ROOT_DIR, 'charts')
+    if not os.path.exists(charts_dir):
+        if not silent:
+            print("✅ Creating charts directory at: ", charts_dir)
+        os.makedirs(charts_dir)
+        
+    questions_dir = os.path.join(charts_dir, 'questions')
+    if not os.path.exists(questions_dir):
+        if not silent:
+            print("✅ Creating questions directory at: ", questions_dir)
+        os.makedirs(questions_dir)
+
+    # Create initial subdirectories for exploratory, primary, and secondary.
+    sub_questions_dirs = ['exploratory', 'primary', 'secondary']
+    for subdir in sub_questions_dirs:
+        subdir_path = os.path.join(questions_dir, subdir)
+        if not os.path.exists(subdir_path):
+            if not silent:
+                print("✅ Creating subdirectory for question type: ", subdir_path)
+            os.makedirs(subdir_path)
+                
+        # Create subdirectories for the two image types inside each question type folder.
+        if subdir in sub_questions_dirs:
+            for img_type in ['png', 'svg']:
+                img_subdir_path = os.path.join(subdir_path, img_type)
+                if not os.path.exists(img_subdir_path):
+                    if not silent:
+                        print("✅ Creating subdirectory for image type: ", img_subdir_path)
+                    os.makedirs(img_subdir_path)
+        
+    if not silent:
+        print("✅ Directory structure initialized.") 
+        
 def run_pipeline(
     refresh=False, 
     purge=False, 
@@ -95,7 +108,11 @@ def run_pipeline(
     notebooks = None
     
     if first_run:
-        print("🚀 First run mode enabled.")
+        print("🚀 First run mode enabled. 🚀")
+        
+        # Build initial directory structure to ensure all necessary folders are created before running any notebooks.
+        # silent=false for verbose output since this is the first run and we want to see the initialization steps.
+        build_directory_structure(False)
         
         print("✅ Enabling purge to ensure a clean slate and prevent issues from any existing outputs.")
         purge = True
