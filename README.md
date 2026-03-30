@@ -2,7 +2,7 @@
 
 This readme is a work in progress and is not intended as the complete/final version of the document.  This readme will be considered final at the time I turn it in for grading, or on April 10th, 2026, whichever comes first.
 
-# Orbital Debris Assessment: Mapping the Kessler Acceleration in Low Earth Orbit
+## Orbital Debris Assessment: Mapping the Kessler Acceleration in Low Earth Orbit 
 
 **Author:** James Glosser  
 **Contact:** [Email](mailto:DemonicUrges05@gmail.com) | [LinkedIn profile](https://www.linkedin.com/in/james-glosser-249100204/)  
@@ -12,30 +12,27 @@ This readme is a work in progress and is not intended as the complete/final vers
 
 ---
 
-## Project Overview
+### Project Overview
 
 This capstone examines whether low Earth orbit is entering a more dangerous growth regime driven by rapid satellite deployment, persistent rocket bodies, and long-lived debris. The project started as a flat-file workflow centered on `kinetic_master.csv`, but the current structure is more deliberate: clean the source datasets, synthesize a physics-informed master registry, normalize that registry into SQLite, run focused analytical queries, and generate final visualizations from compact query outputs.
 
 The goal is not just to count objects in orbit. It is to identify when orbital growth shifts from a historical linear pattern into a modern acceleration regime, and to map where the highest-risk objects are concentrating by orbit class, altitude band, and object type.
 
-This README follows the project narrative laid out in [docs/Capstone Project Proposal - James Glosser.md](docs/Capstone%20Project%20Proposal%20-%20James%20Glosser.md), but updates it to match the repository's current flow and artifacts.
+### Research Questions
 
-## Research Questions
-
-### Primary Questions
+#### Primary Questions
 
 - At what year did orbital growth decouple from a historical linear trend and transition into an exponential trajectory?
 - How are high-risk objects, measured through velocity and kinetic energy, distributed across orbit classes and altitude bands, especially in the 400-600 km LEO band?
 - Which ownership or operator groups contribute most to non-operational zombie payload concentrations?
 
-### Secondary Questions
+#### Secondary Questions
 
 - How do launch cohorts and post-2014 deployment patterns affect congestion intensity?
 - How do object type and operational status relate to kinetic risk?
 - Do user categories such as commercial, government, military, and civil show distinct risk profiles?
 
-## Current Workflow
-
+### Current Workflow
 
 The repo is organized as a staged analysis pipeline. Each notebook handles a distinct phase of the project. There is also a utility notebook for documentation viewing.
 
@@ -68,7 +65,10 @@ The repo is organized as a staged analysis pipeline. Each notebook handles a dis
 8. **Visualization layer**  
    `notebooks/07_orbital_debris_visualizations.ipynb` reads the query outputs and generates the final figures in `images/`.
 
-## Repository Structure
+9. **Presentation layer**  
+   `notebooks/08_orbital_debris_assessment_presentation.ipynb` provides the final project presentation, summarizing key findings, visuals, and conclusions for review or sharing.
+
+### Repository Structure
 
 ```text
 orbital-debris-assessment/
@@ -115,7 +115,7 @@ orbital-debris-assessment/
 \- requirements.txt
 ```
 
-## Key Data Products
+### Key Data Products
 
 | Artifact | Current Role | Size |
 | --- | --- | --- |
@@ -134,27 +134,27 @@ The SQLite database currently contains these tables:
 - `ownership_operators`
 - `launch_events`
 
-## Data Sources
+### Data Sources
 
-### 1. CelesTrak Satellite Catalog (SATCAT)
+#### 1. CelesTrak Satellite Catalog (SATCAT)
 
 - **Source:** CelesTrak / U.S. Space Command (USSPACECOM)
 - **Use in this project:** baseline global object catalog for payloads, rocket bodies, and debris
 - **Link:** [http://celestrak.org/pub/satcat.csv](http://celestrak.org/pub/satcat.csv)
 
-### 2. UCS Satellite Database
+#### 2. UCS Satellite Database
 
 - **Source:** Union of Concerned Scientists
 - **Use in this project:** higher-fidelity payload metadata including ownership, mission, launch mass, and lifetime fields
 - **Link:** [http://www.ucsusa.org/resources/satellite-database](http://www.ucsusa.org/resources/satellite-database)
 
-### 3. ESA Space Environment Report 2025
+#### 3. ESA Space Environment Report 2025
 
 - **Source:** ESA Space Debris Office
 - **Use in this project:** external benchmark for assumptions, validation checks, and proxy reasoning
 - **Link:** [https://www.sdo.esoc.esa.int/publications/Space_Environment_Report_I9R1_20251021.pdf](https://www.sdo.esoc.esa.int/publications/Space_Environment_Report_I9R1_20251021.pdf)
 
-## Analytical Framing
+### Analytical Framing
 
 The project combines data engineering, orbital mechanics, and query-driven analysis.
 
@@ -163,9 +163,9 @@ The project combines data engineering, orbital mechanics, and query-driven analy
 - **Relational structure:** separate the master dataset into reusable SQLite tables so the main project questions can be answered with focused queries rather than repeated notebook-only transforms
 - **Narrative emphasis:** connect launch growth, altitude crowding, and non-operational object persistence into a single collision-risk story
 
-## Usage & Reproduction
+### Usage & Reproduction
 
-### 1. Installation & Environment Setup
+#### 1. Installation & Environment Setup
 
 ```bash
 # Clone the repository
@@ -185,7 +185,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. Pipeline Execution
+#### 2. Pipeline Execution
 
 From the `notebooks/` directory, run the pipeline using the provided CLI options:
 
@@ -223,7 +223,7 @@ python execute.py --vis-only
 **Refresh Usage:**  
 CelesTrak allows ~10 refreshes per day. Use `--refresh` sparingly to avoid throttling.
 
-### 3. Output & Documentation Review
+#### 3. Output & Documentation Review
 
 - Review executed notebooks in `notebooks/output/` (look for `_executed.ipynb` files).
 - For a summary, see `08_orbital_debris_assessment_presentation.ipynb`.
@@ -244,14 +244,14 @@ You may run each notebook in order for full control (see notebook list above), b
 - Use the markdown viewer notebook for in-notebook documentation access.
 - Manual notebook execution is possible but not recommended for typical use.
 
-## Assumptions and Limitations
+### Assumptions and Limitations
 
 - SATCAT and UCS do not provide identical coverage, so matching quality depends on shared identifiers and metadata consistency.
 - Some physics and mass fields require imputation or derivation rather than direct observation.
 - The SQLite layer improves reproducibility, but it does not eliminate source-era gaps or historical catalog inconsistencies.
 - High-risk summary tables can contain missing average values where a group exists but no object in that group qualifies as high risk.
 
-## Why This Structure Matters
+### Why This Structure Matters
 
 The old flat-file-centered workflow made it too easy to mix cleaning, modeling, querying, and storytelling in the same place. The current structure separates those concerns:
 
@@ -261,15 +261,17 @@ The old flat-file-centered workflow made it too easy to mix cleaning, modeling, 
 - query outputs that freeze the logic for each research question
 - a visualization notebook that focuses only on presentation
 
-## AI Usage & Authorship Note
+### AI Usage & Authorship Note
 
-AI assistance (primary GitHub Copilot) was utilized as a development tool for formula research, some functions, error debugging, and documentation adjustments.
+AI assistance (primarily GitHub Copilot) was utilized as a development tool for formula and function development, error debugging, and documentation adjustments. AI-assisted functions are explicitly identified in their respective headers.
 
-**Human Authorship & Governance** I retain full authorship and responsibility for the following core components:
+**Human Authorship & Governance**  
+I retain full authorship and responsibility for the following core components:
 
 - **Strategic Framework:** Research direction, conceptual framing, and methodology.
 - **Data Architecture:** All data-cleaning logic, schema definitions, and pipeline design.
 - **Analytical Logic:** Query structure, data interpretation, and final conclusions.
 - **Critical Judgment:** Final assumptions and technical tradeoff decisions.
 
-**Verification & Accountability** All AI-generated suggestions underwent rigorous manual review, verification, and editing prior to implementation. AI-assisted functions are explicitly identified in their respective headers. I remain fully accountable for the accuracy, integrity, and logic of the completed work.
+**Verification & Accountability**  
+All AI-generated suggestions underwent rigorous manual review, verification, and editing prior to usage in any way. I remain fully accountable for the accuracy, integrity, and logic of the completed work in its entirety.
