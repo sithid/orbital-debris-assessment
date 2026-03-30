@@ -165,6 +165,17 @@ The project combines data engineering, orbital mechanics, and query-driven analy
 
 ### Usage & Reproduction
 
+This repository includes all output artifacts generated from a full pipeline refresh, ensuring that every query result, visualization, and analysis matches the state of the data at project completion. By tracking all outputs (including executed notebooks, query results, and visuals), reviewers can directly verify the narrative, figures, and conclusions without needing to rerun the pipeline or regenerate data.
+
+**Why include all outputs?**  
+
+- Guarantees that the presentation, analysis, and visuals are reproducible and match the documented story, regardless of future data or package changes.
+- Enables reviewers to audit, review, or reuse the final results without running the full pipeline.
+- Preserves the exact state of the project as submitted, including all intermediate and final data products.
+
+**Quick review:**  
+If you only want to review the final presentation and results, simply install the dependencies and open `notebooks/output/08_orbital_debris_assessment_presentation_executed.ipynb`. All supporting outputs and data are included for reference.
+
 #### 1. Installation & Environment Setup
 
 ```bash
@@ -187,7 +198,7 @@ pip install -r requirements.txt
 
 #### 2. Pipeline Execution
 
-From the `notebooks/` directory, run the pipeline using the provided CLI options:
+To fully reproduce or update the outputs, run the pipeline from the `notebooks/` directory using the CLI options below. This will regenerate all outputs, but is not required for review unless you wish to update or extend the analysis.
 
 ```bash
 cd notebooks
