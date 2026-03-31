@@ -81,8 +81,7 @@
 | `ops_status`      | `str`    | Global    | Operational status: `OPERATIONAL`, `DECAYED`, etc.                 |
 | `data_status`     | `str`    | Global    | Tracking health: `Lost` = Issue; `NaN` = Healthy.                  |
 | `in_orbit`        | `int`    | Global    | 1 if currently in orbit; else 0.                                   |
-| `decay_date`      | `date`   | Global    | Date of object
-de-orbit.
+| `decay_date`      | `date`   | Global    | Date of object de-orbit.                                           |
 | `is_zombie`       | `int`    | Payload   | 1 if Payload Age > Design Life + 10%.                              |
 
 ---
