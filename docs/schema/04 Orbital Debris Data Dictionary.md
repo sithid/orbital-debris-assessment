@@ -18,6 +18,7 @@
 | `category`        | `str`    | Engineered risk class.                           |
 | `ops_status`      | `str`    | Operational status.                              |
 | `data_status`     | `str`    | Tracking health/status.                          |
+| `decay_date`      | `str`    | Date of object de-orbit.                         |
 | `in_orbit`        | `int`    | 1 if in orbit, 0 if decayed.                     |
 | `owner_code`      | `str`    | Standardized operator code.                      |
 | `launch_id`       | `str`    | Synthetic launch event ID (YYYY-NNN).            |
