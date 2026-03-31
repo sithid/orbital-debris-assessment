@@ -4,6 +4,7 @@
 - Launch Year Trends: Number of objects launched per year (line/bar chart)
 - Debris Growth Over Time: Trend of debris objects by year
 - Object Type Distribution: How the mix of payloads, rocket bodies, and debris changes over time
+- Linear vs Exponential Trend: Trend of object growth by year, highlighting the shift from linear to exponential increase and identifying the decoupling point (2014) using curve fitting.
 
 ## 2. High-Risk Object Distribution (IN ORBIT)
 - Mass Distribution: Mass of high-risk objects (if available)

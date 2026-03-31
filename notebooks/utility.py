@@ -272,7 +272,7 @@ def first_non_null(series):
     # Return the first valid value or None if none exist.
     return s.iloc[0] if not s.empty else None
 
-def query_all_satellites(conn):
+def query_all_satellites(conn, include_decayed=True):
     """
     Query all satellites from the database and return a merged DataFrame with all fields from 
     from EVERY table for EVERY satellite. This is a utility function to get a comprehensive view of
@@ -305,6 +305,10 @@ def query_all_satellites(conn):
     # drop duplicates
     df = df.drop_duplicates(subset=['norad_id'])
     
+    # Only include in-orbit objects if include_decayed is False
+    if not include_decayed:
+        df = df[df['decay_date'].isna()]
+
     return df
 
 def quick_report(df, title="Dataset Diagnostic", audit_cols=None, key_col=None):
