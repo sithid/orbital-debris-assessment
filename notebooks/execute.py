@@ -3,7 +3,9 @@ import sys
 import argparse
 import os
 import shutil
+
 # https://docs.python.org/3/library/filesys.html
+# https://docs.python.org/3/library/shutil.html
 
 # Set the root directory path (project root, one level up from this file)
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -22,8 +24,6 @@ notebook_pipeline_complete = [
     os.path.join(ROOT_DIR, "notebooks/07_orbital_debris_story_visualizations.ipynb"),
     os.path.join(ROOT_DIR, "notebooks/08_orbital_debris_assessment_presentation.ipynb")
 ]
-
-# notebook_pipeline_data_only should contain 01 - 04
 notebook_pipeline_data_only = notebook_pipeline_complete[1:5]  # Only the first 4 notebooks which are for data processing and synthesis
 notebook_pipeline_vis_only = notebook_pipeline_complete[-4:]  # Only the last 4 notebooks which are for exploration, queries, visualization and presentation.
 
@@ -41,9 +41,14 @@ def purge_outputs():
         shutil.rmtree(charts_dir)
         
     # Remove data/clean directory (all cleaned/intermediate files, CSVs, DBs, and results)
+    # db sometimes locks, handle the exception
     clean_dir = os.path.join(ROOT_DIR, 'data/clean')
     if os.path.exists(clean_dir):
-        shutil.rmtree(clean_dir)
+        try:
+            shutil.rmtree(clean_dir)
+        except Exception as e:
+            print(f"⚠️  Failed to remove clean directory: {e}")
+            
     print("✅ Output, charts, and clean directories removed.")
 
     print("💨 Reinitializing directory structure...")
