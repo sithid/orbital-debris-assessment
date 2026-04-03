@@ -234,7 +234,7 @@ if __name__ == "__main__":
         purge_outputs()
         sys.exit(0)
         
-    # Add support for --data-only argument if needed in the future
+    # Run the pipeline with the specified options.
     run_pipeline(
         refresh=args.refresh,
         purge=args.purge,
