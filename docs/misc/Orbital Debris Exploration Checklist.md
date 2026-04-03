@@ -14,11 +14,11 @@
 - Orbit Class Breakdown: Distribution of high-risk objects by orbit class (LEO, MEO, GEO, etc.) ✅
 - Altitude Band Analysis: Focus on 400–600 km LEO; histogram or density plot of high-risk objects by altitude ✅
 
-## 3. Zombie Payload Concentrations (IN ORBIT) ❌
+## 3. Zombie Payload Concentrations (IN ORBIT) ✅
 
 - Operational Status: Share of operational vs. non-operational payloads ✅
-- Zombie Payloads by Owner/Operator: Which groups have the most non-operational (“zombie”) payloads ❌
-- Ownership/Operator Diversity: Number of unique owners/operators and their object counts ❌
+- Zombie Payloads by Owner/Operator: Which groups have the most non-operational (“zombie”) payloads ✅
+- Ownership/Operator Diversity: Number of unique owners/operators and their object counts ✅
 
 ## 4. Launch Cohorts and Congestion (ALL SATS) ❌
 
