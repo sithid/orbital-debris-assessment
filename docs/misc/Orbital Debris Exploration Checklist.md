@@ -27,7 +27,7 @@
 
 ## 5. Object Type, Status, and Kinetic Risk (ALL SATS) ❌
 
-- Object Type Distribution: Counts and trends for PAYLOAD, ROCKET BODY, DEBRIS ❌
+- Object Type Distribution: Counts and trends for PAYLOAD, ROCKET BODY, DEBRIS ✅
 - Kinetic Risk by Type/Status: Cross-tab kinetic energy/velocity with object type and operational status ❌
 
 ## 6. User Category Risk Profiles (IN ORBIT) ❌
