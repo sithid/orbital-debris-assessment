@@ -20,10 +20,10 @@
 - Zombie Payloads by Owner/Operator: Which groups have the most non-operational (“zombie”) payloads ✅
 - Ownership/Operator Diversity: Number of unique owners/operators and their object counts ✅
 
-## 4. Launch Cohorts and Congestion (ALL SATS) ❌
+## 4. Launch Cohorts and Congestion (ALL SATS) ✅
 
-- Launch Cohort Analysis: Group objects by launch year/cohort and analyze congestion ❌
-- Post-2014 Deployment Patterns: Compare congestion and object types before/after 2014 ❌
+- Launch Cohort Analysis: Group objects by launch year/cohort and analyze congestion ✅
+- Post-2014 Deployment Patterns: Compare congestion and object types before/after 2014 ✅
 
 ## 5. Object Type, Status, and Kinetic Risk (ALL SATS) ❌
 
@@ -35,10 +35,11 @@
 - User Category Breakdown: Distribution of objects by user category (commercial, government, military, civil) ❌
 - Risk by User Category: Kinetic risk, operational status, and age by user category ❌
 
-## General EDA/Supporting Queries (ALL SATS) ❌
+## General EDA/Supporting Queries (ALL SATS) ✅
 
 - Mass Accumulation: Accumulation of mass over time. ✅
 - Mass Distribution: Distribution of mass by orbit class and orbit type. ✅
-- Country of Origin: Top countries by number of objects in orbit ❌
-- Satellite Age Distribution: Histogram of satellite ages; highlight old/young outliers ❌
-- Largest Single Launch Events: Launches that contributed the most objects ❌
+- Country of Origin: Top countries by number of objects in orbit ✅
+- Satellite Age Distribution: Histogram of satellite ages; highlight old/young outliers ✅
+- Largest Launch IDs by Attributed Deployed Objects ✅
+- Largest Debris Contribution Events ✅
