@@ -37,8 +37,8 @@
 
 ## General EDA/Supporting Queries (ALL SATS) ❌
 
-- Mass Accumulation: Accumulation of mass over time. ❌
-- Mass Distribution: Distribution of mass by orbit class and orbit type. ❌
+- Mass Accumulation: Accumulation of mass over time. ✅
+- Mass Distribution: Distribution of mass by orbit class and orbit type. ✅
 - Country of Origin: Top countries by number of objects in orbit ❌
 - Satellite Age Distribution: Histogram of satellite ages; highlight old/young outliers ❌
 - Largest Single Launch Events: Launches that contributed the most objects ❌
