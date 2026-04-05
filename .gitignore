@@ -15,7 +15,6 @@ __pycache__/
 # Jupyter
 .ipynb_checkpoints/
 *.ipynb_checkpoints
-random.ipynb
 
 # IDE
 .vscode/
