@@ -25,10 +25,9 @@
 - Launch Cohort Analysis: Group objects by launch year/cohort and analyze congestion ✅
 - Post-2014 Deployment Patterns: Compare congestion and object types before/after 2014 ✅
 
-## 5. Object Type, Status, and Kinetic Risk (ALL SATS) ❌
-
-- Object Type Distribution: Counts and trends for PAYLOAD, ROCKET BODY, DEBRIS ✅
-- Kinetic Risk by Type/Status: Cross-tab kinetic energy/velocity with object type and operational status ❌
+## 5. Object Type, Status, and Kinetic Risk (ALL SATS) ✅
+ Kinetic Risk by Type/Status: Cross-tab kinetic energy/velocity with object type and operational status ✅
+- Kinetic Risk by Type/Status: Cross-tab kinetic energy/velocity with object type and operational status ✅
 
 ## 6. User Category Risk Profiles (IN ORBIT) ❌
 

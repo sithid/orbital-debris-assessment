@@ -24,6 +24,7 @@ notebook_pipeline_complete = [
     os.path.join(ROOT_DIR, "notebooks/07_orbital_debris_story_visualizations.ipynb"),
     os.path.join(ROOT_DIR, "notebooks/08_orbital_debris_assessment_presentation.ipynb")
 ]
+
 notebook_pipeline_data_only = notebook_pipeline_complete[1:5]  # Only the first 4 notebooks which are for data processing and synthesis
 notebook_pipeline_vis_only = notebook_pipeline_complete[-4:]  # Only the last 4 notebooks which are for exploration, queries, visualization and presentation.
 
@@ -92,6 +93,9 @@ def build_directory_structure(silent=False):
             os.makedirs(subdir_path)
                 
         # Create subdirectories for the two image types inside each question type folder.
+        # I wouldnt bother saving both formats but I havn't decide the final presentation approach
+        # yet and im not sure if I will have to have svg or if png will work.  SVG is preferred, it
+        # doesnt pixelate when resized/scaled.
         if subdir in sub_questions_dirs:
             for img_type in ['png', 'svg']:
                 img_subdir_path = os.path.join(subdir_path, img_type)

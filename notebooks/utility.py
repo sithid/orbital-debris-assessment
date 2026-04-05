@@ -311,6 +311,22 @@ def query_all_satellites(conn, include_decayed=True):
 
     return df
 
+def map_payload_status(value):
+    if value == 'OPERATIONAL':
+        return 'OPERATIONAL'
+    if value == 'NON-OPERATIONAL':
+        return 'NON-OPERATIONAL'
+    if value == 'UNKNOWN':
+        return 'UNKNOWN'
+    return 'OTHER'
+
+def map_lifecycle_status(row):
+    if row['in_orbit'] == 1:
+        return 'IN_ORBIT'
+    if row['in_orbit'] == 0 or pd.notna(row['decay_date']):
+        return 'DECAYED'
+    return 'UNKNOWN'
+        
 def quick_report(df, title="Dataset Diagnostic", audit_cols=None, key_col=None):
     """
     This report focuses on the core stats and simple data quality indicators, without getting into complex analysis or visualizations.
