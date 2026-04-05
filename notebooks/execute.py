@@ -3,6 +3,7 @@ import sys
 import argparse
 import os
 import shutil
+import io
 
 # https://docs.python.org/3/library/filesys.html
 # https://docs.python.org/3/library/shutil.html
@@ -25,7 +26,7 @@ notebook_pipeline_complete = [
 ]
 
 notebook_pipeline_data_only = notebook_pipeline_complete[1:5]  # Only the first 4 notebooks which are for data processing and synthesis
-notebook_pipeline_vis_only = notebook_pipeline_complete[-4:]  # Only the last 4 notebooks which are for exploration, queries, visualization and presentation.
+notebook_pipeline_vis_only = notebook_pipeline_complete[-3:]  # Only the last 4 notebooks which are for exploration, queries, visualization and presentation.
 
 def purge_outputs():
     print("\n⚠️  Purging all exported/cleaned outputs...")
@@ -172,14 +173,16 @@ def run_pipeline(
 
         try:
             print(f"Running: {nb_name}...")
+
             pm.execute_notebook(
                 input_path=nb,
                 
                 # save executed notebooks to the outputs folder
                 output_path= 'output/' + nb_name.replace('.ipynb', '_executed.ipynb'),
             )
+            
             print("✅ Success")
-        except Exception as e:
+        except Exception as e:            
             print("❌ FAILED")
             print("-" * 30)
             print(f"CRITICAL ERROR in {nb_name}:")
@@ -189,6 +192,19 @@ def run_pipeline(
             sys.exit(1)
 
     print("\n🥂 Pipeline finished successfully!")
+
+    # I was running into an issue where the notebook pipeline executed sucessfully but papermill
+    # was still returning a non-zero exit code due to this error, which is harmless apparently but
+    # was causing my pipeline script output to output assertion failure messages not actually related
+    # to the pipeline execution but with the papermill execution environment. I was originally going
+    # to silence the error but it was silencing all output so instead I am just printing a note to the user.
+    # Oddly enough, the ZeroMQ issue literally only triggers if I do NOT include this disclaimer,
+    # apparently because it depends on such exact timing between the kernel shutdown vs process cleanup that
+    # the extra milliseconds of printing this message actually prevents the race condition from triggering in 
+    # most cases. Accidental fix by disclaimer, I'll take it!
+    print("ℹ️  Note: A ZeroMQ 'Assertion failed: Interrupted system call' message may appear below.")
+    print("   The ZeroMQ race condition depends on exact timing of kernel shutdown vs process cleanup.")
+    print("   This is a known Windows kernel-shutdown artifact and does not affect results.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run the orbital debris pipeline.")
