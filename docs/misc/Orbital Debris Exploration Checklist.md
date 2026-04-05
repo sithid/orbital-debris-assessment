@@ -1,5 +1,7 @@
 # Orbital Debris Exploration Checklist
 
+This checklist outlines the key exploratory data analysis (EDA) questions and visualizations to guide my investigation of orbital debris using the synthesized `orbital_debris.db` database. Each item is categorized by focus area and marked with a completion status.  This checklist was designed to keep me on track and ensure a comprehensive exploration of the orbital debris landscape, with a patricular focus on identifying high-risk objects, understanding growth trends, and profiling user categories.
+
 ## 1. Decoupling Point in Orbital Growth (ALL SATS) ✅
 
 - Launch Year Trends: Number of objects launched per year (line/bar chart) ✅
@@ -26,13 +28,14 @@
 - Post-2014 Deployment Patterns: Compare congestion and object types before/after 2014 ✅
 
 ## 5. Object Type, Status, and Kinetic Risk (ALL SATS) ✅
- Kinetic Risk by Type/Status: Cross-tab kinetic energy/velocity with object type and operational status ✅
+
+- Kinetic Risk by Type/Status: Cross-tab kinetic energy/velocity with object type and operational status ✅
 - Kinetic Risk by Type/Status: Cross-tab kinetic energy/velocity with object type and operational status ✅
 
-## 6. User Category Risk Profiles (IN ORBIT) ❌
+## 6. User Category Risk Profiles (IN ORBIT) ✅
 
-- User Category Breakdown: Distribution of objects by user category (commercial, government, military, civil) ❌
-- Risk by User Category: Kinetic risk, operational status, and age by user category ❌
+- User Category Breakdown: Distribution of objects by user category (commercial, government, military, civil) ✅
+- Risk by User Category: Kinetic risk, operational status, and age by user category ✅
 
 ## General EDA/Supporting Queries (ALL SATS) ✅
 
