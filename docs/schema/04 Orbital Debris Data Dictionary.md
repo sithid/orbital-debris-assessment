@@ -22,6 +22,7 @@
 | `in_orbit`        | `int`    | 1 if in orbit, 0 if decayed.                     |
 | `owner_code`      | `str`    | Standardized operator code.                      |
 | `launch_id`       | `str`    | Synthetic launch event ID (YYYY-NNN).            |
+| `user_category`   | `str`    | Per-object user sector: COMMERCIAL, GOVERNMENT, MILITARY, CIVIL, or UNKNOWN. |
 
 ---
 
@@ -54,7 +55,7 @@
 | :---------------- | :------- | :--------------------------------------------- |
 | `norad_id`        | `int`    | Foreign key to satellites.                     |
 | `lifetime_years`  | `float`  | Design life expectancy (years).                |
-| `sat_age_years`   | `int`    | Object age in years.                           |
+| `sat_age_years`   | `float`  | Object age in years.                           |
 | `primary_purpose` | `str`    | Main mission type.                             |
 | `detailed_purpose`| `str`    | Granular mission detail.                       |
 | `geo_longitude`   | `float`  | GEO longitude (if applicable).                 |

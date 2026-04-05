@@ -47,7 +47,45 @@ def calculate_dry_mass(row):
             
     return wet_mass
 
-# basic RCS size categorization
+# Derive user_category PER OBJECT using a three-tier priority:
+#    Tier 1: Per-row boolean flags (from UCS data — most accurate for matched payloads)
+#    Tier 2: Per-row users text (UCS free text for matched payloads)
+#    Tier 3: Owner-level mode-based category fallback (for SATCAT-only debris/rocket bodies)
+# We only need this because I broke the flags previously by using max() in aggregation, which caused is_commercial = 1 to bleed across
+# mixed-sector owner codes like 'US'. This made query results unreliable and inconsistent with UCS data for matched payloads. 
+def derive_user_category(row, map):
+    # Tier 1: per-object boolean flags
+    if row['is_commercial'] == 1: return 'COMMERCIAL'
+    if row['is_government'] == 1: return 'GOVERNMENT'
+    if row['is_military']   == 1: return 'MILITARY'
+    if row['is_civil']      == 1: return 'CIVIL'
+    
+    # Tier 2: per-object users text
+    users = str(row['users'] if pd.notna(row['users']) else '').strip().upper()
+    
+    if users:
+        if 'MILITARY'   in users: return 'MILITARY'
+        if 'GOVERNMENT' in users: return 'GOVERNMENT'
+        if 'CIVIL'      in users: return 'CIVIL'
+        if 'COMMERCIAL' in users: return 'COMMERCIAL'
+        
+    # Tier 3: owner-level fallback
+    return map.get(str(row['owner_code']).strip().upper(), 'UNKNOWN')
+
+# Build an owner_code -> single-label category map from the fixed owner_profile.
+# Priority: MILITARY > GOVERNMENT > CIVIL > COMMERCIAL > UNKNOWN
+def category_from_users_text(users_text):
+    if pd.isna(users_text) or str(users_text).strip() == '':
+        return 'UNKNOWN'
+    
+    u = str(users_text).upper()
+    
+    if 'MILITARY'   in u: return 'MILITARY'
+    if 'GOVERNMENT' in u: return 'GOVERNMENT'
+    if 'CIVIL'      in u: return 'CIVIL'
+    if 'COMMERCIAL' in u: return 'COMMERCIAL'
+    return 'UNKNOWN'
+
 def categorize_rcs(val):
     """
     Categorize the radar cross-section (RCS) value into size classes.
