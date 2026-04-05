@@ -53,7 +53,7 @@ def purge_outputs():
     print("✅ Output, charts, and clean directories removed.")
 
     print("💨 Reinitializing directory structure...")
-    build_directory_structure(True)
+    build_directory_structure()
     print("✅ Purge and reinitialization complete.\n")
 
 def build_directory_structure(silent=False):
