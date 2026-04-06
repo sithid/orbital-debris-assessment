@@ -59,8 +59,8 @@ The repo is organized as a staged analysis pipeline. Each notebook handles a dis
 6. **Orbital Debris exploration**  
    `notebooks/05_orbital_debris_exploration.ipynb` runs exploratory queries and visuals to explore the sql database thoroughly.
 
-7. **Story Narratives**  
-   `notebooks/06_orbital_debris_story.ipynb` answers the three primary and three secondary research questions with targeted queries and visuals, exporting result sets to `data/clean/results/` and charts to `charts/questions/primary/` and `charts/questions/secondary/`.
+7. **Story Narrative**  
+   `notebooks/06_orbital_debris_story.ipynb` answers the three primary and three secondary research questions with targeted queries and visuals, exporting result sets to `data/clean/results/` and charts to `charts/`.
 
 8. **Presentation layer**  
    `notebooks/07_orbital_debris_assessment_presentation.ipynb` provides the final project presentation, summarizing key findings, visuals, and conclusions for review or sharing.
@@ -70,16 +70,6 @@ The repo is organized as a staged analysis pipeline. Each notebook handles a dis
 ```bash
 orbital-debris-assessment/
 |- charts/                        # question-driven figures (by type/phase)
-|  \- questions/
-|     |- exploratory/
-|     |   |- png/
-|     |   \- svg/
-|     |- primary/
-|     |   |- png/
-|     |   \- svg/
-|     \- secondary/
-|         |- png/
-|         \- svg/
 |- data/
 |  |- original/                   # raw source files (satcat.csv, UCS-Satellite-Database.csv, etc.)
 |  \- clean/                      # cleaned CSVs, SQLite database, parquet query outputs
@@ -234,8 +224,8 @@ CelesTrak allows ~10 refreshes per day. Use `--refresh` sparingly to avoid throt
 
 #### 3. Output & Documentation Review
 
-- Review executed notebooks in `notebooks/output/` (look for `_executed.ipynb` files).
-- For a summary, see `07_orbital_debris_assessment_presentation.ipynb`.
+- Review executed notebooks in `notebooks` for the full analysis narrative, including all outputs and visuals.
+- For a summary, see `06_orbital_debris_story.ipynb` and `07_orbital_debris_assessment_presentation.ipynb`.
 - To view documentation in Jupyter, use `00_markdown_viewer.ipynb`.
 
 **Recommended Workflow:**  
@@ -243,14 +233,14 @@ This project is designed for reproducible, stepwise analysis—no manual noteboo
 
 1. **Set up your environment** (one-time)
 2. **Run the pipeline** with a single command
-3. **Review outputs** in the output folder or use the markdown viewer for documentation
+3. **Review outputs** Review executed notebook cell outputs or use the markdown viewer for documentation
 
 **Manual Execution:**  
 You may run each notebook in order for full control (see notebook list above), but the CLI is recommended for reproducibility.
 
 - Use the `execute.py` command to run the pipeline and generate outputs.
-- Review results in the output folder, not the original notebooks.
-- Use the markdown viewer notebook for in-notebook documentation access.
+- Review results in the original notebooks after pipeline execution.
+- Use the markdown viewer notebook for in-notebook documentation access / review.
 - Manual notebook execution is possible but not recommended for typical use.
 
 ### Assumptions and Limitations
