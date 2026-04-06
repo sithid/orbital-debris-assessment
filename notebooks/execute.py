@@ -48,7 +48,9 @@ def purge_outputs():
     print("✅ Output, charts, and clean directories removed.")
 
     print("💨 Reinitializing directory structure...")
+    
     build_directory_structure()
+    
     print("✅ Purge and reinitialization complete.\n")
 
 def build_directory_structure(silent=False):
@@ -66,6 +68,7 @@ def build_directory_structure(silent=False):
         if not silent:
             print("✅ Creating charts directory at: ", charts_dir)
         os.makedirs(charts_dir)
+        
     if not silent:
         print("✅ Directory structure initialized (flat charts/ only, no subfolders).")
         
