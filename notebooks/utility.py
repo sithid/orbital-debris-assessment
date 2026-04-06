@@ -72,7 +72,6 @@ def derive_user_category(row, map):
     # Tier 3: owner-level fallback
     return map.get(str(row['owner_code']).strip().upper(), 'UNKNOWN')
 
-# Build an owner_code -> single-label category map from the fixed owner_profile.
 # Priority: MILITARY > GOVERNMENT > CIVIL > COMMERCIAL > UNKNOWN
 def category_from_users_text(users_text):
     if pd.isna(users_text) or str(users_text).strip() == '':
