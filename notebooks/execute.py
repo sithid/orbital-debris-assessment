@@ -30,12 +30,7 @@ notebook_pipeline_vis_only = notebook_pipeline_complete[-3:]  # Only the last 4 
 
 def purge_outputs():
     print("\n⚠️  Purging all exported/cleaned outputs...")
-    
-    # Remove output directory
-    output_dir = os.path.join(os.path.dirname(__file__), 'output')
-    if os.path.exists(output_dir):
-        shutil.rmtree(output_dir)
-        
+            
     # Remove charts directory
     charts_dir = os.path.join(ROOT_DIR, 'charts')
     if os.path.exists(charts_dir):
@@ -59,53 +54,20 @@ def purge_outputs():
 def build_directory_structure(silent=False):
     if not silent:
         print("💨 Initializing pipeline directory structure...")
-        
-    # Create the output directory if it doesn't exist
-    output_dir = os.path.join(os.path.dirname(__file__), 'output')
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-            
+                    
     # Create the clean/results directory if it doesn't exist
     clean_results_dir = os.path.join(ROOT_DIR, 'data/clean/results')
     if not os.path.exists(clean_results_dir):
         os.makedirs(clean_results_dir)
         
-    # Create the charts directory and subdirectories if they don't exist.
+    # Create the charts directory if it doesn't exist
     charts_dir = os.path.join(ROOT_DIR, 'charts')
     if not os.path.exists(charts_dir):
         if not silent:
             print("✅ Creating charts directory at: ", charts_dir)
         os.makedirs(charts_dir)
-        
-    questions_dir = os.path.join(charts_dir, 'questions')
-    if not os.path.exists(questions_dir):
-        if not silent:
-            print("✅ Creating questions directory at: ", questions_dir)
-        os.makedirs(questions_dir)
-
-    # Create initial subdirectories for exploratory, primary, and secondary.
-    sub_questions_dirs = ['exploratory', 'primary', 'secondary']
-    for subdir in sub_questions_dirs:
-        subdir_path = os.path.join(questions_dir, subdir)
-        if not os.path.exists(subdir_path):
-            if not silent:
-                print("✅ Creating subdirectory for question type: ", subdir_path)
-            os.makedirs(subdir_path)
-                
-        # Create subdirectories for the two image types inside each question type folder.
-        # I wouldnt bother saving both formats but I havn't decide the final presentation approach
-        # yet and im not sure if I will have to have svg or if png will work.  SVG is preferred, it
-        # doesnt pixelate when resized/scaled.
-        if subdir in sub_questions_dirs:
-            for img_type in ['png', 'svg']:
-                img_subdir_path = os.path.join(subdir_path, img_type)
-                if not os.path.exists(img_subdir_path):
-                    if not silent:
-                        print("✅ Creating subdirectory for image type: ", img_subdir_path)
-                    os.makedirs(img_subdir_path)
-        
     if not silent:
-        print("✅ Directory structure initialized.") 
+        print("✅ Directory structure initialized (flat charts/ only, no subfolders).")
         
 def run_pipeline(
     refresh=False, 
@@ -170,25 +132,42 @@ def run_pipeline(
 
     for nb in notebooks:
         nb_name = os.path.basename(nb)
-
+        
+        # When papermill executes a notebook, if there are errors it will insert new markdown cells
+        # into the output notebook with error messages.  This creates a MESS if you are overwriting the 
+        # original notebook with the output notebook, like I am.  Because of this, we have to use a little
+        # tmp shuffle logic to only overwrite the original notebook if execute succeeded, and if it fails we
+        # can just delete the temp notebook with the error cells and keep the original notebook clean. 
+        # This only requires a small amount of code but it keeps the original notebooks clean and free of error cells,
+        # which is important for readability and maintainability especially if the project grows and
+        # the user doesnt understand they have to delete the error cells before re-running the notebook,
+        # which could lead to a confusing mess of error cells in the original notebooks.
+        tmp_nb = nb + "-tmp.ipynb"
+        
         try:
             print(f"Running: {nb_name}...")
-
+            
             pm.execute_notebook(
                 input_path=nb,
-                
-                # save executed notebooks to the outputs folder
-                output_path= 'output/' + nb_name.replace('.ipynb', '_executed.ipynb'),
+                output_path=tmp_nb
             )
             
+            # Only overwrite the original if execution succeeded
+            shutil.move(tmp_nb, nb)
             print("✅ Success")
-        except Exception as e:            
+            
+        except Exception as e:
+            # Clean up temp file if it exists
+            if os.path.exists(tmp_nb):
+                os.remove(tmp_nb)
+                
             print("❌ FAILED")
             print("-" * 30)
             print(f"CRITICAL ERROR in {nb_name}:")
             print(e)
             print("-" * 30)
             print("Stopping pipeline to prevent data corruption.")
+            
             sys.exit(1)
 
     print("\n🥂 Pipeline finished successfully!")
