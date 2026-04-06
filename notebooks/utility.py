@@ -251,7 +251,7 @@ def classify_risk_category(
     if pd.isna(ke):
         return 'Unknown'
 
-    # If use_mass_filter is True, filter out very small objectsas always low risk
+    # If use_mass_filter is True, filter out very small objects as always low risk
     if use_mass_filter and (pd.isna(mass) or mass < mass_cutoff):
         return 'Low Risk'
 

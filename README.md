@@ -8,7 +8,7 @@ This readme is a work in progress and is not intended as the complete/final vers
 **Contact:** [Email](mailto:DemonicUrges05@gmail.com) | [LinkedIn profile](https://www.linkedin.com/in/james-glosser-249100204/)  
 **Repository:** [GitHub repository](https://github.com/sithid/orbital-debris-assessment)  
 **Last Updated:** March 2026  
-**Status:** Code:You Capstone Project #4 (Data Analysis Pathway), updated to reflect the current notebook -> SQLite -> query -> visualization workflow.
+**Status:** In Progress (Final version will be submitted by April 10th, 2026)
 
 ---
 
