@@ -438,7 +438,7 @@ def quick_report(df, title="Dataset Diagnostic", audit_cols=None, key_col=None):
 #   but I wasn't sure of the formula to use, the function itself is straightforward once the            #
 #   formula is known.  AI provided the formula for orbital period, I provided the implementation.       #
 #                                                                                                       #
-# AI (GitHub Copilot, GPT-5.3-Codex) assisted with formula reconstruction.                              #
+# AI (GitHub Copilot, Various Models) assisted with formula reconstruction.                              #
 #########################################################################################################
 def calculate_orbital_period(row):
     """
@@ -525,7 +525,7 @@ def get_first_available_value(row, column_names):
 #   (the function itself is straightforward once the formula is known). AI provided the formula for     #
 #   eccentricity, I provided the implementation.                                                        #
 #                                                                                                       #
-# AI (GitHub Copilot, GPT-5.3-Codex) assisted with formula reconstruction.                              #
+# AI (GitHub Copilot, Various Models) assisted with formula reconstruction.                              #
 #########################################################################################################
 def derive_eccentricity(row):
     ra = row['apogee_km'] + earth_radius  # Distance from Earth center to apogee
@@ -546,7 +546,7 @@ def derive_eccentricity(row):
 # - I defined the analysis method (legacy linear vs modern exponential) and fit requirements.           #
 # - AI helped draft a clean reusable function structure and stability safeguards.                       #
 #                                                                                                       #
-# AI (GitHub Copilot, GPT-5.3-Codex) assisted with formula and function implementation.                 #
+# AI (GitHub Copilot, Various Models) assisted with formula and function implementation.                 #
 #########################################################################################################
 def fit_growth_regimes(df, split_year, y_col):
     """
@@ -613,7 +613,7 @@ def fit_growth_regimes(df, split_year, y_col):
 # - I defined the objective (data-selected decoupling year, not a pre-asserted date).                   #
 # - AI helped structure the candidate-evaluation loop and diagnostics output.                           #
 #                                                                                                       #
-# AI (GitHub Copilot, GPT-5.3-Codex) assisted with formula and function design/implementation.          #
+# AI (GitHub Copilot, Various Models) assisted with formula and function design/implementation.          #
 #########################################################################################################
 def choose_split_year(df, y_col, min_pre_points=8, min_post_points=6):
     """
