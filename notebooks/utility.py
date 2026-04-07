@@ -311,11 +311,8 @@ def first_non_null(series):
 
 def query_all_satellites(conn, include_decayed=True):
     """
-    Query all satellites from the database and return a merged DataFrame with all fields from 
-    from EVERY table for EVERY satellite. This is a utility function to get a comprehensive view of
-    the data in one shot for all satellites. Smaller queries should be used when less data is required.
-    This helps minimize strain on the database and allows for more efficient querying when only a subset of data
-    is needed for a specific analysis or notebook.
+    Query all satellite information by performing a full outer join across all relevant tables
+    on norad_id.
 
     Parameters:
     conn (sql.Connection): The database connection object.
@@ -324,20 +321,17 @@ def query_all_satellites(conn, include_decayed=True):
     pd.DataFrame: A DataFrame containing all satellite information.
     """
     
-    # query should return all columns from all tables
-    q1 = run_query("SELECT * FROM satellites;", conn)
-    q2 = run_query("SELECT * FROM orbital_data;", conn)
-    q3 = run_query("SELECT * FROM ucs_details;", conn)
-    q4 = run_query("SELECT * FROM risk_assessment;", conn)
-    q5 = run_query("SELECT * FROM ownership_operators;", conn)
-    q6 = run_query("SELECT * FROM launch_events;", conn)
+    # full outer join across all tables on norad_id
+    query = f"""
+    SELECT * FROM satellites
+    LEFT JOIN orbital_data ON satellites.norad_id = orbital_data.norad_id
+    LEFT JOIN ucs_details ON satellites.norad_id = ucs_details.norad_id
+    LEFT JOIN risk_assessment ON satellites.norad_id = risk_assessment.norad_id
+    LEFT JOIN ownership_operators ON satellites.owner_code = ownership_operators.owner_code
+    LEFT JOIN launch_events ON satellites.launch_id = launch_events.launch_id
+    """
     
-    # merge all query results.
-    df = q1.merge(q2, on='norad_id', how='left') \
-        .merge(q3, on='norad_id', how='left') \
-        .merge(q4, on='norad_id', how='left') \
-        .merge(q5, on='owner_code', how='left') \
-        .merge(q6, on='launch_id', how='left')
+    df = pd.read_sql(query, conn)   
     
     # drop duplicates
     df = df.drop_duplicates(subset=['norad_id'])

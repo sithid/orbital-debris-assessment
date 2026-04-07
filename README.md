@@ -14,9 +14,7 @@ This readme is a work in progress and is not intended as the complete/final vers
 
 ### Project Overview
 
-This capstone examines whether low Earth orbit is entering a more dangerous growth regime driven by rapid satellite deployment, persistent rocket bodies, and long-lived debris. The project started as a flat-file workflow centered on `kinetic_master.csv`, but the current structure is more deliberate: clean the source datasets, synthesize a physics-informed master registry, normalize that registry into SQLite, run focused analytical queries, and generate final visualizations from compact query outputs.
-
-The goal is not just to count objects in orbit. It is to identify when orbital growth shifts from a historical linear pattern into a modern acceleration regime, and to map where the highest-risk objects are concentrating by orbit class, altitude band, and object type.
+This capstone investigates whether low Earth orbit has entered a new, more hazardous growth regime, driven by rapid satellite deployment, persistent rocket bodies, and long-lived debris. The project has evolved from a flat-file workflow to a structured, reproducible analysis pipeline: source datasets are cleaned and synthesized into a physics-informed master registry, normalized into SQLite, and analyzed through focused, query-driven workflows. The central goal is to pinpoint when orbital growth shifted from a historical linear pattern into an accelerated regime, and to map the resulting risk hotspots by object type, altitude band, and operator profile—providing actionable insights into the changing dynamics of space congestion and collision risk.
 
 ### Research Questions
 
