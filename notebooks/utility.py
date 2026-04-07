@@ -309,39 +309,6 @@ def first_non_null(series):
     # Return the first valid value or None if none exist.
     return s.iloc[0] if not s.empty else None
 
-def query_all_satellites(conn, include_decayed=True):
-    """
-    Query all satellite information by performing a full outer join across all relevant tables
-    on norad_id.
-
-    Parameters:
-    conn (sql.Connection): The database connection object.
-
-    Returns:
-    pd.DataFrame: A DataFrame containing all satellite information.
-    """
-    
-    # full outer join across all tables on norad_id
-    query = f"""
-    SELECT * FROM satellites
-    LEFT JOIN orbital_data ON satellites.norad_id = orbital_data.norad_id
-    LEFT JOIN ucs_details ON satellites.norad_id = ucs_details.norad_id
-    LEFT JOIN risk_assessment ON satellites.norad_id = risk_assessment.norad_id
-    LEFT JOIN ownership_operators ON satellites.owner_code = ownership_operators.owner_code
-    LEFT JOIN launch_events ON satellites.launch_id = launch_events.launch_id
-    """
-    
-    df = pd.read_sql(query, conn)   
-    
-    # drop duplicates
-    df = df.drop_duplicates(subset=['norad_id'])
-    
-    # Only include in-orbit objects if include_decayed is False
-    if not include_decayed:
-        df = df[df['decay_date'].isna()]
-
-    return df
-
 def map_payload_status(value):
     if value == 'OPERATIONAL':
         return 'OPERATIONAL'
