@@ -144,32 +144,6 @@ def fill_power_smart(row, odm, gdm):
     
     return 0.0
 
-def load_query_result(query_name):
-    """
-    Load query results from a parquet file for a given query.
-    
-    Parameters:
-    query_name (str): The name of the query whose results are to be loaded.
-    
-    Returns:
-    pd.DataFrame: The query results as a pandas DataFrame.
-    """
-    file_path = f'../data/clean/results/{query_name}.parquet'
-    return pd.read_parquet(file_path)
-
-def run_query(sql, conn):
-    """
-    Execute a SQL query and return the results as a pandas DataFrame.
-    
-    Parameters:
-    sql (str): The SQL query to be executed.
-    conn (sql.Connection): The database connection object.
-    
-    Returns:
-    pd.DataFrame: The results of the SQL query as a pandas DataFrame.
-    """
-    return pd.read_sql(sql, conn)
-
 # Standardize Primary Purpose (Mission)
 def standardize_purpose(text):
     if pd.isna(text) or text == 'Unknown':
