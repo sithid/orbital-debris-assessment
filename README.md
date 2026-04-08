@@ -38,15 +38,15 @@ This capstone investigates the accelerating growth and evolving risks in low Ear
 
 ## Summary of Findings
 
-**2014 marks the inflection point**: Orbital growth transitions from linear to exponential, driven by commercial megaconstellations, reusable rockets, and satellite miniaturization.
-**High-risk objects are overwhelmingly concentrated in LEO**, especially in the 400–600 km band, which is now the epicenter of congestion and collision risk.
-**Responsibility for non-operational satellites is highly concentrated**: A small number of organizations and contractors account for most “zombie” payloads, while commercial operators now dominate both active and inactive satellite populations.
-**Kinetic risk is driven by large, uncontrolled objects**—especially dead payloads, spent rocket bodies, and the largest debris fragments. Most debris is small, but a few massive pieces pose catastrophic risk.
-**User category matters**: Commercial satellites are most numerous, but government and military payloads are much heavier and longer-lived, carrying outsized kinetic risk. Civil satellites are generally low-risk, while “unknown” objects add uncertainty.
-**Total mass in orbit continues to grow**: The mass of objects launched, decayed, and remaining in orbit shows persistent accumulation, with most mass concentrated in LEO and specific orbital classes.
-**Aging and legacy objects persist**: The age distribution of satellites reveals a growing population of “zombie” and legacy objects, many of which remain in orbit for decades.
-**National and event-driven contributions are significant**: A handful of countries and major launch or fragmentation events account for a disproportionate share of objects and debris in orbit.
-**Effective risk reduction requires targeted action**: Improved end-of-life practices, stricter disposal requirements, and focused cleanup among the biggest contributors are essential for a safer, more sustainable orbital environment.
+- **2014 marks the inflection point**: Orbital growth transitions from linear to exponential, driven by commercial megaconstellations, reusable rockets, and satellite miniaturization.  
+- **High-risk objects are overwhelmingly concentrated in LEO**, especially in the 400–600 km band, which is now the epicenter of congestion and collision risk.  
+- **Responsibility for non-operational satellites is highly concentrated**: A small number of organizations and contractors account for most “zombie” payloads, while commercial operators now dominate both active and inactive satellite populations.  
+- **Kinetic risk is driven by large, uncontrolled objects**—especially dead payloads, spent rocket bodies, and the largest debris fragments. Most debris is small, but a few massive pieces pose catastrophic risk.  
+- **User category matters**: Commercial satellites are most numerous, but government and military payloads are much heavier and longer-lived, carrying outsized kinetic risk. Civil satellites are generally low-risk, while “unknown” objects add uncertainty.  
+- **Total mass in orbit continues to grow**: The mass of objects launched, decayed, and remaining in orbit shows persistent accumulation, with most mass concentrated in LEO and specific orbital classes.  
+- **Aging and legacy objects persist**: The age distribution of satellites reveals a growing population of “zombie” and legacy objects, many of which remain in orbit for decades.  
+- **National and event-driven contributions are significant**: A handful of countries and major launch or fragmentation events account for a disproportionate share of objects and debris in orbit.  
+- **Effective risk reduction requires targeted action**: Improved end-of-life practices, stricter disposal requirements, and focused cleanup among the biggest contributors are essential for a safer, more sustainable orbital environment.  
 
 ### Current Workflow
 
