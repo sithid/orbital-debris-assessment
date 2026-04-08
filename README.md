@@ -4,26 +4,34 @@
 **Author:** James Glosser  
 **Contact:** [Email](mailto:DemonicUrges05@gmail.com) | [LinkedIn profile](https://www.linkedin.com/in/james-glosser-249100204/)  
 **Repository:** [GitHub repository](https://github.com/sithid/orbital-debris-assessment)  
-**Last Updated:** March 2026  
+**Last Updated:** April 2026  
 **Status:** Final submission with all outputs included for review. The repository contains a full pipeline refresh, including all executed notebooks, cleaned datasets, query outputs, and visuals as of the final analysis state.
 
 ---
 
 ## Project Overview
 
-This capstone examines how the population of objects in low Earth orbit has changed over time, focusing on the recent acceleration in satellite launches and debris. The project uses a structured pipeline: source datasets are cleaned, merged into a master registry, stored in a normalized SQLite database, and analyzed with targeted queries. The main goals are to identify when orbital growth accelerated, where high-risk objects are concentrated, and which operators are most responsible for non-operational satellites. The analysis is based on reproducible queries and physics-based metrics, providing a clear view of how and why congestion and collision risks are increasing.
+This capstone investigates the accelerating growth and evolving risks in low Earth orbit (LEO), focusing on the dramatic shift from steady, linear expansion to an era of exponential object proliferation since 2014. Using a structured, reproducible pipeline, the project cleans and merges authoritative satellite and debris catalogs, synthesizes a physics-informed master dataset, and normalizes it into a relational SQLite database. Targeted queries and visual analyses reveal when orbital growth took off, where high-risk objects are concentrated, and which organizations are most responsible for non-operational “zombie” satellites. The analysis is grounded in transparent, query-driven methods and physics-based risk metrics, providing a clear view of how and why congestion and collision hazards are intensifying.
 
-## Results Summary
+## Main Research Questions
 
-- Orbital object counts began accelerating rapidly in 2014, mainly due to increased commercial satellite launches and reusable rockets.
-- Large satellites and rocket bodies are most concentrated in the 400–600 km region of low Earth orbit, where collision risk is highest.
-- Most non-operational satellites are linked to a small number of organizations, while a few groups operate the largest active fleets.
-
-## Primary Research Questions
-
+**Primary:**
 - When did orbital growth shift from a linear to an exponential trend?
-- How are high-risk objects (by mass and kinetic energy) distributed across orbit classes and altitude bands, especially 400–600 km in LEO?
-- Which organizations or operators are most responsible for non-operational satellites?
+- Where are high-risk objects (by mass and kinetic energy) most concentrated, especially in the crowded 400–600 km LEO region?
+- Which organizations or operators are most responsible for non-operational (“zombie”) satellites?
+
+**Secondary:**
+- How do object type (PAYLOAD, ROCKET BODY, DEBRIS) and operational status relate to kinetic risk in orbit?
+- Do user categories (commercial, government, military, civil) show distinct risk profiles in terms of congestion and kinetic risk?
+
+## Summary of Findings
+
+- **2014 marks the inflection point**: Orbital growth transitions from linear to exponential, driven by commercial megaconstellations, reusable rockets, and satellite miniaturization.
+- **High-risk objects are overwhelmingly concentrated in LEO**, especially in the 400–600 km band, which is now the epicenter of congestion and collision risk.
+- **Responsibility for non-operational satellites is highly concentrated**: A small number of organizations and contractors account for most “zombie” payloads, while commercial operators now dominate both active and inactive satellite populations.
+- **Kinetic risk is driven by large, uncontrolled objects**—especially dead payloads, spent rocket bodies, and the largest debris fragments. Most debris is small, but a few massive pieces pose catastrophic risk.
+- **User category matters**: Commercial satellites are most numerous, but government and military payloads are much heavier and longer-lived, carrying outsized kinetic risk. Civil satellites are generally low-risk, while “unknown” objects add uncertainty.
+- **Effective risk reduction requires targeted action**: Improved end-of-life practices, stricter disposal requirements, and focused cleanup among the biggest contributors are essential for a safer, more sustainable orbital environment.
 
 ### Current Workflow
 
