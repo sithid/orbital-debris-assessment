@@ -1,4 +1,5 @@
-## Orbital Debris Assessment: Mapping the Kessler Acceleration in Low Earth Orbit  
+
+# Orbital Debris Assessment: Tracking Growth and Risk in Low Earth Orbit
 
 **Author:** James Glosser  
 **Contact:** [Email](mailto:DemonicUrges05@gmail.com) | [LinkedIn profile](https://www.linkedin.com/in/james-glosser-249100204/)  
@@ -8,54 +9,49 @@
 
 ---
 
-### Project Overview
+## Project Overview
 
-This capstone investigates whether low Earth orbit has entered a new, more hazardous growth regime, driven by rapid satellite deployment, persistent rocket bodies, and long-lived debris. The project has evolved from a flat-file workflow to a structured, reproducible analysis pipeline: source datasets are cleaned and synthesized into a physics-informed master registry, normalized into SQLite, and analyzed through focused, query-driven workflows. The central goal is to pinpoint when orbital growth shifted from a historical linear pattern into an accelerated regime, and to map the resulting risk hotspots by object type, altitude band, and operator profile—providing actionable insights into the changing dynamics of space congestion and collision risk.
+This capstone examines how the population of objects in low Earth orbit has changed over time, focusing on the recent acceleration in satellite launches and debris. The project uses a structured pipeline: source datasets are cleaned, merged into a master registry, stored in a normalized SQLite database, and analyzed with targeted queries. The main goals are to identify when orbital growth accelerated, where high-risk objects are concentrated, and which operators are most responsible for non-operational satellites. The analysis is based on reproducible queries and physics-based metrics, providing a clear view of how and why congestion and collision risks are increasing.
 
-### Results Summary
+## Results Summary
 
-- Orbital growth shifted from a slow, linear trend to exponential acceleration in 2014, driven by commercial megaconstellations and reusable rockets.
-- The most dangerous objects—large, high-energy satellites and rocket bodies—are overwhelmingly concentrated in the 400–600 km band of Low Earth Orbit, creating a crowded and collision-prone hotspot.
-- Responsibility for non-operational “zombie” satellites is highly concentrated among a few organizations and operators, while a handful of leading groups maintain the largest active fleets.
-- These findings highlight the need for targeted action: improved end-of-life practices, stricter disposal requirements, and focused cleanup efforts among the biggest contributors.
+- Orbital object counts began accelerating rapidly in 2014, mainly due to increased commercial satellite launches and reusable rockets.
+- Large satellites and rocket bodies are most concentrated in the 400–600 km region of low Earth orbit, where collision risk is highest.
+- Most non-operational satellites are linked to a small number of organizations, while a few groups operate the largest active fleets.
 
-### Research Questions
+## Primary Research Questions
 
-#### Primary Questions
-
-- At what year did orbital growth decouple from a historical linear trend and transition into an exponential trajectory?
-- How are high-risk objects, measured through velocity and kinetic energy, distributed across orbit classes and altitude bands, especially in the 400-600 km LEO band?
-- Which ownership or operator groups contribute most to non-operational zombie payload concentrations?
+- When did orbital growth shift from a linear to an exponential trend?
+- How are high-risk objects (by mass and kinetic energy) distributed across orbit classes and altitude bands, especially 400–600 km in LEO?
+- Which organizations or operators are most responsible for non-operational satellites?
 
 ### Current Workflow
 
-The repo is organized as a staged analysis pipeline. Each notebook handles a distinct phase of the project. There is also a utility notebook for documentation viewing.
-
-**See the 'Recommended Usage & Output Review' section below for how to review outputs and documentation.**
+The analysis pipeline is organized into sequential notebooks, each handling a specific stage of the project. There is also a utility notebook for viewing documentation.
 
 0. **Markdown Viewer Utility**  
-   `notebooks/00_markdown_viewer.ipynb` is a utility notebook for interactively viewing and rendering markdown files (such as documentation or proposals) within Jupyter. It is not part of the main data pipeline, but is useful for reviewing project documentation directly in the notebook interface.
+   `notebooks/00_markdown_viewer.ipynb` — View markdown documentation in Jupyter.
 
 1. **Pipeline Refresh**  
-   `notebooks/00_pipeline_refresh.ipynb.ipynb` downloads original datasets from their respective sources.
+   `notebooks/00_pipeline_refresh.ipynb` — Download original datasets.
 
-2. **UCS cleanup**  
-   `notebooks/01_ucs_cleanup.ipynb` standardizes and validates the UCS satellite registry, producing `data/clean/ucs_cleaned.csv`.
+2. **UCS Cleanup**  
+   `notebooks/01_ucs_cleanup.ipynb` — Standardize and validate the UCS satellite registry.
 
-3. **SATCAT cleanup and reconstruction**  
-   `notebooks/02_satcat_cleanup.ipynb` cleans the SATCAT catalog, repairs missing orbital values, and exports `data/clean/satcat_cleaned.csv`.
+3. **SATCAT Cleanup and Reconstruction**  
+   `notebooks/02_satcat_cleanup.ipynb` — Clean the SATCAT catalog and repair missing values.
 
-4. **Master synthesis**  
-   `notebooks/03_kinetic_master_synthesis.ipynb` merges the cleaned sources into the physics-informed master dataset `data/clean/kinetic_master.csv`.
+4. **Master Synthesis**  
+   `notebooks/03_kinetic_master_synthesis.ipynb` — Merge cleaned sources into the master dataset.
 
-5. **SQLite normalization**  
-   `notebooks/04_orbital_debris_synthesis.ipynb` converts the master dataset into a normalized SQLite database at `data/clean/orbital_debris.db`.
+5. **SQLite Normalization**  
+   `notebooks/04_orbital_debris_synthesis.ipynb` — Convert the master dataset into a normalized SQLite database.
 
-6. **Orbital Debris exploration**  
-   `notebooks/05_orbital_debris_exploration.ipynb` runs exploratory queries and visuals to explore the sql database thoroughly and generate the outputs that will be used in the final story notebook. This notebook is the main analytical workhorse for answering the research questions and generating the figures that will be used in the final story notebook.
+6. **Orbital Debris Exploration**  
+   `notebooks/05_orbital_debris_exploration.ipynb` — Run queries and generate outputs for the final story.
 
-7. **Story Narrative/Presentation Layer**  
-   `notebooks/06_orbital_debris_story.ipynb` answers the three primary research questions with targeted queries and visuals from the exploration notebook.
+7. **Story Narrative**  
+   `notebooks/06_orbital_debris_story.ipynb` — Present answers and visuals for the main research questions.
 
 ### Repository Structure
 
@@ -95,15 +91,15 @@ orbital-debris-assessment/
 
 ### Key Data Products
 
-| Artifact | Current Role | Size |
-| --- | --- | --- |
-| `data/clean/ucs_cleaned.csv` | Cleaned UCS satellite registry | 7,542 rows x 34 columns |
-| `data/clean/satcat_cleaned.csv` | Cleaned SATCAT global catalog | 68,087 rows x 27 columns |
-| `data/clean/kinetic_master.csv` | Physics-informed synthesized master dataset | 33,234 rows x 47 columns |
-| `data/clean/orbital_debris.db` | Normalized SQLite analysis database | 6 relational tables |
-| `data/clean/results/*.parquet` | Compact query results for all queries used in any visualization | Dependent On Query |
+| Artifact                        | Description                              | Size/Details                |
+|----------------------------------|------------------------------------------|-----------------------------|
+| `data/clean/ucs_cleaned.csv`     | Cleaned UCS satellite registry           | 7,542 rows × 34 columns     |
+| `data/clean/satcat_cleaned.csv`  | Cleaned SATCAT global catalog            | 68,400 rows × 27 columns    |
+| `data/clean/kinetic_master.csv`  | Merged, physics-informed master dataset  | 68,400 rows × 48 columns    |
+| `data/clean/orbital_debris.db`   | Normalized SQLite analysis database      | 6 tables (see below)        |
+| `data/clean/results/*.parquet`   | Query outputs for all visualizations     | Varies by query             |
 
-The SQLite database currently contains these tables:
+The SQLite database includes these tables:
 
 - `satellites`
 - `orbital_data`
@@ -114,44 +110,32 @@ The SQLite database currently contains these tables:
 
 ### Data Sources
 
-#### 1. CelesTrak Satellite Catalog (SATCAT)
+- **CelesTrak Satellite Catalog (SATCAT):**  
+   Baseline global catalog for payloads, rocket bodies, and debris.  
+   [http://celestrak.org/pub/satcat.csv](http://celestrak.org/pub/satcat.csv)
 
-- **Source:** CelesTrak / U.S. Space Command (USSPACECOM)
-- **Use in this project:** baseline global object catalog for payloads, rocket bodies, and debris
-- **Link:** [http://celestrak.org/pub/satcat.csv](http://celestrak.org/pub/satcat.csv)
+- **UCS Satellite Database:**  
+   Higher-fidelity payload metadata (ownership, mission, launch mass, lifetime).  
+   [http://www.ucsusa.org/resources/satellite-database](http://www.ucsusa.org/resources/satellite-database)
 
-#### 2. UCS Satellite Database
-
-- **Source:** Union of Concerned Scientists
-- **Use in this project:** higher-fidelity payload metadata including ownership, mission, launch mass, and lifetime fields
-- **Link:** [http://www.ucsusa.org/resources/satellite-database](http://www.ucsusa.org/resources/satellite-database)
-
-#### 3. ESA Space Environment Report 2025
-
-- **Source:** ESA Space Debris Office
-- **Use in this project:** external benchmark for assumptions, validation checks, and proxy reasoning
-- **Link:** [https://www.sdo.esoc.esa.int/publications/Space_Environment_Report_I9R1_20251021.pdf](https://www.sdo.esoc.esa.int/publications/Space_Environment_Report_I9R1_20251021.pdf)
-
-### Analytical Framing
-
-This project uses structured data analysis to track how risks in low Earth orbit are changing over time.
-
-It identifies when orbital growth accelerated, measures where high-risk objects are concentrated, and summarizes which operators are most responsible for non-operational satellites. The analysis is based on reproducible queries and physics-based metrics, providing a clear view of how and why congestion and collision risks are increasing.
+- **ESA Space Environment Report 2025:**  
+   External benchmark for assumptions, validation, and proxy reasoning.  
+   [https://www.sdo.esoc.esa.int/publications/Space_Environment_Report_I9R1_20251021.pdf](https://www.sdo.esoc.esa.int/publications/Space_Environment_Report_I9R1_20251021.pdf)
 
 ### Usage & Reproduction
 
-This repository includes all output artifacts generated from a full pipeline refresh, ensuring that every query result, visualization, and analysis matches the state of the data at project completion. By tracking all outputs (including executed notebooks, query results, and visuals), reviewers can directly verify the narrative, figures, and conclusions without needing to rerun the pipeline or regenerate data.
+All output artifacts are included from a full pipeline refresh, so every query result, visualization, and analysis matches the final project state. Reviewers can verify the narrative, figures, and conclusions directly—no reruns or regeneration needed.
 
-**Why include all outputs?**  
+**Why include all outputs?**
 
-- Guarantees analysis, and visuals are reproducible and match the documented story, regardless of future data or package changes.
-- Enables reviewers to audit, review, or reuse the final results without running the full pipeline.
-- Preserves the exact state of the project as submitted, including all intermediate and final data products.
+- Ensures analysis and visuals are reproducible and match the documented story, regardless of future data or package changes.
+- Allows reviewers to audit, review, or reuse results without running the pipeline.
+- Preserves the exact state of the project as submitted.
 
 **Quick review:**  
-If you only want to review the final story and results, simply install the dependencies and open `notebooks/output/06_orbital_debris_story_executed.ipynb`. All supporting outputs and data are included for reference.
+To review the final story and results, install dependencies and open `notebooks/output/06_orbital_debris_story_executed.ipynb`. All supporting outputs and data are included.
 
-#### 1. Installation & Environment Setup
+### Installation & Environment Setup
 
 ```bash
 # Clone the repository
@@ -171,7 +155,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-#### 2. Pipeline Execution
+### Pipeline Execution
 
 To fully reproduce or update the outputs, run the pipeline from the `notebooks/` directory using the CLI options below. This will regenerate all outputs, but is not required for review unless you wish to update or extend the analysis.
 
@@ -209,7 +193,7 @@ python execute.py --vis-only
 **Refresh Usage:**  
 CelesTrak allows ~10 refreshes per day. Use `--refresh` sparingly to avoid throttling.
 
-#### 3. Output & Documentation Review
+### Output & Documentation Review
 
 - Review executed notebooks in `notebooks` for the full analysis narrative, including all outputs and visuals.
 - For a summary, see `06_orbital_debris_story.ipynb`.
