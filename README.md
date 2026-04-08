@@ -1,20 +1,23 @@
-# WORK IN PROGRESS
-
-This readme is a work in progress and is not intended as the complete/final version of the document.  This readme will be considered final at the time I turn it in for grading, or on April 10th, 2026, whichever comes first.
-
 ## Orbital Debris Assessment: Mapping the Kessler Acceleration in Low Earth Orbit  
 
 **Author:** James Glosser  
 **Contact:** [Email](mailto:DemonicUrges05@gmail.com) | [LinkedIn profile](https://www.linkedin.com/in/james-glosser-249100204/)  
 **Repository:** [GitHub repository](https://github.com/sithid/orbital-debris-assessment)  
 **Last Updated:** March 2026  
-**Status:** In Progress (Final version will be submitted by April 10th, 2026)
+**Status:** Final submission with all outputs included for review. The repository contains a full pipeline refresh, including all executed notebooks, cleaned datasets, query outputs, and visuals as of the final analysis state.
 
 ---
 
 ### Project Overview
 
 This capstone investigates whether low Earth orbit has entered a new, more hazardous growth regime, driven by rapid satellite deployment, persistent rocket bodies, and long-lived debris. The project has evolved from a flat-file workflow to a structured, reproducible analysis pipeline: source datasets are cleaned and synthesized into a physics-informed master registry, normalized into SQLite, and analyzed through focused, query-driven workflows. The central goal is to pinpoint when orbital growth shifted from a historical linear pattern into an accelerated regime, and to map the resulting risk hotspots by object type, altitude band, and operator profile—providing actionable insights into the changing dynamics of space congestion and collision risk.
+
+### Results Summary
+
+- Orbital growth shifted from a slow, linear trend to exponential acceleration in 2014, driven by commercial megaconstellations and reusable rockets.
+- The most dangerous objects—large, high-energy satellites and rocket bodies—are overwhelmingly concentrated in the 400–600 km band of Low Earth Orbit, creating a crowded and collision-prone hotspot.
+- Responsibility for non-operational “zombie” satellites is highly concentrated among a few organizations and operators, while a handful of leading groups maintain the largest active fleets.
+- These findings highlight the need for targeted action: improved end-of-life practices, stricter disposal requirements, and focused cleanup efforts among the biggest contributors.
 
 ### Research Questions
 
@@ -23,12 +26,6 @@ This capstone investigates whether low Earth orbit has entered a new, more hazar
 - At what year did orbital growth decouple from a historical linear trend and transition into an exponential trajectory?
 - How are high-risk objects, measured through velocity and kinetic energy, distributed across orbit classes and altitude bands, especially in the 400-600 km LEO band?
 - Which ownership or operator groups contribute most to non-operational zombie payload concentrations?
-
-#### Secondary Questions
-
-- How do launch cohorts and post-2014 deployment patterns affect congestion intensity?
-- How do object type and operational status relate to kinetic risk?
-- Do user categories such as commercial, government, military, and civil show distinct risk profiles?
 
 ### Current Workflow
 
@@ -55,13 +52,10 @@ The repo is organized as a staged analysis pipeline. Each notebook handles a dis
    `notebooks/04_orbital_debris_synthesis.ipynb` converts the master dataset into a normalized SQLite database at `data/clean/orbital_debris.db`.
 
 6. **Orbital Debris exploration**  
-   `notebooks/05_orbital_debris_exploration.ipynb` runs exploratory queries and visuals to explore the sql database thoroughly.
+   `notebooks/05_orbital_debris_exploration.ipynb` runs exploratory queries and visuals to explore the sql database thoroughly and generate the outputs that will be used in the final story notebook. This notebook is the main analytical workhorse for answering the research questions and generating the figures that will be used in the final story notebook.
 
-7. **Story Narrative**  
-   `notebooks/06_orbital_debris_story.ipynb` answers the three primary and three secondary research questions with targeted queries and visuals, exporting result sets to `data/clean/results/` and charts to `charts/`.
-
-8. **Presentation layer**  
-   `notebooks/07_orbital_debris_assessment_presentation.ipynb` provides the final project presentation, summarizing key findings, visuals, and conclusions for review or sharing.
+7. **Story Narrative/Presentation Layer**  
+   `notebooks/06_orbital_debris_story.ipynb` answers the three primary research questions with targeted queries and visuals from the exploration notebook.
 
 ### Repository Structure
 
@@ -85,7 +79,6 @@ orbital-debris-assessment/
 |  \- schema/
 |- images/                        # exported figures and schema image
 |- notebooks/                     # stepwise analysis pipeline and utilities
-|  \- output/                     # executed notebooks with outputs
 |  |- 00_markdown_viewer.ipynb    # utility: view markdown docs in Jupyter
 |  |- 00_pipeline_refresh.ipynb
 |  |- 01_ucs_cleanup.ipynb
@@ -94,7 +87,6 @@ orbital-debris-assessment/
 |  |- 04_orbital_debris_synthesis.ipynb
 |  |- 05_orbital_debris_exploration.ipynb
 |  |- 06_orbital_debris_story.ipynb
-|  |- 07_orbital_debris_assessment_presentation.ipynb
 |  |- execute.py
 |  |- utility.py
 |- README.md
@@ -142,12 +134,9 @@ The SQLite database currently contains these tables:
 
 ### Analytical Framing
 
-The project combines data engineering, orbital mechanics, and query-driven analysis.
+This project uses structured data analysis to track how risks in low Earth orbit are changing over time.
 
-- **Temporal growth modeling:** separate the historical launch regime from the modern acceleration regime and test the proposed pivot around 2014
-- **Physics-informed risk metrics:** use orbital geometry, velocity, and kinetic energy to move beyond simple object counts
-- **Relational structure:** separate the master dataset into reusable SQLite tables so the main project questions can be answered with focused queries rather than repeated notebook-only transforms
-- **Narrative emphasis:** connect launch growth, altitude crowding, and non-operational object persistence into a single collision-risk story
+It identifies when orbital growth accelerated, measures where high-risk objects are concentrated, and summarizes which operators are most responsible for non-operational satellites. The analysis is based on reproducible queries and physics-based metrics, providing a clear view of how and why congestion and collision risks are increasing.
 
 ### Usage & Reproduction
 
@@ -155,12 +144,12 @@ This repository includes all output artifacts generated from a full pipeline ref
 
 **Why include all outputs?**  
 
-- Guarantees that the presentation, analysis, and visuals are reproducible and match the documented story, regardless of future data or package changes.
+- Guarantees analysis, and visuals are reproducible and match the documented story, regardless of future data or package changes.
 - Enables reviewers to audit, review, or reuse the final results without running the full pipeline.
 - Preserves the exact state of the project as submitted, including all intermediate and final data products.
 
 **Quick review:**  
-If you only want to review the final presentation and results, simply install the dependencies and open `notebooks/output/07_orbital_debris_assessment_presentation_executed.ipynb`. All supporting outputs and data are included for reference.
+If you only want to review the final story and results, simply install the dependencies and open `notebooks/output/06_orbital_debris_story_executed.ipynb`. All supporting outputs and data are included for reference.
 
 #### 1. Installation & Environment Setup
 
@@ -223,7 +212,7 @@ CelesTrak allows ~10 refreshes per day. Use `--refresh` sparingly to avoid throt
 #### 3. Output & Documentation Review
 
 - Review executed notebooks in `notebooks` for the full analysis narrative, including all outputs and visuals.
-- For a summary, see `06_orbital_debris_story.ipynb` and `07_orbital_debris_assessment_presentation.ipynb`.
+- For a summary, see `06_orbital_debris_story.ipynb`.
 - To view documentation in Jupyter, use `00_markdown_viewer.ipynb`.
 
 **Recommended Workflow:**  
@@ -260,7 +249,7 @@ The old flat-file-centered workflow made it too easy to mix cleaning, modeling, 
 
 ### AI Usage & Authorship Note
 
-AI assistance (primarily GitHub Copilot) was utilized as a development tool for formula and function development, error debugging, and documentation adjustments. AI-assisted functions are explicitly identified in their respective headers.
+AI assistance (primarily GitHub Copilot) was utilized as a development tool for formula and function development, error debugging, documentation/markdown tone, and research. AI-assisted functions are explicitly identified in their respective headers.
 
 **Human Authorship & Governance**  
 I retain full authorship and responsibility for the following core components:
