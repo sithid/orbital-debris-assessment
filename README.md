@@ -159,6 +159,8 @@ pip install -r requirements.txt
 
 To fully reproduce or update the outputs, run the pipeline from the `notebooks/` directory using the CLI options below. This will regenerate all outputs, but is not required for review unless you wish to update or extend the analysis.
 
+**Warning:** Running `--first-run`, `--refresh`, or `--purge` will delete existing outputs and datasets. Use with caution if you want to preserve the current state.  Run only execute.py --vis-only to regenerate visuals without affecting datasets.
+
 ```bash
 cd notebooks
 
