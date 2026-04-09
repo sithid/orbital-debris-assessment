@@ -55,6 +55,7 @@ papermill==2.7.0
 parso==0.8.5
 patsy==1.0.2
 phik==0.12.5
+pi==0.1.2
 pillow==12.1.0
 platformdirs==4.5.1
 prompt_toolkit==3.0.52
