@@ -186,6 +186,10 @@ deactivate
 
 # Install dependencies
 pip install -r requirements.txt
+
+# If you have any issues installing libs for the python environment, you can force install on your active environment with:
+python -m pip install ipywidgets pandas requests bs4 tabulate seaborn pyarrow fastparquet papermill matplotlib
+
 ```
 
 ### Pipeline Execution
@@ -228,23 +232,32 @@ python execute.py --vis-only
 **Refresh Usage:**  
 CelesTrak allows ~10 refreshes per day. Use `--refresh` sparingly to avoid throttling.
 
+
 ### Python Libraries Used
 
 - **pandas** — Data manipulation and analysis
-- **numpy** — Numerical operations
+- **numpy** — Numerical operations (not part of the Python standard library)
 - **IPython.display** — Rich display in Jupyter notebooks
-- **sqlite3** — SQLite database access
 - **seaborn** — Statistical data visualization
 - **matplotlib** — Plotting and visualization
 - **requests** — HTTP requests for data download
-- **bs4 (BeautifulSoup)** — HTML/XML parsing
-- **urllib.parse** — URL handling
+- **beautifulsoup4 (bs4)** — HTML/XML parsing
 - **papermill** — Parameterized notebook execution
-- **sys** — System-specific parameters and functions
-- **argparse** — Command-line argument parsing
-- **os** — Operating system interfaces
-- **shutil** — High-level file operations
-- **io** — Core tools for working with streams
+- **tabulate** — Table formatting for output
+- **pyarrow** — Parquet and Arrow file support
+- **fastparquet** — Alternative Parquet file support
+- **ipywidgets** — Interactive widgets for Jupyter
+- **statsmodels** — Statistical modeling and tests
+- **phik** — Phi_k correlation analysis
+- **wordcloud** — Word cloud generation
+- **PyPDF2** — PDF file handling
+- **PyMuPDF** — PDF and document processing
+- **openpyxl** — Excel file reading/writing
+- **shapely** — Geometric operations
+- **pyogrio** — Geospatial vector data IO
+- **llvmlite, numba** — Accelerated numerical computing
+
+*Standard library modules (e.g., sys, os, shutil, io, argparse, sqlite3, urllib.parse) are used but not listed here, as they are included with Python.*
 
 ### Tools Used
 
