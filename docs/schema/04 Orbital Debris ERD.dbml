@@ -116,11 +116,11 @@ Table risk_assessment {
 // RELATIONSHIPS
 // =============================================================================
 
-// 1:1 — child tables use their own PKs and keep norad_id as a unique FK to satellites
+// 1:1 — In each child table, norad_id serves as both the primary key and foreign key to satellites.norad_id, enforcing a strict one-to-one relationship.
 ref: orbital_data.norad_id > satellites.norad_id
 ref: ucs_details.norad_id > satellites.norad_id
 ref: risk_assessment.norad_id > satellites.norad_id
 
-// Many:1 — each satellite points to one owner and one launch event
+// Many:1 — Each satellite references one owner (owner_code) and one launch event (launch_id); multiple satellites can share the same owner or launch.
 ref: satellites.owner_code > ownership_operators.owner_code
 ref: satellites.launch_id > launch_events.launch_id
