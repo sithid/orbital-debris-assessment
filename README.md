@@ -168,6 +168,9 @@ cd orbital-debris-assessment
 # Create and activate virtual environment (REQUIRED)
 python -m venv venv
 
+# Install requirment dependencies
+pip install -r requirements.txt
+
 # Activate virtual environment:
 # Windows:
 venv/Scripts/activate
