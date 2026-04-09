@@ -95,3 +95,17 @@
 | `contractor`        | `str`    | Payload   | Prime manufacturer of bus/payload.                                 |
 | `contractor_country`| `str`    | Payload   | Nation of manufacture.                                             |
 | `contractor_country` | `str` | Payload | Nation of manufacture. |
+
+
+| Acronym | Definition                           |
+| :------ | :----------------------------------- |
+| `UCS`   | Union of Concerned Scientists        |
+| `ESA`   | European Space Agency                |
+| `RCS`   | Radar Cross Section                  |
+| `SATCAT`| USSPACECOM Satellite Catalog          |
+| `LEO`   | Low Earth Orbit (altitude < 2000 km) |
+| `MEO`   | Medium Earth Orbit (2000-35786 km)   |
+| `GEO`   | Geostationary Orbit (35786 km)       |
+| `Elliptical` | Highly eccentric orbit (varied altitudes) |
+| `Polar` | Orbit with inclination near 90 degrees (passes over poles) |
+| `Sun-Synchronous` | Orbit that passes over the same Earth location at the same local solar time (common for Earth observation) |

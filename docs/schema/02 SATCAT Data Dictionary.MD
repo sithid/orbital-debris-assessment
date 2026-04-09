@@ -42,3 +42,21 @@
 | `owner_code`      | `str`    | ISO-style country/org code, whitespace stripped.                            |
 | `launch_year`     | `int`    | Year of launch, derived for simulation aging.                               |
 | `in_orbit`        | `int`    | 1 if currently in orbit, 0 if decayed.                                      |
+
+## 4. Acronyms & Definitions
+
+| Acronym | Definition                           |
+| :------ | :----------------------------------- |
+| `UCS`   | Union of Concerned Scientists        |
+| `ESA`   | European Space Agency                |
+| `RCS`   | Radar Cross Section                  |
+| `LEO`   | Low Earth Orbit (altitude < 2000 km) |
+| `MEO`   | Medium Earth Orbit (2000-35786 km)   |
+| `GEO`   | Geostationary Orbit (35786 km)       |
+| `Elliptical` | Highly eccentric orbit (varied altitudes) |
+| `PAYLOAD` | Operational satellite or spacecraft |
+| `ROCKET BODY` | Spent rocket stage or booster |
+| `DEBRIS` | Fragmented object or non-functional piece |
+| `UNKNOWN` | Unclassified object type |
+| `OPERATIONAL` | Actively functioning satellite |
+| `NON-OPERATIONAL` | No longer functioning, but still in orbit |

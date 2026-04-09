@@ -46,3 +46,16 @@
 | `is_military`     | `int`     | 1 if military use is present; else 0.                                       |
 | `is_government`   | `int`     | 1 if government use is present; else 0.                                     |
 | `is_civil`        | `int`     | 1 if civil use is present; else 0.                                          |
+
+
+| Acronym | Definition                           |
+| :------ | :----------------------------------- |
+| `UCS`   | Union of Concerned Scientists        |
+| `LEO`   | Low Earth Orbit (altitude < 2000 km) |
+| `MEO`   | Medium Earth Orbit (2000-35786 km)   |
+| `GEO`   | Geostationary Orbit (35786 km)       |
+| `Elliptical` | Highly eccentric orbit (varied altitudes) |
+| `Polar` | Orbit with inclination near 90 degrees (passes over poles) |
+| `Equatorial` | Orbit with inclination near 0 degrees (stays near equator) |
+| `Inclined` | Orbit with inclination between 0 and 90 degrees (neither polar nor equatorial) |
+| `Eccentric` | Orbit with high eccentricity (significantly non-circular) |

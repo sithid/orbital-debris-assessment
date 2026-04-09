@@ -228,6 +228,31 @@ python execute.py --vis-only
 **Refresh Usage:**  
 CelesTrak allows ~10 refreshes per day. Use `--refresh` sparingly to avoid throttling.
 
+### Python Libraries Used
+
+- **pandas** — Data manipulation and analysis
+- **numpy** — Numerical operations
+- **IPython.display** — Rich display in Jupyter notebooks
+- **sqlite3** — SQLite database access
+- **seaborn** — Statistical data visualization
+- **matplotlib** — Plotting and visualization
+- **requests** — HTTP requests for data download
+- **bs4 (BeautifulSoup)** — HTML/XML parsing
+- **urllib.parse** — URL handling
+- **papermill** — Parameterized notebook execution
+- **sys** — System-specific parameters and functions
+- **argparse** — Command-line argument parsing
+- **os** — Operating system interfaces
+- **shutil** — High-level file operations
+- **io** — Core tools for working with streams
+
+### Tools Used
+
+- **Jupyter Notebook** — Interactive analysis and documentation
+- **Python (venv)** — Virtual environment management
+- **Git** — Version control
+- **SQLite** — Relational database for structured analysis
+
 ### Output & Documentation Review
 
 - Review executed notebooks in `notebooks` for the full analysis narrative, including all outputs and visuals.
