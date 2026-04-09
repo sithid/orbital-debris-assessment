@@ -1,10 +1,22 @@
-// Orbital Debris Assessment — SQL Schema (DBML)
-// Each table has its own primary key to uniquely identify its row type (satellites.norad_id,
-// orbital_data.orbital_data_id, ucs_details.ucs_detail_id, risk_assessment.risk_assessment_id, etc.).
-// I use norad_id as a foreign key in child tables (orbital_data, ucs_details, risk_assessment) with a
-// unique constraint to preserve a one-to-one relationship back to satellites, rather than duplicating
-// child table IDs inside the parent table. This avoids circular dependencies and keeps normalization 
-// clean while still enforcing relational links.
+// Orbital Debris Assessment — Normalized SQL Schema (DBML)
+// This schema defines the analytical backbone for orbital_debris.db, supporting all queries and risk modeling.
+//
+// Design Overview:
+// - The database is fully normalized for efficient, reproducible analysis of satellites, debris, and rocket bodies.
+// - Table roles:
+//     - satellites: Core identity and classification for every tracked object (one row per object, PK = norad_id).
+//     - orbital_data: Orbital geometry and physical properties (1:1 with satellites, norad_id is both PK and FK).
+//     - ucs_details: Enriched mission/purpose fields for active payloads (1:1 with satellites, norad_id is both PK and FK).
+//     - risk_assessment: Derived physics-based risk metrics (1:1 with satellites, norad_id is both PK and FK).
+//     - ownership_operators: Lookup for owner/operator metadata (referenced by satellites.owner_code).
+//     - launch_events: Lookup for launch metadata (referenced by satellites.launch_id).
+//
+// - In each 1:1 child table, norad_id serves as both the primary key and foreign key to satellites.norad_id.
+//   This enforces strict 1:1 relationships—each satellite has at most one related row per extension table, and no duplicates are allowed.
+// - satellites is the central hub, linking to ownership_operators and launch_events (many:1).
+// - No circular dependencies; referential integrity is maintained throughout.
+//
+// See docs/schema/04 Orbital Debris Data Dictionary.md for detailed field definitions.
 
 // =============================================================================
 // CORE IDENTITY TABLE — one row per tracked space object
