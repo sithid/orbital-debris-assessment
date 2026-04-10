@@ -370,10 +370,11 @@ def quick_report(df, title="Dataset Diagnostic", audit_cols=None, key_col=None):
 #                                                                                                       #
 # How AI assistance was used                                                                            #
 # - I understand the concept of orbital period, and how to use it to derive orbital regime,             #
-#   but I wasn't sure of the formula to use, the function itself is straightforward once the            #
-#   formula is known.  AI provided the formula for orbital period, I provided the implementation.       #
+#   but I wasn't sure of the formula to use to actually cacluate the, the function itself is straight   #
+#   forward once the formula is known.  AI provided the formula for orbital period, I provided the      #
+#   implementation.                                                                                     #
 #                                                                                                       #
-# AI (GitHub Copilot, Various Models) assisted with formula reconstruction.                              #
+# AI (GitHub Copilot, Various Models) assisted with formula reconstruction.                             #
 #########################################################################################################
 def calculate_orbital_period(row):
     """

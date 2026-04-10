@@ -47,6 +47,9 @@
 | `is_government`   | `int`     | 1 if government use is present; else 0.                                     |
 | `is_civil`        | `int`     | 1 if civil use is present; else 0.                                          |
 
+---
+
+## 5. Acronyms & Definitions
 
 | Acronym | Definition                           |
 | :------ | :----------------------------------- |

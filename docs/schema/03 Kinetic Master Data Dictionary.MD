@@ -96,6 +96,9 @@
 | `contractor_country`| `str`    | Payload   | Nation of manufacture.                                             |
 | `contractor_country` | `str` | Payload | Nation of manufacture. |
 
+---
+
+## 7. Acronyms & Definitions
 
 | Acronym | Definition                           |
 | :------ | :----------------------------------- |

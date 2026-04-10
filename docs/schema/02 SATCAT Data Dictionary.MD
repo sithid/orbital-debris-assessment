@@ -43,6 +43,8 @@
 | `launch_year`     | `int`    | Year of launch, derived for simulation aging.                               |
 | `in_orbit`        | `int`    | 1 if currently in orbit, 0 if decayed.                                      |
 
+---
+
 ## 4. Acronyms & Definitions
 
 | Acronym | Definition                           |
