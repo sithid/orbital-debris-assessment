@@ -196,8 +196,7 @@ To fully reproduce or update the outputs, run the pipeline from the `notebooks/`
 **Warning:** Running `--first-run`, `--refresh`, or `--purge` will delete existing outputs and datasets. Use with caution if you want to preserve the current state.  Run only execute.py --vis-only to regenerate visuals without affecting datasets.
 
 **Alternative:** You can also run each notebook sequentially for more control, but the CLI is recommended for reproducibility and ease of use. If
-you have any issues with the CLI, you can run each notebook in order (00-06) to achieve the same results, the CLI was designed to make it easier to update the entire pipeline, and make sure everything builds correctly. The CLI is not required, run the notebooks in order if you want to update or extend the analysis. You can run any notebook independently as long as you have the required datasets and outputs from previous steps.
-When running manually for the first time, you may have to set each notebook kernal to the environment you created.
+you have any issues with the CLI, you can run each notebook in order (00-06) to achieve the same results. The CLI was designed to make it easier to update the entire pipeline, and make sure everything builds correctly, but the CLI is not actually required. You can run any notebook independently as long as you have the required datasets and outputs from previous steps. When running manually for the first time, you may have to set each notebook kernal to the environment you created.
 
 ```bash
 cd notebooks
