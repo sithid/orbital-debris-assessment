@@ -198,6 +198,9 @@ To fully reproduce or update the outputs, run the pipeline from the `notebooks/`
 
 **Warning:** Running `--first-run`, `--refresh`, or `--purge` will delete existing outputs and datasets. Use with caution if you want to preserve the current state.  Run only execute.py --vis-only to regenerate visuals without affecting datasets.
 
+**Alternative:** You can also run each notebook sequentially for more control, but the CLI is recommended for reproducibility and ease of use. If
+you have any issues with the CLI, you can run each notebook in order (00-06) to achieve the same results, the CLI was designed to make it easier to update the entire pipeline, and make sure everything builds correctly, but it is not required to run the notebooks in order if you want to update or extend the analysis, you can run any notebook independently as long as you have the required datasets and outputs from previous steps.
+
 ```bash
 cd notebooks
 
@@ -289,6 +292,7 @@ You may run each notebook in order for full control (see notebook list above), b
 
 ### Assumptions and Limitations
 
+- This pipeline was designed on Windows 10 with Python 3.13.5, with minimal testing on Windows 11, so some environment-specific issues may arise on other platforms or other Python versions.
 - SATCAT and UCS do not provide identical coverage, so matching quality depends on shared identifiers and metadata consistency.
 - Some physics and mass fields require imputation or derivation rather than direct observation.
 - The SQLite layer improves reproducibility, but it does not eliminate source-era gaps or historical catalog inconsistencies.
