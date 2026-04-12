@@ -5,7 +5,9 @@
 **Contact:** [Email](mailto:DemonicUrges05@gmail.com) | [LinkedIn profile](https://www.linkedin.com/in/james-glosser-249100204/)  
 **Repository:** [GitHub repository](https://github.com/sithid/orbital-debris-assessment)  
 **Last Updated:** April 2026  
-**Status:** Final submission with all outputs included for review. The repository contains a full pipeline refresh, including all executed notebooks, cleaned datasets, query outputs, and visuals as of the final analysis state.
+**Status:** Final submission with all outputs included for review. The repository contains a full pipeline refresh, including all executed notebooks, cleaned datasets, query outputs, and visuals as of the final analysis state.  
+**See Also:** [Orbital Debris Interactive](https://github.com/sithid/orbital-debris-interactive) — An interactive dashboard type version of the analysis I
+am currently working on.
 
 ---
 
