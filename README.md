@@ -2,7 +2,7 @@
 # Orbital Debris Assessment: Tracking Growth and Risk in Low Earth Orbit
 
 **Author:** James Glosser  
-**Contact:** [Email](mailto:DemonicUrges05@gmail.com) | [LinkedIn profile](https://www.linkedin.com/in/james-glosser-249100204/)  
+**Contact:** [Email](mailto:j.glosser86@gmail.com) | [LinkedIn profile](https://www.linkedin.com/in/james-glosser-249100204/)  
 **Repository:** [GitHub repository](https://github.com/sithid/orbital-debris-assessment)  
 **Last Updated:** April 2026  
 **Status:** Final submission with all outputs included for review. The repository contains a full pipeline refresh, including all executed notebooks, cleaned datasets, query outputs, and visuals as of the final analysis state.  
